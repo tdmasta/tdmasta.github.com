@@ -12,6 +12,7 @@ pygments: true
 #
 title : MCS Developer
 tagline: Site Tagline
+main_title: MCS Developer portal
 author :
   name : MCS developer team
   email : webmaster.telecomdesign@gmail.com
