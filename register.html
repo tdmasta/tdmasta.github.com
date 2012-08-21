@@ -6,10 +6,31 @@ group: navigation
 ---
 {% include JB/setup %}
 <div>
-<label>Name:</label>
-<input type="text" ng-model="yourName" placeholder="Enter a name here">
-<hr>
+    <label for="firstName">First Name :</label>
+   	<input id="firstName" name="firstName" ng-model="firstName" placeholder="Your first name" title="Your First Name" type="text" required />
 
-<h1>Hello {{ "{{yourName "}} }} !</h1>
+    <label for="lastName">Last Name :</label>
+    <input id="lastName" name="lastName" ng-model="lastName" placeholder="Your last name" title="Your Last Name" type="text" required />
 
+    <label for="email">Your email :</label>
+    <input id="email" name="email" ng-model="email" placeholder="Your Email" title="Your email" type="email" required />
 </div>
+
+<div>
+    <label for="addressLine1">Address (line 1) :</label>
+    <input id="addressLine1" name="addressLine1" ng-model="addressLine1" placeholder="Your address (line 1)" title="Your Address (line 1)" type="text" required />
+
+    <label for="addressLine2">Address (line 2) :</label>
+    <input id="addressLine2" name="addressLine2" ng-model="addressLine2" placeholder="Your address (line 2)" title="Your Address (line 2)" type="text" />
+
+    <label for="zipCode">Zip code :</label>
+    <input id="zipCode" name="zipCode" ng-model="zipCode" placeholder="Your Zip Code" title="Your zip code" type="number" pattern="[0-9]*" maxlength="5" min="0" required />
+
+    <label for="city">City :</label>
+    <input id="city" name="city" ng-model="city" placeholder="Your city" title="Your city" type="text" required />
+	
+    <label for="country">Country :</label>
+    <input id="country" name="country" ng-model="country" placeholder="Your country" title="Your country" type="text" required />
+</div>
+
+<h1>Hello {{ "{{firstName "}} }} & {{ "{{email "}} }}!</h1>
