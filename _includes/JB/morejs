@@ -22,5 +22,4 @@ Usage:
 	{% else %}
 		<script src="{{s.url}}"></script>
 	{% endif %}
-
 {% endfor %}
