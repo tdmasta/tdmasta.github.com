@@ -7,74 +7,74 @@ group: navigation
 ---
 {% include JB/setup %}
 <div class="row">
-    <div class="span12">
-        <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate">
-            <fieldset>
-                <div class="control-group">
-                    <label class="control-label"  for="firstName">First name</label>
-                    <div class="controls">
-                        <input id="firstName" name="firstName" ng-model="firstName" placeholder="Your first name" title="Your First Name" type="text" required />
-                        <span class="field-validation-valid" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="lastName">Last name</label>
-                    <div class="controls">
-                        <input id="lastName" name="lastName" ng-model="lastName" placeholder="Your last name" title="Your Last Name" type="text" required />
-                        <span class="field-validation-valid" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="email">Your email </label>
-                    <div class="controls">
-                        <input id="email" name="email" ng-model="email" placeholder="Enter valid email address" title="Your email" type="email" required/>
-                        <span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="addressLine1">Address (line 1) </label>
-                    <div class="controls">
-                        <input id="addressLine1" name="addressLine1" ng-model="addressLine1" placeholder="Your address (line 1)" title="Your Address (line 1)" type="text" required/>
-                        <span class="field-validation-valid" data-valmsg-for="addressLine1" data-valmsg-replace="true"></span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="addressLine2">Address (line 2) </label>
-                    <div class="controls">
-                        <input id="addressLine2" name="addressLine2" ng-model="addressLine2" placeholder="Your address (line 2)" title="Your Address (line 2)" type="text" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="zipCode">Zip code </label>
-                    <div class="controls">
-                        <input id="zipCode" name="zipCode" ng-model="zipCode" placeholder="Your Zip Code" title="Your zip code" type="text" min="0" required/>
-                        <span class="field-validation-valid" data-valmsg-for="zipCode" data-valmsg-replace="true"></span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="city">City </label>
-                    <div class="controls">
-                        <input id="city" name="city" ng-model="city" placeholder="Your city" title="Your city" type="text" required />
-                        <span class="field-validation-valid" data-valmsg-for="city" data-valmsg-replace="true"></span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label  class="control-label" for="country">Country</label>
-                    <div class="controls">
-                        <input id="country" name="country" ng-model="country" placeholder="Your country" title="Your country" type="text" required />
-                        <span class="field-validation-valid" data-valmsg-for="country" data-valmsg-replace="true"></span>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">
-                        Create an account
-                    </button>
-                    <button  type="reset" class="btn">
-                        Cancel
-                    </button>
-                </div>
-            </fieldset>
+	<div class="span12">
+		<form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="registration">
+	
+		<fieldset>
+			<div class="control-group">
+			    <label class="control-label" for="email"> Your email </label>
+				<div class="controls">
+			    	<input id="email" name="email" ng-model="email" data-val="true" type="email" data-val-required="Email address is required." required/>
+					<span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
+				</div>
+			</div>
+			
+			<div class="control-group">
+			    <label class="control-label" for="firstName">Full name</label>
+				<div class="controls">
+			   		<input id="fullName" name="fullName" ng-model="fullName" data-val="true" type="text" data-val-required="Full name is required." required />
+					<span class="field-validation-valid" data-valmsg-for="fullName" data-valmsg-replace="true"></span>	
+				</div>
+			</div>
+			
+			<div class="control-group">
+			    <label class="control-label" for="addressLine1">Address (line 1) </label>
+				<div class="controls">
+			    	<input id="addressLine1" name="addressLine1" ng-model="addressLine1" type="text" data-val="true" data-val-required="Address is required." required/>
+					<span class="field-validation-valid" data-valmsg-for="addressLine1" data-valmsg-replace="true"></span>
+				</div>
+			</div>
+	
+			<div class="control-group">
+			    <label class="control-label" for="addressLine2">Address (line 2) </label>
+				<div class="controls">
+			    	<input id="addressLine2" name="addressLine2" ng-model="addressLine2"  data-val="false"  type="text" />
+				</div>
+			</div>
+	
+			<div class="control-group">
+			    <label class="control-label" for="zipCode">Zip code </label>
+				<div class="controls">
+			    	<input id="zipCode" name="zipCode" ng-model="zipCode"  type="text" min="0" data-val="true" data-val-required="Zipcode is required." required/>
+					<span class="field-validation-valid" data-valmsg-for="zipCode" data-valmsg-replace="true"></span>
+				</div>
+			</div>
+	
+			<div class="control-group">
+			    <label class="control-label" for="city">City </label>
+				<div class="controls">
+			    	<input id="city" name="city" ng-model="city" type="text" data-val="true" data-val-required="City is required." required/>
+					<span class="field-validation-valid" data-valmsg-for="city" data-valmsg-replace="true"></span>
+				</div>
+			</div>
+			<div class="control-group">
+			    <label  class="control-label" for="country">Country</label>
+				<div class="controls">
+			    	<input id="country" name="country" ng-model="country" type="text" data-val="true" data-val-required="Country is required." required/>
+					<span class="field-validation-valid" data-valmsg-for="country" data-valmsg-replace="true"></span>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">Create an account</button>
+				<button type="reset" class="btn">Cancel</button>
+			</div>
+		</fieldset>
 
-        </form>
-    </div>
+		</form>
+	</div>
 </div>
+<style type="text/css" media="screen">
+	.field-validation-error {
+		color: #B94A48;
+	}
+</style>
