@@ -1,0 +1,26 @@
+{% comment %}<!--
+The morejs include is a listing helper for 3rd party js.
+Usage:
+  1) assign the 'scripts' variable to a valid array of script object.
+  2) include JB/morejs
+  example:
+    <ul>
+  	  {% assign scripts = page.scripts %}  
+  	  {% include JB/morejs %}
+  	</ul>
+  
+  Notes: 
+    Tags can be either a Hash of tag objects (hashes) or an Array of tag-names (strings).
+    The encapsulating 'if' statement checks whether tags_list is a Hash or Array.
+    site.tags is a Hash while page.tags is an array.
+    
+  This helper can be seen in use at: ../_layouts/page-ng.html
+-->{% endcomment %}
+{% for s in scripts %}
+	{%if s.type == "inline" %}
+	<script type="text/javascript" charset="utf-8">{{ s.content }}</script>
+	{% else %}
+		<script src="{{s.url}}"></script>
+	{% endif %}
+
+{% endfor %}
