@@ -4,7 +4,7 @@ title: Sign Up
 tagline: Register and get your Api keys
 description: Registration form
 group: navigation
-scripts: 
+scripts:
 - {name: jquery, type: remote, url: "http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"}
 - {name: validation, type: remote, url: "http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"}
 - {name: validation.nonobs, type: remote, url: "https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"}
@@ -12,79 +12,84 @@ scripts:
   type: inline
   content: "$(function() {$('#registration').validate();})"
 ---
+
 {% include JB/setup %}
 
 <script src="assets/js/controllers.js"></script>
 
 <div class="row">
-	<div class="span12" ng-controller="RegistrationCtrl">
-		<form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="registration" name="registrationForm" ng-submit="registrationSubmit(account)">
-	
-		<fieldset>
-			<div class="control-group">
-			    <label class="control-label" for="email"> Your email </label>
-				<div class="controls">
-			    	<input id="email" name="account.email" ng-model="account.email" ng-model-instant data-val="true" type="email" data-val-required="Email address is required." required />
-					<span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
-				</div>
-			</div>
-			
-			<div class="control-group">
-			    <label class="control-label" for="firstName">Full name</label>
-				<div class="controls">
-			   		<input id="fullName" name="account.fullName" ng-model="account.fullName" ng-model-instant data-val="true" type="text" data-val-required="Full name is required." required />
-					<span class="field-validation-valid" data-valmsg-for="fullName" data-valmsg-replace="true"></span>	
-				</div>
-			</div>
-			
-			<div class="control-group">
-			    <label class="control-label" for="addressLine1">Address (line 1) </label>
-				<div class="controls">
-			    	<input id="addressLine1" name="account.addressLine1" ng-model="account.addressLine1" ng-model-instant type="text" data-val="true" data-val-required="Address is required." required />
-					<span class="field-validation-valid" data-valmsg-for="addressLine1" data-valmsg-replace="true"></span>
-				</div>
-			</div>
-	
-			<div class="control-group">
-			    <label class="control-label" for="addressLine2">Address (line 2) </label>
-				<div class="controls">
-			    	<input id="addressLine2" name="account.addressLine2" ng-model="account.addressLine2" ng-model-instant data-val="false"  type="text" />
-				</div>
-			</div>
-	
-			<div class="control-group">
-			    <label class="control-label" for="zipCode">Zip code </label>
-				<div class="controls">
-			    	<input id="zipCode" name="account.zipCode" ng-model="account.zipCode" ng-model-instant type="text" min="0" data-val="true" data-val-required="Zipcode is required." required />
-					<span class="field-validation-valid" data-valmsg-for="zipCode" data-valmsg-replace="true"></span>
-				</div>
-			</div>
-	
-			<div class="control-group">
-			    <label class="control-label" for="city">City </label>
-				<div class="controls">
-			    	<input id="city" name="account.city" ng-model="account.city" ng-model-instant type="text" data-val="true" data-val-required="City is required." required />
-					<span class="field-validation-valid" data-valmsg-for="city" data-valmsg-replace="true"></span>
-				</div>
-			</div>
-			<div class="control-group">
-			    <label  class="control-label" for="country">Country</label>
-				<div class="controls">
-			    	<input id="country" name="account.country" ng-model="account.country" ng-model-instant type="text" data-val="true" data-val-required="Country is required." required />
-					<span class="field-validation-valid" data-valmsg-for="country" data-valmsg-replace="true"></span>
-				</div>
-			</div>
-			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">Create an account</button>
-				<button type="reset" class="btn">Cancel</button>
-			</div>
-		</fieldset>
-		</form>
-	</div>
+    <div class="span12" ng-controller="RegistrationCtrl">
+        <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="registration" name="registrationForm" ng-submit="registrationSubmit(account)">
+
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="email"> Your email </label>
+                    <div class="controls">
+                        <input id="email" name="account.email" ng-model="account.email" ng-model-instant data-val="true" type="email" data-val-required="Email address is required." required />
+                        <span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="firstName">Full name</label>
+                    <div class="controls">
+                        <input id="fullName" name="account.fullName" ng-model="account.fullName" ng-model-instant data-val="true" type="text" data-val-required="Full name is required." required />
+                        <span class="field-validation-valid" data-valmsg-for="fullName" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="addressLine1">Address (line 1) </label>
+                    <div class="controls">
+                        <input id="addressLine1" name="account.addressLine1" ng-model="account.addressLine1" ng-model-instant type="text" data-val="true" data-val-required="Address is required." required />
+                        <span class="field-validation-valid" data-valmsg-for="addressLine1" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="addressLine2">Address (line 2) </label>
+                    <div class="controls">
+                        <input id="addressLine2" name="account.addressLine2" ng-model="account.addressLine2" ng-model-instant data-val="false"  type="text" />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="zipCode">Zip code </label>
+                    <div class="controls">
+                        <input id="zipCode" name="account.zipCode" ng-model="account.zipCode" ng-model-instant type="text" min="0" data-val="true" data-val-required="Zipcode is required." required />
+                        <span class="field-validation-valid" data-valmsg-for="zipCode" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="city">City </label>
+                    <div class="controls">
+                        <input id="city" name="account.city" ng-model="account.city" ng-model-instant type="text" data-val="true" data-val-required="City is required." required />
+                        <span class="field-validation-valid" data-valmsg-for="city" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label  class="control-label" for="country">Country</label>
+                    <div class="controls">
+                        <input id="country" name="account.country" ng-model="account.country" ng-model-instant type="text" data-val="true" data-val-required="Country is required." required />
+                        <span class="field-validation-valid" data-valmsg-for="country" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        Create an account
+                    </button>
+                    <button type="reset" class="btn">
+                        Cancel
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 </div>
 
 <style type="text/css" media="screen">
-	.field-validation-error {
-		color: #B94A48;
-	}
+    .field-validation-error {
+        color: #B94A48;
+    }
 </style>
