@@ -83,17 +83,6 @@ scripts:
 	</div>
 </div>
 
-<div class="row" ng-controller="TopListCtrl">
-    <ol>
-        <li ng-repeat="post in posts.items">
-            <a href="{{ "{{post.url"}} }}">{{ "{{post.title"}} }}</a>
-            <span class="url">{{ "{{post.url"}} }} | {{ "{{shortURL"}} }}</span>
-            <small> {{ "{{post.points"}} }} points by {{ "{{post.postedBy"}} }} {{ "{{post.postedAgo"}} }} | {{ "{{post.commentCount"}} }} comments</small>
-        </li>
-    </ol>
-</div>
-
-
 <style type="text/css" media="screen">
 	.field-validation-error {
 		color: #B94A48;
