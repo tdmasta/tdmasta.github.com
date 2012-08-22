@@ -6,3 +6,4 @@ function RegistrationCtrl($scope) {
         alert(JSON.stringify(input));
     };
 }
+
