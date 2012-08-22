@@ -8,6 +8,7 @@ function RegistrationCtrl($scope) {
 }
 
 function TopListCtrl($scope, $http) {
+/**
     $http.jsonp('http://api.ihackernews.com/page?format=jsonp&callback=JSON_CALLBACK').
         success(function(data) {
             $scope.posts = data;
@@ -15,4 +16,23 @@ function TopListCtrl($scope, $http) {
         error(function(data) {
             alert('Error during http.jsonp callback');
         })
+*/
+$http.get('/assets/js/controllers.js').
+// $http.get('http://briantford.com/blog/angular-d3.html').
+    success(function(data, status) {
+        alert('>> OK : status = ' + status + ' et data = ' + data);
+    }).
+    error(function(data, status) {
+        alert('>> KO - request failed - status = ' + status + ' et data = ' + data);
+    });
+
+/**
+$http.get('http://workflow.insgroup.fr/workflow/pv/gateways/overprod?currentstatus=OK&percent=100').
+        success(function(data) {
+            alert('Ok');
+        }).
+        error(function(data) {
+            alert('Error during ws callback');
+        });
+*/
 }
