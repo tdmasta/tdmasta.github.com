@@ -3,10 +3,24 @@
 /* Controllers */
 function RegistrationCtrl($scope, $http) {
     $scope.registrationSubmit = function(input) {
-        // $http.get('/assets/js/controllers.js').
-        // $http.get('http://workflow.insgroup.fr/workflow/pv/gateways/overprod?currentstatus=OK&percent=100').
-        // $http.get('http://briantford.com/blog/angular-d3.html').
-        // $http.jsonp('http://api.ihackernews.com/page?format=jsonp&callback=JSON_CALLBACK').
+        // 'POST' method
+        $http({
+            method : 'POST',
+            url : 'http://192.168.0.42:9010/mcs/register.json',
+            data : {
+                'account' : $scope.account
+            }
+        }).success(function(data, status) {
+            alert('OK : status = ' + status + ' & data = ' + data);
+        }).error(function(data, status) {
+            alert('KO - Request failed - status = ' + status + ' & data = ' + data);
+        });
+    };
+}
+
+
+/**
+        // 'GET' method with Authorization
         $http({
             method : 'GET',
             url : 'http://192.168.0.7:9010/security/authentication',
@@ -21,5 +35,4 @@ function RegistrationCtrl($scope, $http) {
         }).error(function(data, status) {
             alert('KO - Request failed - status = ' + status + ' & data = ' + data);
         });
-    };
-}
+*/
