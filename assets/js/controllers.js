@@ -8,6 +8,7 @@ function RegistrationCtrl($scope, $http) {
             method : 'POST',
             url : 'http://192.168.0.42:9010/mcs/register.json',
             data : $scope.account // $.param($scope.account)
+            // ,headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(data, status) {
             alert('OK : status = ' + status + ' & data = ' + data);
         }).error(function(data, status) {
