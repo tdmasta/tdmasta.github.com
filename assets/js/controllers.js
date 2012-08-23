@@ -11,8 +11,6 @@ function RegistrationCtrl($scope, $http) {
             method : 'GET',
             url : 'http://192.168.0.7:9010/security/authentication',
             params : {
-                'email' : $scope.account.email,
-                'password' : $scope.account.email,
                 'account' : $scope.account
             },
             headers : {
