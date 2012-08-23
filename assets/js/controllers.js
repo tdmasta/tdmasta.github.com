@@ -15,24 +15,24 @@ function RegistrationCtrl($scope, $http) {
         }).error(function(data, status) {
             alert('KO - Request failed - status = ' + status + ' & data = ' + data);
         });
+
+        /**
+            // 'GET' method with Authorization
+            $http({
+                method : 'GET',
+                url : 'http://192.168.0.7:9010/security/authentication',
+                params : {
+                    'account' : $scope.account
+                },
+                headers : {
+                    'Authorization' : 'Basic Y2hyaXN0b3VpbGhlQGhvdG1haWwuZnI6cG9wb3BvcG8='
+                }
+            }).success(function(data, status) {
+                alert('OK : status = ' + status + ' & data = ' + data);
+            }).error(function(data, status) {
+                alert('KO - Request failed - status = ' + status + ' & data = ' + data);
+            });
+        */
     };
 }
 
-
-/**
-        // 'GET' method with Authorization
-        $http({
-            method : 'GET',
-            url : 'http://192.168.0.7:9010/security/authentication',
-            params : {
-                'account' : $scope.account
-            },
-            headers : {
-                'Authorization' : 'Basic Y2hyaXN0b3VpbGhlQGhvdG1haWwuZnI6cG9wb3BvcG8='
-            }
-        }).success(function(data, status) {
-            alert('OK : status = ' + status + ' & data = ' + data);
-        }).error(function(data, status) {
-            alert('KO - Request failed - status = ' + status + ' & data = ' + data);
-        });
-*/
