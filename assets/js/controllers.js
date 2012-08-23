@@ -34,4 +34,3 @@ function RegistrationCtrl($scope, $http) {
         */
     };
 }
-
