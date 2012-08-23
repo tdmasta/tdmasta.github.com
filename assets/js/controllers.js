@@ -3,13 +3,11 @@
 /* Controllers */
 function RegistrationCtrl($scope, $http) {
     $scope.registrationSubmit = function(input) {
-        // 'POST' method
+        // 'POST' method without Authorization
         $http({
             method : 'POST',
             url : 'http://192.168.0.42:9010/mcs/register.json',
-            data : {
-                'account' : $scope.account
-            }
+            data : $scope.account // $.param($scope.account)
         }).success(function(data, status) {
             alert('OK : status = ' + status + ' & data = ' + data);
         }).error(function(data, status) {
