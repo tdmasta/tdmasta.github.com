@@ -9,13 +9,14 @@ function RegistrationCtrl($scope, $http) {
         // $http.jsonp('http://api.ihackernews.com/page?format=jsonp&callback=JSON_CALLBACK').
         $http({
             method : 'GET',
-            url : 'http://192.168.0.42:9010/security/authentication',
+            url : 'http://192.168.0.7:9010/security/authentication',
             params : {
                 'email' : $scope.account.email,
-                'password' : $scope.account.email
+                'password' : $scope.account.email,
+                'account' : $scope.account
             },
             headers : {
-                'Authorization' : 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=='
+                'Authorization' : 'Basic Y2hyaXN0b3VpbGhlQGhvdG1haWwuZnI6cG9wb3BvcG8='
             }
         }).success(function(data, status) {
             alert('OK : status = ' + status + ' & data = ' + data);
