@@ -11,9 +11,9 @@ function RegistrationCtrl($scope, $http) {
             data : $scope.account
         }).success(function(data, status) {
             $scope.token = data;
-            alert('OK : status = ' + status + ' & data = ' + data);
+            alert('OK registrationSubmit : status = ' + status + ' & data = ' + data);
         }).error(function(data, status) {
-            alert('KO - Request failed - status = ' + status + ' & data = ' + data);
+            alert('KO registrationSubmit - Request failed - status = ' + status + ' & data = ' + data);
         });
 
         /**
@@ -47,9 +47,9 @@ function RegistrationCtrl($scope, $http) {
                     'Authorization' : ['Basic', $scope.token].join(" ")
                 }
             }).success(function(data, status) {
-                alert('OK : status = ' + status + ' & data = ' + data);
+                alert('OK unregister : status = ' + status + ' & data = ' + data);
             }).error(function(data, status) {
-                alert('KO - Request failed - status = ' + status + ' & data = ' + data);
+                alert('KO unregister - Request failed - status = ' + status + ' & data = ' + data);
             });
         } else {
             alert('No token or no email');
