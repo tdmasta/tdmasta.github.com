@@ -23,7 +23,7 @@ scripts:
 
             <fieldset>
                 <div class="control-group">
-                    <label class="control-label" for="email"> Your email</label>
+                    <label class="control-label" for="email">Your email</label>
                     <div class="controls">
                         <input id="email" name="account.email" ng-model="account.email" ng-model-instant data-val="true" type="email" data-val-required="Email address is required." required />
                         <span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
@@ -78,6 +78,7 @@ scripts:
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Create an account</button>
                     <button type="reset" class="btn">Cancel</button>
+                    <button type="button" class="btn btn-warning" ng-click="unregister()">Delete an account</button>
                 </div>
             </fieldset>
         </form>
