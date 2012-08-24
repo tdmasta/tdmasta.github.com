@@ -1,0 +1,35 @@
+---
+layout: page-ng
+title: Dashboard
+tagline: Transmited Data
+description: Dashboard with atTable of transmited Data
+group: navigation
+scripts:
+- {name: validation, type: remote, url: "http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"}
+- {name: validation.nonobs, type: remote, url: "https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"}
+---
+
+{% include JB/setup %}
+
+<script src="assets/js/controllers.js"></script>
+
+<div class="row-fluid">
+    <div class="span12" ng-controller="DashboardCtrl" id="fixed" when-scrolled="loadMore()">
+      <ul>
+        <li ng-repeat="i in items">{{"{{i.id"}}}}</li>
+      </ul>  
+    </div>
+</div>
+
+
+<style type="text/css" media="screen">
+li {
+  height: 120px;
+  border-bottom: 1px solid gray;
+}
+
+#fixed {
+    height: 400px;
+    overflow: auto;
+}
+</style>
