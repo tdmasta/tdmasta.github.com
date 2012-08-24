@@ -13,7 +13,7 @@ scripts:
 
 {% include JB/setup %}
 
-<div ng-app="DashboardApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" id="fixed" ng:cloak>
+<div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" id="fixed" ng:cloak>
   <ul class="dashboardClass">
     <li ng-repeat="i in items">{{"{{i.id"}}}}</li>
   </ul>  

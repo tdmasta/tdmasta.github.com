@@ -8,7 +8,7 @@
 function RegistrationCtrl($scope, $http) {
 
     // Registration button
-    $scope.registrationSubmit = function(input) {
+    $scope.registrationSubmit = function() {
         // 'POST' method without Authorization
         $http({
             method : 'POST',

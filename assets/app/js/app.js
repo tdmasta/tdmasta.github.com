@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('DashboardApp', []).directive('whenScrolled', function() {
+angular.module('evbApp', []).directive('whenScrolled', function() {
     return function(scope, elm, attr) {
         var raw = elm[0];
         elm.bind('scroll', function() {
