@@ -9,11 +9,11 @@ Quickly get your Evaluation Board up and running and get access to your dashboar
 
 ## Sign in / Up
 
-
 ## Configure your MCS Application
 
-
 ## Code for your customers
+
+## Dashboard
 
 
 
