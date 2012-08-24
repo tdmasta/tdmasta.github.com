@@ -13,14 +13,11 @@ scripts:
 
 <script src="assets/js/controllers.js"></script>
 
-<div class="row-fluid">
-    <div class="span12" ng-controller="DashboardCtrl" id="fixed" when-scrolled="loadMore()">
-      <ul>
-        <li ng-repeat="i in items">{{"{{i.id"}}}}</li>
-      </ul>  
-    </div>
+<div id="fixed" ng-controller="DashboardCtrl" when-scrolled="loadMore()">
+  <ul>
+    <li ng-repeat="i in items">{{"{{i.id"}}}}</li>
+  </ul>  
 </div>
-
 
 <style type="text/css" media="screen">
 li {
