@@ -7,14 +7,13 @@ group: navigation
 scripts:
 - {name: validation, type: remote, url: "http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"}
 - {name: validation.nonobs, type: remote, url: "https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"}
+- {name: controller, type: remote, url: "assets/app/js/controllers.js"}
 - name: custom
   type: inline
   content: "$(function() {$('#registration').validate();})"
 ---
 
 {% include JB/setup %}
-
-<script src="assets/js/controllers.js"></script>
 
 <div class="row-fluid">
     <div class="span12" ng-controller="RegistrationCtrl">
@@ -77,7 +76,7 @@ scripts:
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Create an account</button>
                     <button type="reset" class="btn">Cancel</button>
-                    <button type="button" class="btn btn-warning" ng-click="unregister()">Delete an account</button>
+                    <button type="button" class="btn btn-warning" ng-click="deleteClick()">Delete an account</button>
                 </div>
             </fieldset>
         </form>

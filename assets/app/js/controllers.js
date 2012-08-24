@@ -1,8 +1,13 @@
 'use strict';
 
-/* Controllers */
+/* 
+ * Controllers
+*/
+
+// Registration controller
 function RegistrationCtrl($scope, $http) {
 
+    // Registration button
     $scope.registrationSubmit = function(input) {
         // 'POST' method without Authorization
         $http({
@@ -11,9 +16,11 @@ function RegistrationCtrl($scope, $http) {
             data : $scope.account
         }).success(function(data, status) {
             $scope.token = data;
-            alert('OK registrationSubmit : status = ' + status + ' & data = ' + data);
+            console.log('Registration OK : token = ' + data);
+            alert('Registration OK : token : ' + data);
         }).error(function(data, status) {
-            alert('KO registrationSubmit - Request failed - status = ' + status + ' & data = ' + data);
+            console.log('Registration KO : Failed request status = ' + status + ' & data = ' + data);
+            alert('Registration KO : Failed request status = ' + status + ' & data = ' + data);
         });
 
         /**
@@ -28,14 +35,17 @@ function RegistrationCtrl($scope, $http) {
                     'Authorization' : 'Basic Y2hyaXN0b3VpbGhlQGhvdG1haWwuZnI6cG9wb3BvcG8='
                 }
             }).success(function(data, status) {
-                alert('OK : status = ' + status + ' & data = ' + data);
+                console.log('Authentication OK : data = ' + data);
+                alert('Authentication OK : data : ' + data);
             }).error(function(data, status) {
-                alert('KO - Request failed - status = ' + status + ' & data = ' + data);
+                console.log('Authentication KO : Failed request status = ' + status + ' & data = ' + data);
+                alert('Authentication KO : Failed request status = ' + status + ' & data = ' + data);
             });
         */
     };
 
-    $scope.unregister = function() {
+    // Delete button
+    $scope.deleteClick = function() {
         if ($scope.account && $scope.account.email && $scope.token) {
             $http({
                 method : 'DELETE',
@@ -47,12 +57,29 @@ function RegistrationCtrl($scope, $http) {
                     'Authorization' : ['Basic', $scope.token].join(" ")
                 }
             }).success(function(data, status) {
-                alert('OK unregister : status = ' + status + ' & data = ' + data);
+                console.log('Delete OK : data = ' + data);
+                alert('Delete OK : data : ' + data);
             }).error(function(data, status) {
-                alert('KO unregister - Request failed - status = ' + status + ' & data = ' + data);
+                console.log('Delete KO : Failed request status = ' + status + ' & data = ' + data);
+                alert('Delete KO : Failed request status = ' + status + ' & data = ' + data);
             });
         } else {
             alert('No token or no email');
         }
     };
+}
+
+// Dashboard controller
+function DashboardCtrl($scope) {
+    $scope.items = [];
+
+    var counter = 0;
+    $scope.loadMore = function() {
+        for (var i = 0; i < 5; i++) {
+            $scope.items.push({id: counter});
+            counter += 10;
+        }
+    };
+
+    $scope.loadMore();
 }
