@@ -15,7 +15,7 @@ function RegistrationCtrl($scope, $http) {
             url : 'http://192.168.0.42:9010/mcs/register.json',
             data : $scope.account
         }).success(function(data, status) {
-            $scope.token = data;
+            $cookieStore.put('mcstoken', data);
             console.log('Registration OK : token = ' + data);
             alert('Registration OK : token : ' + data);
         }).error(function(data, status) {
@@ -46,7 +46,7 @@ function RegistrationCtrl($scope, $http) {
 
     // Delete button
     $scope.deleteClick = function() {
-        if ($scope.account && $scope.account.email && $scope.token) {
+        if ($scope.account && $scope.account.email && $cookieStore.get('mcstoken')) {
             $http({
                 method : 'DELETE',
                 url : 'http://192.168.0.42:9010/mcs/developers.json',
