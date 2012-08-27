@@ -5,21 +5,23 @@
 */
 
 // Registration controller
-function RegistrationCtrl($scope, $http, $cookieStore) {
+function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 
     // Registration button
     $scope.registrationSubmit = function() {
+        var hosturl = CONSTANTS.remote;
+
         // 'POST' method without Authorization
         $http({
             method : 'POST',
-            url : 'http://192.168.0.42:9010/mcs/register.json',
+            url : hosturl + '/mcs/register.json',
             data : $scope.account
         }).success(function(data, status) {
             $cookieStore.put('mcstoken', data);
-            console.log('Registration OK : token = ' + data);
+            $log.info('Registration OK : token = ' + data);
             alert('Registration OK : token : ' + data);
         }).error(function(data, status) {
-            console.log('Registration KO : Failed request status = ' + status + ' & data = ' + data);
+            $log.error('Registration KO : Failed request status = ' + status + ' & data = ' + data);
             alert('Registration KO : Failed request status = ' + status + ' & data = ' + data);
         });
 
@@ -27,7 +29,7 @@ function RegistrationCtrl($scope, $http, $cookieStore) {
             // 'GET' method with Authorization
             $http({
                 method : 'GET',
-                url : 'http://192.168.0.7:9010/security/authentication',
+                url : hosturl + '/security/authentication',
                 params : {
                     'account' : $scope.account
                 },
@@ -35,10 +37,10 @@ function RegistrationCtrl($scope, $http, $cookieStore) {
                     'Authorization' : 'Basic Y2hyaXN0b3VpbGhlQGhvdG1haWwuZnI6cG9wb3BvcG8='
                 }
             }).success(function(data, status) {
-                console.log('Authentication OK : data = ' + data);
+                $log.info('Authentication OK : data = ' + data);
                 alert('Authentication OK : data : ' + data);
             }).error(function(data, status) {
-                console.log('Authentication KO : Failed request status = ' + status + ' & data = ' + data);
+                $log.error('Authentication KO : Failed request status = ' + status + ' & data = ' + data);
                 alert('Authentication KO : Failed request status = ' + status + ' & data = ' + data);
             });
         */
@@ -46,25 +48,34 @@ function RegistrationCtrl($scope, $http, $cookieStore) {
 
     // Delete button
     $scope.deleteClick = function() {
-        if ($scope.account && $scope.account.email && $cookieStore.get('mcstoken')) {
-            $http({
-                method : 'DELETE',
-                url : 'http://192.168.0.42:9010/mcs/developers.json',
-                params : {
-                    'email' : $scope.account.email
-                },
-                headers : {
-                    'Authorization' : ['Basic', $scope.token].join(" ")
-                }
-            }).then(function(data, status) {
-                console.log('Delete OK : data = ' + data);
-                alert('Delete OK : data : ' + data);
-            }).error(function(data, status) {
-                console.log('Delete KO : Failed request status = ' + status + ' & data = ' + data);
-                alert('Delete KO : Failed request status = ' + status + ' & data = ' + data);
-            });
+        if ($scope.account && $scope.account.email) {
+            var mcstoken = $cookieStore.get('mcstoken');
+            if (mcstoken) {
+                var hosturl = CONSTANTS.remote;
+
+                $http({
+                    method : 'DELETE',
+                    url : hosturl + '/mcs/developers.json',
+                    params : {
+                        'email' : $scope.account.email
+                    },
+                    headers : {
+                        'Authorization' : ['Basic', mcstoken].join(" ")
+                    }
+                }).then(function(data, status) {
+                    $log.info('Delete OK : data = ' + data);
+                    alert('Delete OK : data : ' + data);
+                }).error(function(data, status) {
+                    $log.error('Delete KO : Failed request status = ' + status + ' & data = ' + data);
+                    alert('Delete KO : Failed request status = ' + status + ' & data = ' + data);
+                });
+            } else {
+                $log.error('MCSToken is missing');
+                alert('MCSToken is missing');
+            }
         } else {
-            alert('No token or no email');
+            $log.error('Email is required');
+            alert('Email is required');
         }
     };
 }
@@ -75,7 +86,7 @@ function DashboardCtrl($log, $scope, MCSDevices) {
 
     var counter = 0;
     $scope.loadMore = function() {
-		var msgs = MCSDevices.getMessages('2002',null,2);
+		var msgs = MCSDevices.getMessages('2002', null, 2);
     };
 
     $scope.loadMore();
