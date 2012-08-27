@@ -18,8 +18,8 @@ angular.module('MCSDeviceServices', ['ngCookies'], function($provide) {
                 var url = CONSTANTS.remote + '/mcs/devices/msgs.json';
                 var token = 'Basic ' + _key;
                 $log.info('url built up', url);
-
-                $http({
+				
+				return $http({
                     method : 'GET',
                     url : url,
                     params : {
@@ -30,13 +30,15 @@ angular.module('MCSDeviceServices', ['ngCookies'], function($provide) {
                     headers : {
                         'Authorization' : token
                     }
-                }).success(function(response) {
+                });
+/**
+				.success(function(response) {
                     $log.info("response on success", response);
                     return response.data;
                 }).error(function(response) {
                     $log.error("response on ERROR ", response);
                     return response.data;
-                })
+                })*/
             }
         }
     });

@@ -81,19 +81,22 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 }
 
 // Dashboard controller
-function DashboardCtrl($log, $scope, MCSDevices) {
+function DashboardCtrl($log, $scope, MCSDevices, $q) {
     $scope.messages = [];
-
+	$scope.serial = '2002';
+	$scope.lastUpdate = new Date().getTime();
+	
     var counter = 0;
     $scope.loadMore = function() {
-		var msgs = MCSDevices.getMessages('2002', null, 2);
-		if (msgs) {
-            var objs = angular.fromJson(msgs);
-	        for (var i = 0; i < objs.length; i++) {
-                $scope.messages.push(objs[i]);
-                // $scope.messages.push({hr: objs[i].hr, raw: objs[i].raw});
-            }
-        }
+	
+		var lastdate = $scope.messages[0] ? $scope.messages[0].when : null;
+		MCSDevices.getMessages($scope.serial, lastdate, 10).then(function(response){
+			$log.info("within resolved resources", response.data);
+			angular.forEach(response.data, function(value, key){
+                $scope.messages.push(value);
+			});
+			$scope.lastUpdate = new Date().getTime();
+		});
     };
 
     $scope.loadMore();
