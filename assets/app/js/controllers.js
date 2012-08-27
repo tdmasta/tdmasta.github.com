@@ -5,7 +5,7 @@
 */
 
 // Registration controller
-function RegistrationCtrl($scope, $http) {
+function RegistrationCtrl($scope, $http, $cookieStore) {
 
     // Registration button
     $scope.registrationSubmit = function() {
