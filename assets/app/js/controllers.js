@@ -82,11 +82,16 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 
 // Dashboard controller
 function DashboardCtrl($log, $scope, MCSDevices) {
-    $scope.items = [];
+    $scope.messages = [];
 
     var counter = 0;
     $scope.loadMore = function() {
 		var msgs = MCSDevices.getMessages('2002', null, 2);
+        var objs = angular.fromJson(msgs);
+		for (var i = 0; i < objs.length; i++) {
+            $scope.messages.push(objs[i]);
+            // $scope.messages.push({hr: objs[i].hr, raw: objs[i].raw});
+		}
     };
 
     $scope.loadMore();
