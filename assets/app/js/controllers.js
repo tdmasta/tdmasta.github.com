@@ -56,7 +56,7 @@ function RegistrationCtrl($scope, $http) {
                 headers : {
                     'Authorization' : ['Basic', $scope.token].join(" ")
                 }
-            }).success(function(data, status) {
+            }).then(function(data, status) {
                 console.log('Delete OK : data = ' + data);
                 alert('Delete OK : data : ' + data);
             }).error(function(data, status) {
@@ -70,15 +70,12 @@ function RegistrationCtrl($scope, $http) {
 }
 
 // Dashboard controller
-function DashboardCtrl($scope) {
+function DashboardCtrl($log, $scope, MCSDevices) {
     $scope.items = [];
 
     var counter = 0;
     $scope.loadMore = function() {
-        for (var i = 0; i < 5; i++) {
-            $scope.items.push({id: counter});
-            counter += 10;
-        }
+		var msgs = MCSDevices.getMessages('2002',null,2);
     };
 
     $scope.loadMore();

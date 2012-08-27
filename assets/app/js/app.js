@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('evbApp', []).directive('whenScrolled', function() {
+var app = angular.module('evbApp', ['MCSDeviceServices']).directive('whenScrolled', function() {
     return function(scope, elm, attr) {
         var raw = elm[0];
         elm.bind('scroll', function() {
@@ -10,3 +10,6 @@ angular.module('evbApp', []).directive('whenScrolled', function() {
         });
     };
 });
+
+
+app.constant('CONSTANTS', {remote : 'http://localhost:9010'})
