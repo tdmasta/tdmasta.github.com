@@ -89,15 +89,25 @@ function DashboardCtrl($log, $scope, MCSDevices, $q) {
     var counter = 0;
     $scope.loadMore = function() {
 	
-		var lastdate = $scope.messages[0] ? $scope.messages[0].when : null;
-		MCSDevices.getMessages($scope.serial, lastdate, 10).then(function(response){
+		var oldest = $scope.messages.length != 0 ? $scope.messages[scope.messages.length - 1].when : null;
+		var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
+		
+		MCSDevices.getMessagesBefore($scope.serial, oldest, 10).then(function(response){
 			$log.info("within resolved resources", response.data);
 			angular.forEach(response.data, function(value, key){
                 $scope.messages.push(value);
 			});
 			$scope.lastUpdate = new Date().getTime();
 		});
+		
+		MCSDevices.getMessagesAfter($scope.serial, newest, 10).then(function(response){
+			$log.info("within resolved resources", response.data);
+		});
     };
 
+	$scope.emptyMessages = function() {
+		return $scope.messages.length != 0;
+	}
+	
     $scope.loadMore();
 }

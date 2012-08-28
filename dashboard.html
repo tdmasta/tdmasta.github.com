@@ -14,27 +14,34 @@ scripts:
 
 {% include JB/setup %}
 
-<div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" id="fixed" ng:cloak>
-	<div class="page-header">
+<div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" ng:cloak  id="fixed" class="container">
 		<h3>EVB {{"{{serial"}}}}</h3>
-	</div>
-	<table class="table">
-		<thead>
-			<th>Date</th>
-			<th>Raw Payload</th>
-			<th>Human Readable</th>
-			<th>Station</th>
-			<th>Signal</th>
-		</thead>
-		<tbody>
-			<tr ng-repeat="message in messages">
-				<td>{{"{{message.when"}}}}</td><td>{{"{{message.raw"}}}}</td><td>{{"{{message.hr"}}}}</td><td>{{"{{message.station"}}}}</td><td>{{"{{message.lvl"}}}}</td>
-			</tr>
-		</tbody>
-	</table>
-	<div class="span12" style="text-align:center;margin: 0 auto;">
-		last update time {{"{{lastUpdate | date:'medium' "}}}}
-	</div>
+		<p>
+		<div class="pull-right">last update {{"{{lastUpdate | date:'medium' "}}}} 		<button class="btn" ng-click="loadMore();"><i class="icon-refresh icon-success"></i></button></div>
+		</p>
+		<table class="table">
+			<thead>
+				<th>Date</th>
+				<th>Text</th>
+				<th>Raw</th>
+				<th>Station</th>
+				<th>Signal</th>
+			</thead>
+			<tbody>
+				<ng:switch on="emptyMessages()">
+					<x ng:switch-when="empty">
+						<tr>
+							<td colspan="5"><center> <strong>No message found</strong></center></td>
+						</tr>
+					</x>
+					<x ng:switch-when="items">
+						<tr ng-repeat="message in messages">
+							<td>{{"{{message.when | date:'medium' "}}}}</td><td>{{"{{message.hr"}}}}</td><td>{{"{{message.raw"}}}}</td><td>{{"{{message.station"}}}}</td><td>{{"{{message.lvl"}}}}</td>
+						</tr>
+					</x>
+				</ng:switch>
+			</tbody>
+		</table>
 </div>
 
 <style type="text/css" media="screen">

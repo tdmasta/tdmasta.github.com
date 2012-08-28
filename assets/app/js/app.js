@@ -12,5 +12,5 @@ var app = angular.module('evbApp', ['MCSDeviceServices']).directive('whenScrolle
 });
 
 
-//app.constant('CONSTANTS', {remote : 'http://localhost:9010'})
-app.constant('CONSTANTS', {remote : 'http://sensor.insgroup.fr'});
+app.constant('CONSTANTS', {remote : 'http://localhost:9010'});
+//app.constant('CONSTANTS', {remote : 'https://sensor.insgroup.fr'});

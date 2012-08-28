@@ -7,7 +7,7 @@ angular.module('MCSDeviceServices', ['ngCookies'], function($provide) {
         var _key = $cookieStore.get('mcstoken');
 
         return {
-            getMessages : function(sn, until, amount) {
+            getMessagesBefore : function(sn, before, amount) {
 
                 /**
                 if (!_key) {
@@ -15,7 +15,7 @@ angular.module('MCSDeviceServices', ['ngCookies'], function($provide) {
                     return;
                 }*/
 
-                var url = CONSTANTS.remote + '/mcs/devices/msgs.json';
+                var url = CONSTANTS.remote + '/mcs/devices/msgs/history.json';
                 var token = 'Basic ' + _key;
                 $log.info('url built up', url);
 				
@@ -24,22 +24,34 @@ angular.module('MCSDeviceServices', ['ngCookies'], function($provide) {
                     url : url,
                     params : {
                         'sn' : sn,
-                        'until': until,
+                        'until': before,
                         'amount': amount
                     },
                     headers : {
                         'Authorization' : token
                     }
                 });
-/**
-				.success(function(response) {
-                    $log.info("response on success", response);
-                    return response.data;
-                }).error(function(response) {
-                    $log.error("response on ERROR ", response);
-                    return response.data;
-                })*/
-            }
+            },
+
+			getMessagesAfter: function(sn, after, amount) {
+                var url = CONSTANTS.remote + '/mcs/devices/msgs/recents.json';
+                var token = 'Basic ' + _key;
+                $log.info('url built up', url);
+				
+				return $http({
+                    method : 'GET',
+                    url : url,
+                    params : {
+                        'sn' : sn,
+                        'after': after ,
+                        'amount': amount
+                    },
+                    headers : {
+                        'Authorization' : token
+                    }
+                });
+
+			} 
         }
     });
 });
