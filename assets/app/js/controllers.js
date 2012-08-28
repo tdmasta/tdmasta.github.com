@@ -94,52 +94,72 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
     };
 }
 
+// Dashboard modal controller
+function DashboardModalCtrl($scope) {
+  $scope.connectionPopupF = function(){
+      if($scope.connectionPopup) {
+        $scope.connectionPopup = false;          
+      } else {
+          $scope.connectionPopup = true;
+      }
+  };
+
+  // $scope.data = {active_tab:"image", url:'http://cnn.com', image_url:'http://upload.wikimedia.org/wikipedia/en/6/60/Beagle_logo.png'};
+  // $scope.toggle = function(){
+    // if($scope.data.active_tab == "url")
+      // $scope.data.active_tab = "image";
+    // else
+      // $scope.data.active_tab = "url";
+  // };
+
+}
+
 // Dashboard controller
 function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
     $scope.messages = [];
-	$scope.serial = '2002';
-	$scope.lastUpdate = new Date().getTime();
-	
+    $scope.serial = '2002';
+    $scope.lastUpdate = new Date().getTime();
+    
     var counter = 0;
     $scope.loadMore = function() {
-	
-		var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
-		
-		MCSDevices.getMessagesBefore($scope.serial, oldest, 10).then(function(response){
-			$log.info("within resolved resources", response.data);
-			angular.forEach(response.data, function(value, key){
+    
+        var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
+        
+        MCSDevices.getMessagesBefore($scope.serial, oldest, 10).then(function(response){
+            $log.info("within resolved resources", response.data);
+            angular.forEach(response.data, function(value, key){
                 $scope.messages.push(value);
-			});
-			$scope.lastUpdate = new Date().getTime();
-		});
-		
+            });
+            $scope.lastUpdate = new Date().getTime();
+        });
+        
     }
 
-	$scope.checkForNewMsg = function() {
-		
-		var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
-		
-		MCSDevices.getMessagesAfter($scope.serial, newest, 10).then(function(response){
-			angular.forEach(response.data.reverse(), function(item, value){
-				jQuery.pnotify({
-				    title: ''+new Date(item.when),
-				    text: item.hr,
-					hide: false,
-				    styling: 'bootstrap'
-				});
-				$scope.messages.splice(0,0,item);
-			});
-			$scope.lastUpdate = new Date().getTime();
-		});
-		
-	}
+    $scope.checkForNewMsg = function() {
+        
+        var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
+        
+        MCSDevices.getMessagesAfter($scope.serial, newest, 10).then(function(response){
+            angular.forEach(response.data.reverse(), function(item, value){
+                jQuery.pnotify({
+                    title: ''+new Date(item.when),
+                    text: item.hr,
+                    hide: false,
+                    styling: 'bootstrap'
+                });
+                $scope.messages.splice(0,0,item);
+            });
+            $scope.lastUpdate = new Date().getTime();
+        });
+        
+    }
 
-	$scope.loadMore();
-	
-	function poll() {
-		$scope.checkForNewMsg();
-		$timeout(poll, 5000);
-	}
-	
-	$timeout(poll, 0);
-}	
+    $scope.loadMore();
+    
+    function poll() {
+        $scope.checkForNewMsg();
+        $timeout(poll, 5000);
+    }
+    
+    $timeout(poll, 0);
+}
