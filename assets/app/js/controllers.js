@@ -103,8 +103,7 @@ function DashboardCtrl($log, $scope, MCSDevices, $q) {
     var counter = 0;
     $scope.loadMore = function() {
 	
-		var oldest = $scope.messages.length != 0 ? $scope.messages[scope.messages.length - 1].when : null;
-		var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
+		var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
 		
 		MCSDevices.getMessagesBefore($scope.serial, oldest, 10).then(function(response){
 			$log.info("within resolved resources", response.data);
@@ -113,11 +112,17 @@ function DashboardCtrl($log, $scope, MCSDevices, $q) {
 			});
 			$scope.lastUpdate = new Date().getTime();
 		});
+    }
+
+	$scope.checkForNewMsg = function() {
+		
+		var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
 		
 		MCSDevices.getMessagesAfter($scope.serial, newest, 10).then(function(response){
 			$log.info("within resolved resources", response.data);
 		});
-    };
-	
-    $scope.loadMore();
+		
+	}
+
+	$scope.loadMore();
 }
