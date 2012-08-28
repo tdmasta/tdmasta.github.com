@@ -118,10 +118,6 @@ function DashboardCtrl($log, $scope, MCSDevices, $q) {
 			$log.info("within resolved resources", response.data);
 		});
     };
-
-	$scope.emptyMessages = function() {
-		return $scope.messages.length != 0;
-	}
 	
     $scope.loadMore();
 }
