@@ -1,7 +1,7 @@
 ---
 layout: page-ng
 title: Dashboard
-tagline: Transmitted Datas
+tagline: Messages history
 description: Dashboard with transmitted datas
 group: navigation
 scripts:
@@ -71,11 +71,8 @@ EE
     </div>  
 </div>
 
-<div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" ng:cloak  id="fixed" class="container">
-		<h3>EVB {{"{{serial"}}}}</h3>
-		<p>
-		<div class="pull-right">last update {{"{{lastUpdate | date:'medium' "}}}} 		<button class="btn" ng-click="checkForNewMsg();"><i class="icon-refresh icon-success"></i></button></div>
-		</p>
+<div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
+		<h3>EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
 		<ng-switch on="messages.length == 0">
 			<div ng-switch-when="true">
 				<table class="table">
