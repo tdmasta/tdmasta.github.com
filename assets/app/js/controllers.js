@@ -95,7 +95,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 }
 
 // Dashboard controller
-function DashboardCtrl($log, $scope, MCSDevices, $q) {
+function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
     $scope.messages = [];
 	$scope.serial = '2002';
 	$scope.lastUpdate = new Date().getTime();
@@ -112,6 +112,7 @@ function DashboardCtrl($log, $scope, MCSDevices, $q) {
 			});
 			$scope.lastUpdate = new Date().getTime();
 		});
+		
     }
 
 	$scope.checkForNewMsg = function() {
@@ -119,10 +120,26 @@ function DashboardCtrl($log, $scope, MCSDevices, $q) {
 		var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
 		
 		MCSDevices.getMessagesAfter($scope.serial, newest, 10).then(function(response){
-			$log.info("within resolved resources", response.data);
+			angular.forEach(response.data.reverse(), function(item, value){
+				jQuery.pnotify({
+				    title: ''+new Date(item.when),
+				    text: item.hr,
+					hide: false,
+				    styling: 'bootstrap'
+				});
+				$scope.messages.splice(0,0,item);
+			});
+			$scope.lastUpdate = new Date().getTime();
 		});
 		
 	}
 
 	$scope.loadMore();
-}
+	
+	function poll() {
+		$scope.checkForNewMsg();
+		$timeout(poll, 5000);
+	}
+	
+	$timeout(poll, 0);
+}	

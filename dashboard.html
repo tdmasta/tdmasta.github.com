@@ -10,6 +10,7 @@ scripts:
 - {name: app, type: remote, url: "assets/app/js/app.js"}
 - {name: controller, type: remote, url: "assets/app/js/controllers.js"}
 - {name: service, type: remote, url: "assets/app/js/services.js"}
+- {name: pines, type: remote, url: "assets/app/lib/jquery.pnotify.min.js"}
 - {name: modernizr, type:remote, url: "assets/app/js/mdz.js"}
 ---
 
@@ -18,7 +19,7 @@ scripts:
 <div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" ng:cloak  id="fixed" class="container">
 		<h3>EVB {{"{{serial"}}}}</h3>
 		<p>
-		<div class="pull-right">last update {{"{{lastUpdate | date:'medium' "}}}} 		<button class="btn" ng-click="loadMore();"><i class="icon-refresh icon-success"></i></button></div>
+		<div class="pull-right">last update {{"{{lastUpdate | date:'medium' "}}}} 		<button class="btn" ng-click="checkForNewMsg();"><i class="icon-refresh icon-success"></i></button></div>
 		</p>
 		<ng-switch on="messages.length == 0">
 			<div ng-switch-when="true">
