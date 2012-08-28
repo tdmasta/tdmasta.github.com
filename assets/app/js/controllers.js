@@ -4,6 +4,20 @@
  * Controllers
 */
 
+// Authentication controller
+function authenticationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
+
+    // AuthenticationBySerialSubmit button
+    $scope.authenticationBySerialSubmit = function() {
+        alert('By Serial Submit : ' + JSON.stringify($scope.account));
+    };
+
+    // AuthenticationByEmailSubmit button
+    $scope.authenticationByEmailSubmit = function() {
+        alert('By Email Submit : ' + JSON.stringify($scope.account));
+    };
+}
+
 // Registration controller
 function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 
