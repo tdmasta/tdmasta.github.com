@@ -16,7 +16,7 @@ scripts:
 
 {% include JB/setup %}
 
-<div ng-controller="DashboardModalCtrl" ng-app="evbApp">
+<div ng-app="evbApp" ng-controller="DashboardModalCtrl">
     <input type="checkbox" name="connect" value="false" ng-click="connectionPopupF()">Connect</input>
 
     <div ng:show="connectionPopup == true" ng:cloak>
@@ -110,11 +110,3 @@ scripts:
         </div>
     </div>
 </div>
-
-
-<style type="text/css" media="screen">
-    #fixed {
-        height: 400px;
-        overflow: auto;
-    }
-</style>

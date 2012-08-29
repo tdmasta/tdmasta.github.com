@@ -103,15 +103,6 @@ function DashboardModalCtrl($scope) {
           $scope.connectionPopup = true;
       }
   };
-
-  // $scope.data = {active_tab:"image", url:'http://cnn.com', image_url:'http://upload.wikimedia.org/wikipedia/en/6/60/Beagle_logo.png'};
-  // $scope.toggle = function(){
-    // if($scope.data.active_tab == "url")
-      // $scope.data.active_tab = "image";
-    // else
-      // $scope.data.active_tab = "url";
-  // };
-
 }
 
 // Dashboard controller
