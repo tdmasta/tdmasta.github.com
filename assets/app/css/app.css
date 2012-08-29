@@ -1,0 +1,6 @@
+/* app css stylesheet */
+
+    #fixed {
+        height: 400px;
+        overflow: auto;
+    }
