@@ -134,12 +134,13 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout, $cookieStore) {
         });
     }
 
-    $scope.loadMore();
+    if ($scope.userConnected) {
+        $scope.loadMore();
+        $timeout(poll, 0);
+    }
 
     function poll() {
         $scope.checkForNewMsg();
         $timeout(poll, 5000);
     }
-
-    $timeout(poll, 0);
 }
