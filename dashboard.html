@@ -70,7 +70,7 @@ scripts:
         </div>
     </div>
 
-    <div ng:show="connectionPopup == false" >
+    <div ng:show="connectionPopup == null || connectionPopup == false" >
         <div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
             <h3>EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
             <ng-switch on="messages.length == 0">
