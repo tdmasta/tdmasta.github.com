@@ -96,10 +96,10 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 }
 
 
-// Dashboard modal controller
-function DashboardModalCtrl($scope) {
-    $scope.connectionPopupF = function(){
-        $scope.connectionPopup = !$scope.connectionPopup;          
+// Dashboard connection controller
+function DashboardConnectionCtrl($scope) {
+    $scope.connectionClick = function(){
+        $scope.connectedUser = !$scope.connectedUser;          
     };
 }
 
