@@ -18,6 +18,7 @@ function authenticationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
     };
 }
 
+
 // Registration controller
 function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 
@@ -94,16 +95,14 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
     };
 }
 
+
 // Dashboard modal controller
 function DashboardModalCtrl($scope) {
-  $scope.connectionPopupF = function(){
-      if($scope.connectionPopup) {
-        $scope.connectionPopup = false;          
-      } else {
-          $scope.connectionPopup = true;
-      }
-  };
+    $scope.connectionPopupF = function(){
+        $scope.connectionPopup = !$scope.connectionPopup;          
+    };
 }
+
 
 // Dashboard controller
 function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
@@ -146,11 +145,11 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
     }
 
     $scope.loadMore();
-    
+
     function poll() {
         $scope.checkForNewMsg();
         $timeout(poll, 5000);
     }
-    
+
     $timeout(poll, 0);
 }

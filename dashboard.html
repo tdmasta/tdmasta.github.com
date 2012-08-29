@@ -19,7 +19,7 @@ scripts:
 <div ng-app="evbApp" ng-controller="DashboardModalCtrl">
     <input type="checkbox" name="connect" value="false" ng-click="connectionPopupF()">Connect</input>
 
-    <div ng:show="connectionPopup == true" ng:cloak>
+    <div ng:show="connectionPopup == null || connectionPopup == false" ng:cloak>
         <div class="row">
             <div class="span4">
                 <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="authenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account)" >
@@ -70,7 +70,7 @@ scripts:
         </div>
     </div>
 
-    <div ng:show="connectionPopup == null || connectionPopup == false" >
+    <div ng:show="connectionPopup == true" >
         <div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
             <h3>EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
             <ng-switch on="messages.length == 0">
