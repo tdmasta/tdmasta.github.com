@@ -54,10 +54,9 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
         }).success(function(data, status) {
             $cookieStore.put('utoken', data);
             $log.info('Registration OK : utoken = ' + data);
-            alert('Registration OK : utoken : ' + data);
         }).error(function(data, status) {
+            $cookieStore.put('utoken', null);
             $log.error('Registration KO : Failed request status = ' + status + ' & data = ' + data);
-            alert('Registration KO : Failed request status = ' + status + ' & data = ' + data);
         });
 
         /**
@@ -73,10 +72,8 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
                 }
             }).success(function(data, status) {
                 $log.info('Authentication OK : data = ' + data);
-                alert('Authentication OK : data : ' + data);
             }).error(function(data, status) {
                 $log.error('Authentication KO : Failed request status = ' + status + ' & data = ' + data);
-                alert('Authentication KO : Failed request status = ' + status + ' & data = ' + data);
             });
         */
     };
@@ -99,18 +96,14 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
                     }
                 }).then(function(data, status) {
                     $log.info('Delete OK : data = ' + data);
-                    alert('Delete OK : data : ' + data);
                 }).error(function(data, status) {
                     $log.error('Delete KO : Failed request status = ' + status + ' & data = ' + data);
-                    alert('Delete KO : Failed request status = ' + status + ' & data = ' + data);
                 });
             } else {
                 $log.error('UToken is missing');
-                alert('UToken is missing');
             }
         } else {
             $log.error('Email is required');
-            alert('Email is required');
         }
     };
 }
