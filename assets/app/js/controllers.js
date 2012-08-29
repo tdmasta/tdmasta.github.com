@@ -62,24 +62,6 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
             $cookieStore.put('utoken', null);
             $log.error('Registration KO : Failed request status = ' + status + ' & data = ' + data);
         });
-
-        /**
-            // 'GET' method with Authorization
-            $http({
-                method : 'GET',
-                url : hosturl + '/security/authentication',
-                params : {
-                    'account' : $scope.account
-                },
-                headers : {
-                    'Authorization' : 'Basic Y2hyaXN0b3VpbGhlQGhvdG1haWwuZnI6cG9wb3BvcG8='
-                }
-            }).success(function(data, status) {
-                $log.info('Authentication OK : data = ' + data);
-            }).error(function(data, status) {
-                $log.error('Authentication KO : Failed request status = ' + status + ' & data = ' + data);
-            });
-        */
     };
 
     // Delete button
@@ -131,7 +113,16 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout, $cookieStore) {
                 $scope.messages.push(value);
             });
             $scope.lastUpdate = new Date().getTime();
-        });
+        },function(response){
+			$log.error('authentication failure', response);
+            jQuery.pnotify({
+                title: 'Authentification failure',
+                text: response.data,
+                 hide: false,
+                 styling: 'bootstrap'
+               });
+			$scope.userConnected = false;
+		});
     }
 
     $scope.checkForNewMsg = function() {
@@ -148,7 +139,16 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout, $cookieStore) {
                 $scope.messages.splice(0,0,item);
             });
             $scope.lastUpdate = new Date().getTime();
-        });
+        },function(response){
+			$log.error('authentication failure', response);
+            jQuery.pnotify({
+                title: 'Authentification failure',
+                text: response.data,
+                 hide: false,
+                 styling: 'bootstrap'
+               });
+			$scope.userConnected = false;
+		});
     }
 
     if ($scope.userConnected) {
@@ -157,7 +157,9 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout, $cookieStore) {
     }
 
     function poll() {
-        $scope.checkForNewMsg();
-        $timeout(poll, 5000);
+		if ($scope.userConnected) {
+        	$scope.checkForNewMsg();
+        	$timeout(poll, 5000);
+		}
     }
 }
