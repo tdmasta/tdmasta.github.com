@@ -70,7 +70,7 @@ scripts:
 
     <div ng:show="userConnected">
         <div when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
-            <h3>My EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
+            <h3>EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
             <ng-switch on="messages.length == 0">
                 <div ng-switch-when="true">
                     <table class="table">
