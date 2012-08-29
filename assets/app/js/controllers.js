@@ -5,7 +5,7 @@
 */
 
 // Authentication controller
-function authenticationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
+function AuthenticationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
