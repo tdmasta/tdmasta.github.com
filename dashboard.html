@@ -68,46 +68,49 @@ scripts:
                 </form>
             </div>
         </div>
-    </div>  
+    </div>
+
+    <div ng:show="connectionPopup == false" >
+        <div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
+            <h3>EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
+            <ng-switch on="messages.length == 0">
+                <div ng-switch-when="true">
+                    <table class="table">
+                        <thead>
+                            <th>When</th>
+                            <th>Text</th>
+                            <th>Raw</th>
+                            <th>Station</th>
+                            <th>Signal</th>
+                        </thead>
+                        <tbody ng-switch>
+                            <tr>
+                                <td colspan="5"><center> <strong>No message found</strong></center></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-switch-when="false">
+                    <table class="table">
+                        <thead>
+                            <th>When</th>
+                            <th>Text</th>
+                            <th>Raw</th>
+                            <th>Station</th>
+                            <th>Signal</th>
+                        </thead>
+                        <tbody ng-switch>
+                            <tr ng-repeat="message in messages">
+                                <td>{{"{{message.when | date:'medium' "}}}}</td><td>{{"{{message.hr"}}}}</td><td>{{"{{message.raw"}}}}</td><td>{{"{{message.station"}}}}</td><td>{{"{{message.lvl"}}}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-switch>
+        </div>
+    </div>
 </div>
 
-<div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
-		<h3>EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
-		<ng-switch on="messages.length == 0">
-			<div ng-switch-when="true">
-				<table class="table">
-					<thead>
-						<th>When</th>
-						<th>Text</th>
-						<th>Raw</th>
-						<th>Station</th>
-						<th>Signal</th>
-					</thead>
-					<tbody ng-switch>
-						<tr>
-							<td colspan="5"><center> <strong>No message found</strong></center></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div ng-switch-when="false">
-				<table class="table">
-					<thead>
-						<th>When</th>
-						<th>Text</th>
-						<th>Raw</th>
-						<th>Station</th>
-						<th>Signal</th>
-					</thead>
-					<tbody ng-switch>
-						<tr ng-repeat="message in messages">
-							<td>{{"{{message.when | date:'medium' "}}}}</td><td>{{"{{message.hr"}}}}</td><td>{{"{{message.raw"}}}}</td><td>{{"{{message.station"}}}}</td><td>{{"{{message.lvl"}}}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</ng-switch>
-</div>
 
 <style type="text/css" media="screen">
     #fixed {
