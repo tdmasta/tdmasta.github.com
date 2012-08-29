@@ -96,25 +96,16 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 }
 
 
-// Dashboard connection controller
-function DashboardConnectionCtrl($scope) {
-    $scope.connectionClick = function(){
-        $scope.connectedUser = !$scope.connectedUser;          
-    };
-}
-
-
 // Dashboard controller
 function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
     $scope.messages = [];
     $scope.serial = '2002';
     $scope.lastUpdate = new Date().getTime();
-    
+
     var counter = 0;
     $scope.loadMore = function() {
-    
         var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
-        
+
         MCSDevices.getMessagesBefore($scope.serial, oldest, 10).then(function(response){
             $log.info("within resolved resources", response.data);
             angular.forEach(response.data, function(value, key){
@@ -122,13 +113,11 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
             });
             $scope.lastUpdate = new Date().getTime();
         });
-        
     }
 
     $scope.checkForNewMsg = function() {
-        
         var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
-        
+
         MCSDevices.getMessagesAfter($scope.serial, newest, 10).then(function(response){
             angular.forEach(response.data.reverse(), function(item, value){
                 jQuery.pnotify({
@@ -141,7 +130,6 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
             });
             $scope.lastUpdate = new Date().getTime();
         });
-        
     }
 
     $scope.loadMore();
@@ -152,4 +140,9 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
     }
 
     $timeout(poll, 0);
+
+    $scope.connectionClick = function(){
+        $scope.connectedUser = !$scope.connectedUser;
+    };
+
 }

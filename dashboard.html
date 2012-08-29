@@ -16,7 +16,7 @@ scripts:
 
 {% include JB/setup %}
 
-<div ng-app="evbApp" ng-controller="DashboardConnectionCtrl">
+<div ng-app="evbApp" ng-controller="DashboardCtrl" >
     <input type="checkbox" name="connect" value="false" ng-click="connectionClick()">Connected user</input>
 
     <div ng:show="connectedUser == null || connectedUser == false" ng:cloak>
@@ -71,8 +71,8 @@ scripts:
     </div>
 
     <div ng:show="connectedUser == true" >
-        <div ng-app="evbApp" ng-controller="DashboardCtrl" when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
-            <h3>EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
+        <div when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
+            <h3>My EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
             <ng-switch on="messages.length == 0">
                 <div ng-switch-when="true">
                     <table class="table">
