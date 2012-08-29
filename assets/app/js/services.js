@@ -4,7 +4,7 @@ angular.module('MCSDeviceServices', ['ngCookies'], function($provide) {
 
     $provide.factory('MCSDevices', function($http, $log, $cookieStore, CONSTANTS) {
 
-        var _key = $cookieStore.get('mcstoken');
+        var _key = $cookieStore.get('utoken');
 
         return {
             getMessagesBefore: function(sn, before, amount) {
@@ -14,7 +14,7 @@ angular.module('MCSDeviceServices', ['ngCookies'], function($provide) {
                     return;
                 }*/
                 var url = CONSTANTS.remote + '/mcs/devices/msgs/history.json';
-                var token = 'Basic ' + _key;
+                var utoken = 'Basic ' + _key;
                 $log.info('url built up', url);
 
 				return $http({
@@ -26,14 +26,14 @@ angular.module('MCSDeviceServices', ['ngCookies'], function($provide) {
                         'amount': amount
                     },
                     headers : {
-                        'Authorization' : token
+                        'Authorization' : utoken
                     }
                 });
             },
 
 			getMessagesAfter: function(sn, after, amount) {
                 var url = CONSTANTS.remote + '/mcs/devices/msgs/recents.json';
-                var token = 'Basic ' + _key;
+                var utoken = 'Basic ' + _key;
                 $log.info('url built up', url);
 
 				return $http({
@@ -45,7 +45,7 @@ angular.module('MCSDeviceServices', ['ngCookies'], function($provide) {
                         'amount': amount
                     },
                     headers : {
-                        'Authorization' : token
+                        'Authorization' : utoken
                     }
                 });
 

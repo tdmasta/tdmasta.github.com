@@ -9,13 +9,33 @@ function authenticationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
-        alert('By Serial Submit : ' + JSON.stringify($scope.account));
+        var hosturl = CONSTANTS.remote;
+
+        if ($scope.account && $scope.account.inputSerial && $scope.account.inputKey) {
+
+            // checkCRC method
+            $http({
+                method : 'GET',
+                url : hosturl + '/mcs/devices/crc.json',
+                params : {
+                    'sn' : $scope.account.inputSerial,
+                    'key' : $scope.account.inputKey
+                }
+            }).success(function(data, status) {
+                $log.info('checkCRC OK : data = ' + data);
+                $cookieStore.put('dtoken', data);
+            }).error(function(data, status) {
+                $log.error('checkCRC KO : Failed request status = ' + status + ' & data = ' + data);
+                $cookieStore.put('dtoken', null);
+            });
+        }
     };
 
     // AuthenticationByEmailSubmit button
     $scope.authenticationByEmailSubmit = function() {
         alert('By Email Submit : ' + JSON.stringify($scope.account));
     };
+
 }
 
 
@@ -32,9 +52,9 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
             url : hosturl + '/mcs/register.json',
             data : $scope.account
         }).success(function(data, status) {
-            $cookieStore.put('mcstoken', data);
-            $log.info('Registration OK : token = ' + data);
-            alert('Registration OK : token : ' + data);
+            $cookieStore.put('utoken', data);
+            $log.info('Registration OK : utoken = ' + data);
+            alert('Registration OK : utoken : ' + data);
         }).error(function(data, status) {
             $log.error('Registration KO : Failed request status = ' + status + ' & data = ' + data);
             alert('Registration KO : Failed request status = ' + status + ' & data = ' + data);
@@ -64,8 +84,8 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
     // Delete button
     $scope.deleteClick = function() {
         if ($scope.account && $scope.account.email) {
-            var mcstoken = $cookieStore.get('mcstoken');
-            if (mcstoken) {
+            var utoken = $cookieStore.get('utoken');
+            if (utoken) {
                 var hosturl = CONSTANTS.remote;
 
                 $http({
@@ -75,7 +95,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
                         'email' : $scope.account.email
                     },
                     headers : {
-                        'Authorization' : ['Basic', mcstoken].join(" ")
+                        'Authorization' : ['Basic', utoken].join(" ")
                     }
                 }).then(function(data, status) {
                     $log.info('Delete OK : data = ' + data);
@@ -85,8 +105,8 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
                     alert('Delete KO : Failed request status = ' + status + ' & data = ' + data);
                 });
             } else {
-                $log.error('MCSToken is missing');
-                alert('MCSToken is missing');
+                $log.error('UToken is missing');
+                alert('UToken is missing');
             }
         } else {
             $log.error('Email is required');
@@ -102,7 +122,7 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout, $cookieStore) {
     $scope.serial = '2002';
     $scope.lastUpdate = new Date().getTime();
 
-    $scope.userConnected = $cookieStore.get('mcstoken');
+    $scope.userConnected = $cookieStore.get('utoken') || $cookieStore.get('dtoken');
 
     var counter = 0;
     $scope.loadMore = function() {
