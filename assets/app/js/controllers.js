@@ -24,6 +24,10 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
             }).success(function(data, status) {
                 $log.info('checkCRC OK : data = ' + data);
                 $cookieStore.put('dtoken', data);
+                var dashDiv = document.getElementById('dashboardDivId');
+                if (dashDiv) {
+                    angular.element(dashDiv).scope().userConnected = true;
+                }
             }).error(function(data, status) {
                 $log.error('checkCRC KO : Failed request status = ' + status + ' & data = ' + data);
                 $cookieStore.put('dtoken', null);
