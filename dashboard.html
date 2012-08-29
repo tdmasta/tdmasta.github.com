@@ -16,10 +16,10 @@ scripts:
 
 {% include JB/setup %}
 
-<div ng-controller="DashboardModalCtrl" ng-app="evbApp"> 
+<div ng-controller="DashboardModalCtrl" ng-app="evbApp">
     <input type="checkbox" name="connect" value="false" ng-click="connectionPopupF()">Connect</input>
 
-    <div ng:show="connectionPopup == true" >
+    <div ng:show="connectionPopup == true" ng:cloak>
         <div class="row">
             <div class="span4">
                 <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="authenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account)" >
