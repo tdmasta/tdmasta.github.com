@@ -102,7 +102,7 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout, $cookieStore) {
     $scope.serial = '2002';
     $scope.lastUpdate = new Date().getTime();
 
-    $scope.mcstoken = $cookieStore.get('mcstoken');
+    $scope.userConnected = $cookieStore.get('mcstoken');
 
     var counter = 0;
     $scope.loadMore = function() {
