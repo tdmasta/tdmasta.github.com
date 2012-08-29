@@ -16,10 +16,8 @@ scripts:
 
 {% include JB/setup %}
 
-<div ng-app="evbApp" ng-controller="DashboardCtrl" >
-    <input type="checkbox" name="connect" value="false" ng-click="connectionClick()">Connected user</input>
-
-    <div ng:show="connectedUser == null || connectedUser == false" ng:cloak>
+<div ng-app="evbApp" ng-controller="DashboardCtrl">
+    <div ng:show="mcstoken == null" ng:cloak>
         <div class="row">
             <div class="span4">
                 <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="authenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account)" >
@@ -70,7 +68,7 @@ scripts:
         </div>
     </div>
 
-    <div ng:show="connectedUser == true" >
+    <div ng:show="mcstoken" >
         <div when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
             <h3>My EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
             <ng-switch on="messages.length == 0">

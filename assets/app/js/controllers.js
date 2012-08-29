@@ -97,10 +97,12 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS) {
 
 
 // Dashboard controller
-function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
+function DashboardCtrl($log, $scope, MCSDevices, $timeout, $cookieStore) {
     $scope.messages = [];
     $scope.serial = '2002';
     $scope.lastUpdate = new Date().getTime();
+
+    $scope.mcstoken = $cookieStore.get('mcstoken');
 
     var counter = 0;
     $scope.loadMore = function() {
@@ -140,9 +142,4 @@ function DashboardCtrl($log, $scope, MCSDevices, $timeout) {
     }
 
     $timeout(poll, 0);
-
-    $scope.connectionClick = function(){
-        $scope.connectedUser = !$scope.connectedUser;
-    };
-
 }
