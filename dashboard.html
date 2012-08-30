@@ -16,11 +16,13 @@ scripts:
 
 {% include JB/setup %}
 
-<div ng-app="evbApp" ng-controller="DashboardCtrl" id="dashboardDivId">
-    <div ng:show="!userConnected" ng:cloak>
+<div ng-app="evbApp" ng-controller="DashboardCtrl">
+    <input type="hidden" ng-model="displayDashboard" />
+
+    <div ng:show="displayDashboard != 'true'" ng:cloak>
         <div class="row">
             <div class="span4">
-                <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account)" >
+                <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account, displayDashboard)" >
                     <div class="control-group">
                         <label class="control-label" for="inputSerial">Serial</label>
                         <div class="controls">
@@ -43,7 +45,7 @@ scripts:
                 </form>
             </div>
             <div class="span4">
-                <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationByEmail" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(account)" >
+                <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationByEmail" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(account, displayDashboard)" >
                     <div class="control-group">
                         <label class="control-label" for="inputEmail">Email</label>
                         <div class="controls">
@@ -68,7 +70,7 @@ scripts:
         </div>
     </div>
 
-    <div ng:show="userConnected">
+    <div ng:show="displayDashboard == 'true'">
         <div when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
             <h3>EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small></h3>
             <ng-switch on="messages.length == 0">

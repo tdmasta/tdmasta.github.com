@@ -119,3 +119,25 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($rootS
             }
         }
 });
+
+angular.module('myModule', []).factory('mySharedService', function($rootScope) {
+    var sharedService = {};
+
+    sharedService.displayDashboard = '';
+
+    sharedService.prepareDisplayDashboard = function() {
+        this.displayDashboard = 'true';
+        this.displayDashboardItem();
+    };
+
+    sharedService.prepareHideDashboard = function() {
+        this.displayDashboard = 'false';
+        this.displayDashboardItem();
+    };
+
+    sharedService.displayDashboardItem = function() {
+        $rootScope.$broadcast('handleDisplayDashboard');
+    };
+
+    return sharedService;
+});

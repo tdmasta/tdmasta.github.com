@@ -5,7 +5,7 @@
 */
 
 // Authentication controller
-function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices) {
+function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, mySharedService) {
 
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
@@ -16,10 +16,12 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices)
                 .success(function(data, status) {
                     $log.info('checkCRC OK : data = ' + data);
                     $cookieStore.put('dtoken', data);
+                    mySharedService.prepareDisplayDashboard();
                 })
                 .error(function(data, status) {
                     $log.error('checkCRC KO : Failed request status = ' + status + ' & data = ' + data);
                     $cookieStore.put('dtoken', null);
+                    mySharedService.prepareHideDashboard();
                 });
         }
     };
@@ -73,15 +75,19 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 
 
 // Dashboard controller
-function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore) {
+function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, mySharedService) {
+    $scope.$on('handleDisplayDashboard', function() {
+        $scope.displayDashboard = mySharedService.displayDashboard;
+        $scope.loadMore();
+        $timeout(poll, 0);
+    });
 
     $scope.messages = [];
     $scope.serial = '2002';
     $scope.lastUpdate = new Date().getTime();
 
-    $scope.userConnected = $cookieStore.get('utoken') || $cookieStore.get('dtoken');
-
     var counter = 0;
+
     $scope.loadMore = function() {
         var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
 
@@ -113,7 +119,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore) {
             });
     }
 
-    if ($scope.userConnected) {
+    if ($cookieStore.get('dtoken')) {
         $scope.loadMore();
         $timeout(poll, 0);
     }
