@@ -76,6 +76,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 
 // Dashboard controller
 function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, SharedModuleServices) {
+
     $scope.$on('handleDisplayDashboard', function() {
         $scope.displayDashboard = SharedModuleServices.displayDashboard;
         $scope.loadMore();

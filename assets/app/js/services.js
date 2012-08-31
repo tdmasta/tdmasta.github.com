@@ -43,7 +43,7 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
                     url : url,
                     params : {
                         sn : sn,
-                        after : after ,
+                        after : after,
                         amount : amount
                     },
                     headers : {
@@ -124,27 +124,28 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($rootS
 //
 // Module : SharedModule
 //
+// Constant :
+//      displayDashboard
 // Services : 
-//      checkCRC
-//      registration
-//      authentication
-//      deleteAccount
-angular.module('SharedModule', []).factory('SharedModuleServices', function($rootScope) {
+//      prepareDisplayDashboard
+//      prepareHideDashboard
+//      handleDisplayDashboardEvent
+angular.module('SharedModule', []).factory('SharedModuleServices', function($rootScope, $cookieStore) {
     var sharedServices = {};
 
-    sharedServices.displayDashboard = '';
+    sharedServices.displayDashboard = false; //($cookieStore.get('dtoken') != null);
 
     sharedServices.prepareDisplayDashboard = function() {
-        this.displayDashboard = 'true';
-        this.displayDashboardItem();
+        this.displayDashboard = true;
+        this.handleDisplayDashboardEvent();
     };
 
     sharedServices.prepareHideDashboard = function() {
-        this.displayDashboard = 'false';
-        this.displayDashboardItem();
+        this.displayDashboard = false;
+        this.handleDisplayDashboardEvent();
     };
 
-    sharedServices.displayDashboardItem = function() {
+    sharedServices.handleDisplayDashboardEvent = function() {
         $rootScope.$broadcast('handleDisplayDashboard');
     };
 
