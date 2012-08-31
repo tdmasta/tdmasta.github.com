@@ -120,24 +120,33 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($rootS
         }
 });
 
-angular.module('myModule', []).factory('mySharedService', function($rootScope) {
-    var sharedService = {};
 
-    sharedService.displayDashboard = '';
+//
+// Module : SharedModule
+//
+// Services : 
+//      checkCRC
+//      registration
+//      authentication
+//      deleteAccount
+angular.module('SharedModule', []).factory('SharedModuleServices', function($rootScope) {
+    var sharedServices = {};
 
-    sharedService.prepareDisplayDashboard = function() {
+    sharedServices.displayDashboard = '';
+
+    sharedServices.prepareDisplayDashboard = function() {
         this.displayDashboard = 'true';
         this.displayDashboardItem();
     };
 
-    sharedService.prepareHideDashboard = function() {
+    sharedServices.prepareHideDashboard = function() {
         this.displayDashboard = 'false';
         this.displayDashboardItem();
     };
 
-    sharedService.displayDashboardItem = function() {
+    sharedServices.displayDashboardItem = function() {
         $rootScope.$broadcast('handleDisplayDashboard');
     };
 
-    return sharedService;
+    return sharedServices;
 });

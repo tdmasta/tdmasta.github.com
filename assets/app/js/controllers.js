@@ -5,7 +5,7 @@
 */
 
 // Authentication controller
-function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, mySharedService) {
+function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, SharedModuleServices) {
 
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
@@ -16,12 +16,12 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
                 .success(function(data, status) {
                     $log.info('checkCRC OK : data = ' + data);
                     $cookieStore.put('dtoken', data);
-                    mySharedService.prepareDisplayDashboard();
+                    SharedModuleServices.prepareDisplayDashboard();
                 })
                 .error(function(data, status) {
                     $log.error('checkCRC KO : Failed request status = ' + status + ' & data = ' + data);
                     $cookieStore.put('dtoken', null);
-                    mySharedService.prepareHideDashboard();
+                    SharedModuleServices.prepareHideDashboard();
                 });
         }
     };
@@ -75,9 +75,9 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 
 
 // Dashboard controller
-function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, mySharedService) {
+function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, SharedModuleServices) {
     $scope.$on('handleDisplayDashboard', function() {
-        $scope.displayDashboard = mySharedService.displayDashboard;
+        $scope.displayDashboard = SharedModuleServices.displayDashboard;
         $scope.loadMore();
         $timeout(poll, 0);
     });
