@@ -65,7 +65,7 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
 //      registration
 //      authentication
 //      deleteAccount
-angular.module('SecurityModule', []).factory('SecurityServices', function($rootScope, $http, $cookieStore, CONSTANTS) {
+angular.module('SecurityModule', []).factory('SecurityServices', function($http, $log, $cookieStore, CONSTANTS) {
 
     return {
 
@@ -124,33 +124,37 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($rootS
 
 
 //
-// Module : SharedModule
+// Module : ContextModule
 //
-// Constant :
-//      displayDashboard
+// member :
+//      state
 // Services : 
-//      prepareDisplayDashboard
-//      prepareHideDashboard
+//      DashboardVisibility toggle
+//      SerialNumber setter
 //      handleDisplayDashboardEvent
-angular.module('SharedModule', []).factory('SharedModuleServices', function($rootScope) {
+angular.module('Context', []).factory('Context', function($rootScope, $cookieStore, $log) {
 
-    var sharedServices = {};
+    var state = {
+		serial : undefined,
+		dashboard : {
+			visible: false
+		}
+	}
 
-    sharedServices.displayDashboard = false;
-
-    sharedServices.prepareDisplayDashboard = function() {
-        this.displayDashboard = true;
-        this.handleDisplayDashboardEvent();
+    state.setDashBoardVisibilty = function(flag) {
+		this.dashboard.visible = flag;
+        this.notify('DashBoardEvent');
     };
 
-    sharedServices.prepareHideDashboard = function() {
-        this.displayDashboard = false;
-        this.handleDisplayDashboardEvent();
+    state.setSerial = function(sn) {
+		this.serial = sn;
+        this.notify('newSerialEvent');
     };
 
-    sharedServices.handleDisplayDashboardEvent = function() {
-        $rootScope.$broadcast('handleDisplayDashboard');
+    state.notify = function(event) {
+		$log.info("triggering event", event);
+        $rootScope.$broadcast(event);
     };
-
-    return sharedServices;
+	
+    return state;
 });

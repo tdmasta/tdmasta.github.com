@@ -5,7 +5,7 @@
 */
 
 // Authentication controller
-function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, SharedModuleServices) {
+function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, Context) {
 
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
@@ -16,12 +16,14 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
                 .success(function(data, status) {
                     $log.info('checkCRC OK : data = ' + data);
                     $cookieStore.put('dtoken', data);
-                    SharedModuleServices.prepareDisplayDashboard();
+                    Context.setSerial($scope.account.inputSerial);
+                    Context.setDashBoardVisibilty(true);
                 })
                 .error(function(data, status) {
                     $log.error('checkCRC KO : Failed request status = ' + status + ' & data = ' + data);
-                    $cookieStore.put('dtoken', null);
-                    SharedModuleServices.prepareHideDashboard();
+                    $cookieStore.remove('dtoken');
+					Context.setSerial(undefined);
+                    Context.setDashBoardVisibilty(false);
                 });
         }
     };
@@ -47,7 +49,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
                 $cookieStore.put('utoken', data);
                 $log.info('Registration OK : utoken = ' + data);
             }).error(function(data, status) {
-                $cookieStore.put('utoken', null);
+                $cookieStore.remove('utoken');
                 $log.error('Registration KO : Failed request status = ' + status + ' & data = ' + data);
             });
     };
@@ -75,19 +77,18 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 
 
 // Dashboard controller
-function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, SharedModuleServices) {
+function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Context) {
 
     $scope.messages = [];
-    $scope.serial = '2002';
     $scope.lastUpdate = new Date().getTime();
-
-    var counter = 0;
+	$scope.timer = undefined;
+	$scope.serial = undefined;
 
     // loadMore    
     $scope.loadMore = function() {
         var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
 
-        DevicesServices.getMessagesBefore($scope.serial, oldest, 10)
+        DevicesServices.getMessagesBefore(Context.serial, oldest, 10)
             .then(function(response){
                 $log.info("within resolved resources", response.data);
                 angular.forEach(response.data, function(value, key){
@@ -101,7 +102,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Sh
     $scope.checkForNewMsg = function() {
         var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
 
-        DevicesServices.getMessagesAfter($scope.serial, newest, 10)
+        DevicesServices.getMessagesAfter(Context.serial, newest, 10)
             .then(function(response){
                 angular.forEach(response.data.reverse(), function(item, value){
                     jQuery.pnotify({
@@ -116,21 +117,58 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Sh
             });
     }
 
-    function poll() {
+    $scope.poll = function() {
         $scope.checkForNewMsg();
-        $timeout(poll, 5000);
-    }
-
-    if ($cookieStore.get('dtoken')) {
-        $scope.displayDashboard = true;
-        $scope.loadMore();
-        $timeout(poll, 0);
+       	$scope.timer = $timeout($scope.poll, 5000);
     }
 
     // Event handleDisplayDashboard
-    $scope.$on('handleDisplayDashboard', function() {
-        $scope.displayDashboard = SharedModuleServices.displayDashboard;
-        $scope.loadMore();
-        $timeout(poll, 0);
+    $scope.$on('DashBoardEvent', function() {
+		$log.info('waking up on dashoard event');
+        $scope.displayDashboard = Context.dashboard.visible;
+		if (true == $scope.displayDashboard) {
+        	$scope.loadMore();	
+			if (undefined == $scope.timer) {
+				$log.info("calling polling operation");
+				$scope.poll();
+			} else {
+				$log.info("not calling polling operation");
+			}
+		} else {
+			clearInterval($scope.timer);
+		}
     });
+
+    // Event handleDisplayDashboard
+    $scope.$on('newSerialEvent', function() {
+        $scope.serial = Context.serial;
+    });
+}
+
+function LogOutCtrl($scope, $log, $cookieStore, Context) {
+	
+	$scope.display = false;
+	$scope.serial = undefined;
+	
+	$scope.logOut = function() {
+		$cookieStore.remove('dtoken');
+		$cookieStore.remove('utoken');
+		Context.setSerial(undefined);
+        Context.setDashBoardVisibilty(false);
+        jQuery.pnotify({
+            title: 'Bye Bye',
+            text: 'See you later alligator',
+            hide: true,
+            styling: 'bootstrap'
+        });
+	}
+	
+	// Event handleDisplayDashboard
+    $scope.$on('DashBoardEvent', function() {
+		$log.info('waking up on dashoard event');
+        $scope.display = Context.dashboard.visible;
+        $scope.serial = Context.serial;
+    });
+	
+	
 }
