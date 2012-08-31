@@ -12,6 +12,7 @@ scripts:
 - {name: service, type: remote, url: "assets/app/js/services.js"}
 - {name: pines, type: remote, url: "assets/app/lib/jquery.pnotify.min.js"}
 - {name: modernizr, type: remote, url: "assets/app/js/mdz.js"}
+- {name: popover, type: inline, content: "$(function(){$('label[rel=\"popover\"]').popover({trigger:'hover',placement:'left'})})"}
 ---
 
 {% include JB/setup %}
@@ -19,18 +20,19 @@ scripts:
 <div ng-app="evbApp" ng-controller="DashboardCtrl">
 
     <div ng:show="displayDashboard != true" ng:cloak>
-        <div class="row">
-            <div class="span4">
+	   <div class="row">
+            <div class="span4 offset3">
                 <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account, displayDashboard)" >
+					<legend><center> Device Authentication </center></legend>
                     <div class="control-group">
-                        <label class="control-label" for="inputSerial">Serial</label>
+                        <label class="control-label" for="inputSerial" rel="popover" data-content="<p>Module id appears either either on product parcel sticker<br/> either by perfoming AT&V command within a terminal session.</p>" data-original-title="<strong>What's this ?</strong>"><a href="#">Enter module id</a></label>
                         <div class="controls">
-                            <input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required placeholder="Serial" />
+                            <input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required placeholder="e.g 0000XXXX" />
                             <span class="field-validation-valid" data-valmsg-for="inputSerial" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="inputKey">Key</label>
+                        <label class="control-label" for="inputKey">Enter module key</label>
                         <div class="controls">
                             <input id="inputKey" name="account.inputKey" ng-model="account.inputKey" ng-model-instant data-val="true" type="text" data-val-required="Key is required." required placeholder="Key" />
                             <span class="field-validation-valid" data-valmsg-for="inputKey" data-valmsg-replace="true"></span>
