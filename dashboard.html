@@ -17,6 +17,7 @@ scripts:
 {% include JB/setup %}
 
 <div ng-app="evbApp" ng-controller="DashboardCtrl">
+
     <div ng:show="displayDashboard != true" ng:cloak>
         <div class="row">
             <div class="span4">
@@ -42,6 +43,7 @@ scripts:
                     </div>
                 </form>
             </div>
+<!--
             <div class="span4">
                 <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationByEmail" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(account, displayDashboard)" >
                     <div class="control-group">
@@ -65,6 +67,7 @@ scripts:
                     </div>
                 </form>
             </div>
+-->
         </div>
     </div>
 

@@ -77,18 +77,13 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 // Dashboard controller
 function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, SharedModuleServices) {
 
-    $scope.$on('handleDisplayDashboard', function() {
-        $scope.displayDashboard = SharedModuleServices.displayDashboard;
-        $scope.loadMore();
-        $timeout(poll, 0);
-    });
-
     $scope.messages = [];
     $scope.serial = '2002';
     $scope.lastUpdate = new Date().getTime();
 
     var counter = 0;
 
+    // loadMore    
     $scope.loadMore = function() {
         var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
 
@@ -102,6 +97,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Sh
             });
     }
 
+    // checkForNewMsg
     $scope.checkForNewMsg = function() {
         var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
 
@@ -114,19 +110,27 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Sh
                         hide: false,
                         styling: 'bootstrap'
                     });
-                    $scope.messages.splice(0,0,item);
+                    $scope.messages.splice(0, 0, item);
                 });
                 $scope.lastUpdate = new Date().getTime();
             });
-    }
-
-    if ($cookieStore.get('dtoken')) {
-        $scope.loadMore();
-        $timeout(poll, 0);
     }
 
     function poll() {
         $scope.checkForNewMsg();
         $timeout(poll, 5000);
     }
+
+    if ($cookieStore.get('dtoken')) {
+        $scope.displayDashboard = true;
+        $scope.loadMore();
+        $timeout(poll, 0);
+    }
+
+    // Event handleDisplayDashboard
+    $scope.$on('handleDisplayDashboard', function() {
+        $scope.displayDashboard = SharedModuleServices.displayDashboard;
+        $scope.loadMore();
+        $timeout(poll, 0);
+    });
 }

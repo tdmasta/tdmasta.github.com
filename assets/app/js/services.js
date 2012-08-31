@@ -10,12 +10,11 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
 
     $provide.factory('DevicesServices', function($http, $log, $cookieStore, CONSTANTS) {
 
-        var dtoken = $cookieStore.get('dtoken');
-
         return {
 
             // getMessagesBefore method
             getMessagesBefore: function(sn, before, amount) {
+                var dtoken = $cookieStore.get('dtoken');
                 var url = CONSTANTS.remote + '/mcs/devices/msgs/history.json';
                 $log.info('url built up', url);
 
@@ -35,6 +34,7 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
 
             // getMessagesAfter method
 			getMessagesAfter: function(sn, after, amount) {
+                var dtoken = $cookieStore.get('dtoken');
                 var url = CONSTANTS.remote + '/mcs/devices/msgs/recents.json';
                 $log.info('url built up', url);
 
@@ -66,7 +66,9 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
 //      authentication
 //      deleteAccount
 angular.module('SecurityModule', []).factory('SecurityServices', function($rootScope, $http, $cookieStore, CONSTANTS) {
+
     return {
+
             // checkCRC method
             checkCRC : function(inputSerial, inputKey) {
                 return $http({
@@ -130,10 +132,11 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($rootS
 //      prepareDisplayDashboard
 //      prepareHideDashboard
 //      handleDisplayDashboardEvent
-angular.module('SharedModule', []).factory('SharedModuleServices', function($rootScope, $cookieStore) {
+angular.module('SharedModule', []).factory('SharedModuleServices', function($rootScope) {
+
     var sharedServices = {};
 
-    sharedServices.displayDashboard = false; //($cookieStore.get('dtoken') != null);
+    sharedServices.displayDashboard = false;
 
     sharedServices.prepareDisplayDashboard = function() {
         this.displayDashboard = true;
