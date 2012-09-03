@@ -3,7 +3,6 @@ layout: page-ng
 title: Dashboard
 tagline: Messages history <button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="display == true" ng:cloak>Switch from {{serial}}</button>
 description: Dashboard with transmitted datas
-group: navigation
 scripts:
 - {name: validation, type: remote, url: "https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"}
 - {name: validation.nonobs, type: remote, url: "https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"}
@@ -13,7 +12,6 @@ scripts:
 - {name: pines, type: remote, url: "assets/app/lib/jquery.pnotify.min.js"}
 - {name: modernizr, type: remote, url: "assets/app/js/mdz.js"}
 - {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
-- {name: fixedheader, type: remote, url: "https://raw.github.com/golovko/Fixed-Header-Table/master/jquery.fixedheadertable.min.js"}
 - {name: popover, type: inline, content: "$(function(){$('label[rel=\"popover\"]').popover({trigger:'hover',placement:'left'});})"}
 ---
 
@@ -27,14 +25,14 @@ scripts:
                 <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account, displayDashboard)" >
 					<legend> Device Authentication</legend>
                     <div class="control-group">
-                        <label class="control-label" for="inputSerial" rel="popover" data-content="<p>Module id appears either on product parcel sticker<br/> either by perfoming AT&V command within a terminal session.</p>" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign"></i>  Enter module id , </a></label>
+                        <label class="control-label" for="inputSerial" rel="popover" data-content="<p>Module id appears either on product parcel sticker<br/> either by perfoming AT&V command within a terminal session.</p>" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Enter module id </a></label>
                         <div class="controls">
                             <input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required placeholder="e.g 0000XXXX, case insentitive" />
                             <span class="field-validation-valid" data-valmsg-for="inputSerial" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="inputKey" rel="popover" data-content="<p>Key information appears next to Module Id information on product parcel sticker</p>" data-original-title="<strong>Where can I get the Key info?</strong>"><a href="#"><i class="icon-question-sign"></i>  its key , </a></label>
+                        <label class="control-label" for="inputKey" rel="popover" data-content="<p>Key information appears next to Module Id information on product parcel sticker</p>" data-original-title="<strong>Where can I get the Key info?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  its key </a></label>
                         <div class="controls">
                             <input id="inputKey" name="account.inputKey" ng-model="account.inputKey" ng-model-instant data-val="true" type="text" data-val-required="Key is required." required placeholder="8 hexa chars, case insentitive" />
                             <span class="field-validation-valid" data-valmsg-for="inputKey" data-valmsg-replace="true"></span>
