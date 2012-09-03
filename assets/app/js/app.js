@@ -11,27 +11,26 @@ var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context'
     };
 });
 
-app.run(function($log, $cookieStore, Context) {
+app.run(function($log, $cookieStore, Context, $timeout) {
 	$log.info("config step");
 	var token = $cookieStore.get('dtoken');
 	$log.info("token information", token);
-	/**
-	if (undefined != token) {
-		// decode token to get the serial
-		var clear = base64.decode(token);
-		var sn = clear.split(":")[0];
-		sn = sn.substring(sn.length-4);
-		$log.info("serial", sn);
-		Context.setSerial(sn);
-		Context.setDashBoardVisibilty(true);
-		$log.info("settings ok");
-		return true;
-	} else {
-		$log.info("no token found => clearing information");
-		Context.setSerial(undefined);
-		Context.setDashBoardVisibilty(false);	
-	}
-	*/
+    $timeout(function() {
+    	if (undefined != token) {
+    		// decode token to get the serial
+    		var clear = base64.decode(token);
+    		var sn = clear.split(":")[0];
+    		sn = sn.substring(sn.length-4);
+    		$log.info("serial", sn);
+    		Context.setSerial(sn);
+    		Context.setDashBoardVisibilty(true);
+    		$log.info("settings ok");
+    	} else {
+    		$log.info("no token found => clearing information");
+    		Context.setSerial(undefined);
+    		Context.setDashBoardVisibilty(false);	
+    	}
+    });
 });
 
 
