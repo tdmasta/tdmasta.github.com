@@ -13,7 +13,8 @@ scripts:
 - {name: pines, type: remote, url: "assets/app/lib/jquery.pnotify.min.js"}
 - {name: modernizr, type: remote, url: "assets/app/js/mdz.js"}
 - {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
-- {name: popover, type: inline, content: "$(function(){$('label[rel=\"popover\"]').popover({trigger:'hover',placement:'left'})})"}
+- {name: fixedheader, type: remote, url: "https://raw.github.com/golovko/Fixed-Header-Table/master/jquery.fixedheadertable.min.js"}
+- {name: popover, type: inline, content: "$(function(){$('label[rel=\"popover\"]').popover({trigger:'hover',placement:'left'});})"}
 ---
 
 {% include JB/setup %}
@@ -95,7 +96,7 @@ scripts:
                     </table>
                 </div>
                 <div ng-switch-when="false">
-                    <table class="table">
+                    <table class="table fh">
                         <thead>
                             <th>When</th>
                             <th>Text</th>

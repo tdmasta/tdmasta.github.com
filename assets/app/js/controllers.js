@@ -88,7 +88,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     $scope.loadMore = function() {
         var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
 
-        DevicesServices.getMessagesBefore(Context.serial, oldest, 10)
+        DevicesServices.getMessagesBefore(Context.serial, oldest, 50)
             .then(function(response){
                 $log.info("within resolved resources", response.data);
                 angular.forEach(response.data, function(value, key){
@@ -102,7 +102,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     $scope.checkForNewMsg = function() {
         var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
 
-        DevicesServices.getMessagesAfter(Context.serial, newest, 10)
+        DevicesServices.getMessagesAfter(Context.serial, newest, 50)
             .then(function(response){
                 angular.forEach(response.data.reverse(), function(item, value){
                     jQuery.pnotify({
