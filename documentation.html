@@ -59,6 +59,10 @@ scripts:
 				
 	          	<h3>General considerations</h3>
 				
+				<h4>URLS</h4>
+				
+				<h4>Authentication token</h4>
+				
 			</section>
 			<section id="device">
 	            <h2>Device API</h2>
@@ -126,57 +130,24 @@ scripts:
 				                            </thead>
 				                            <tbody>
 				                                <tr>
-				                                    <td>id</td>
-				                                    <td>Unique integer identifying the order</td>
+				                                    <td>when</td>
+				                                    <td>Message reception timestamp (GMT)</td>
 				                                </tr>
 				                                <tr>
-				                                    <td>recipientName</td>
-				                                    <td>Who the order will be addressed to</td>
+				                                    <td>raw</td>
+				                                    <td>Raw Message content</td>
 				                                </tr>
 				                                <tr>
-				                                    <td>address1</td>
-				                                    <td>First line of recipient address</td>
+				                                    <td>hr</td>
+				                                    <td>Human readable translation of the raw content</td>
 				                                </tr>
 				                                <tr>
-				                                    <td>address2</td>
-				                                    <td>Second line of recipient address</td>
+				                                    <td>lvl</td>
+				                                    <td>Signal level upon reception</td>
 				                                </tr>
 				                                <tr>
-				                                    <td>addressTownOrCity</td>
-				                                    <td>Town/City of recipient address</td>
-				                                </tr>
-				                                <tr>
-				                                    <td>stateOrCounty</td>
-				                                    <td>State (US) or County (UK) of recipient address</td>
-				                                </tr>
-				                                <tr>
-				                                    <td>postalOrZipCode</td>
-				                                    <td>Postal/Zipcode of recipient address</td>
-				                                </tr>
-				                                <tr>
-				                                    <td>country</td>
-				                                    <td>Country of recipient (we support almost every country in the world!)</td>
-				                                </tr>
-				                                <tr>
-				                                    <td>status</td>
-				                                    <td>Status of order. Can be <code>NotYetSubmitted</code>,
-				                                     <code>Submitted</code>,<code>Complete</code>, or <code>Cancelled</code>
-				                                     </td>
-				                                </tr>
-				                                <tr>
-				                                    <td>photos</td>
-				                                    <td>An array of objects representing the photos in the order. For structure of these objects see
-				                                    <a href="#PhotosGet">/Photos (GET)</a></td>
-				                                </tr>
-				                                <tr>
-				                                    <td>documents</td>
-				                                    <td>An array of documents representing the documents in the order. For structure of these objects see
-				                                    <a href="#DocumentsGet">/Documents (GET)</a></td>
-				                                </tr>
-				                                <tr>
-				                                    <td>stickers</td>
-				                                    <td>An array of object representing the Stickers in the order. For structure of these objects see
-				                                    <a href="#StickersGet">/Stickers (GET)</a></td>
+				                                    <td>station</td>
+				                                    <td>Receiver station id</td>
 				                                </tr>
 				                            </tbody>
 				                        </table>
@@ -186,7 +157,8 @@ scripts:
 				                    <td><h6>Errors</h6></td>
 				                    <td>
 				                        <ul class="unstyled">
-				                            <li><code>404</code> - The order with the specified id was not found</li>
+				                            <li><code>404</code> - The serial number was not found </li>
+											<li><code>401</code> - The authentication token is invalid or missing </li>
 				                        </ul>
 				                    </td>
 				                </tr>
