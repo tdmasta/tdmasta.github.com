@@ -1,247 +1,219 @@
 ---
 layout: page
-title: "Documentation"
+title: "REST API"
 description: ""
-tagline: "Api documentation"
+tagline: "SENSOR™ interaction"
 group: navigation
 weight: 3
 scripts:
 - name: custom
   type: inline
-  content: "$(function() {$('.bs-docs-sidenav').affix();})"
+  content: "$(function() {$('.bs-docs-sidenav').affix(); })"
 ---
 {% include JB/setup %}
 
 <div class="row">
 	<div class="span3 bs-docs-sidebar">
 		<ul class="nav nav-list bs-docs-sidenav affix">
-			<li class="active"><a href="#overview"><i class="icon-chevron-right"></i> Overview</a></li>
-		     <li><a href="#transitions"><i class="icon-chevron-right"></i> Transitions</a></li>
-	        <li><a href="#modals"><i class="icon-chevron-right"></i> Modal</a></li>
+			<li class="active"><a href="#sensor"><i class="icon-chevron-right"></i> About Sensor </a></li>
+			<li><a href="#device"><i class="icon-chevron-right"></i>Device API</a></li>
+			<li><a href="#application"><i class="icon-chevron-right"></i> Application API</a></li>
+			<li><a href="#dashboard"><i class="icon-chevron-right"></i> Example App : Dashboard </a></li>
 		</ul>
 	</div>
 	<div class="span9">
-		<section id="overview">
-		          <div class="page-header">
-		            <h1>JavaScript in Bootstrap</h1>
-		          </div>
-
-		          <h3>Individual or compiled</h3>
-		          <p>If you have downloaded the latest version of Bootstrap, both <strong>bootstrap.js</strong> and <strong>bootstrap.min.js</strong> contain all of the plugins listed on this page.</p>
-
-		          <h3>Data attributes</h3>
-		          <p>You can use all Bootstrap plugins purely through the markup API without writing a single line of JavaScript. This is Bootstrap's first class API and should be your first consideration when using a plugin.</p>
-
-		          <p>That said, in some situations it may be desirable to turn this functionality off. Therefore, we also provide the ability to disable the data attribute API by unbinding all events on the body namespaced with `'data-api'`. This looks like this:
-		          </p><pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'body'</span><span class="pun">).</span><span class="pln">off</span><span class="pun">(</span><span class="str">'.data-api'</span><span class="pun">)</span></li></ol></pre>
-
-		          <p>Alternatively, to target a specific plugin, just include the plugins name as a namespace along with the data-api namespace like this:</p>
-		          <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'body'</span><span class="pun">).</span><span class="pln">off</span><span class="pun">(</span><span class="str">'.alert.data-api'</span><span class="pun">)</span></li></ol></pre>
-
-		          <h3>Programmatic API</h3>
-		          <p>We also believe you should be able to use all Bootstrap plugins purely through the JavaScript API. All public APIs are single, chainable methods, and return the collection acted upon.</p>
-		          <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">".btn.danger"</span><span class="pun">).</span><span class="pln">button</span><span class="pun">(</span><span class="str">"toggle"</span><span class="pun">).</span><span class="pln">addClass</span><span class="pun">(</span><span class="str">"fat"</span><span class="pun">)</span></li></ol></pre>
-		          <p>All methods should accept an optional options object, a string which targets a particular method, or nothing (which initiates a plugin with default behavior):</p>
-		<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">"#myModal"</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">()</span><span class="pln">                       </span><span class="com">// initialized with defaults</span></li><li class="L1"><span class="pln">$</span><span class="pun">(</span><span class="str">"#myModal"</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">({</span><span class="pln"> keyboard</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln"> </span><span class="pun">})</span><span class="pln">   </span><span class="com">// initialized with no keyboard</span></li><li class="L2"><span class="pln">$</span><span class="pun">(</span><span class="str">"#myModal"</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">(</span><span class="str">'show'</span><span class="pun">)</span><span class="pln">                </span><span class="com">// initializes and invokes show immediately</span><p></p></li></ol></pre>
-		          <p>Each plugin also exposes it's raw constructor on a `Constructor` property: <code>$.fn.popover.Constructor</code>. If you'd like to get a particular plugin instance, retrieve it directly from an element: <code>$('[rel=popover]').data('popover')</code>.</p>
-
-		          <h3>Events</h3>
-		          <p>Bootstrap provides custom events for most plugin's unique actions. Generally, these come in an infinitive and past participle form - where the infinitive (ex. <code>show</code>) is triggered at the start of an event, and it's past participle form (ex. <code>shown</code>) is trigger on the completion of an action.</p>
-		          <p>All infinitive events provide preventDefault functionality. This provides the abililty to stop the execution of an action before it starts.</p>
-		<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#myModal'</span><span class="pun">).</span><span class="pln">on</span><span class="pun">(</span><span class="str">'show'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></li><li class="L1"><span class="pln">    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">data</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> e</span><span class="pun">.</span><span class="pln">preventDefault</span><span class="pun">()</span><span class="pln"> </span><span class="com">// stops modal from being shown</span></li><li class="L2"><span class="pun">})</span></li></ol></pre>
-		        </section>
-				<section id="transitions">
-				          <div class="page-header">
-				            <h1>JavaScript in Bootstrap</h1>
-				          </div>
-
-				          <h3>Individual or compiled</h3>
-				          <p>If you have downloaded the latest version of Bootstrap, both <strong>bootstrap.js</strong> and <strong>bootstrap.min.js</strong> contain all of the plugins listed on this page.</p>
-
-				          <h3>Data attributes</h3>
-				          <p>You can use all Bootstrap plugins purely through the markup API without writing a single line of JavaScript. This is Bootstrap's first class API and should be your first consideration when using a plugin.</p>
-
-				          <p>That said, in some situations it may be desirable to turn this functionality off. Therefore, we also provide the ability to disable the data attribute API by unbinding all events on the body namespaced with `'data-api'`. This looks like this:
-				          </p><pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'body'</span><span class="pun">).</span><span class="pln">off</span><span class="pun">(</span><span class="str">'.data-api'</span><span class="pun">)</span></li></ol></pre>
-
-				          <p>Alternatively, to target a specific plugin, just include the plugins name as a namespace along with the data-api namespace like this:</p>
-				          <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'body'</span><span class="pun">).</span><span class="pln">off</span><span class="pun">(</span><span class="str">'.alert.data-api'</span><span class="pun">)</span></li></ol></pre>
-
-				          <h3>Programmatic API</h3>
-				          <p>We also believe you should be able to use all Bootstrap plugins purely through the JavaScript API. All public APIs are single, chainable methods, and return the collection acted upon.</p>
-				          <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">".btn.danger"</span><span class="pun">).</span><span class="pln">button</span><span class="pun">(</span><span class="str">"toggle"</span><span class="pun">).</span><span class="pln">addClass</span><span class="pun">(</span><span class="str">"fat"</span><span class="pun">)</span></li></ol></pre>
-				          <p>All methods should accept an optional options object, a string which targets a particular method, or nothing (which initiates a plugin with default behavior):</p>
-				<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">"#myModal"</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">()</span><span class="pln">                       </span><span class="com">// initialized with defaults</span></li><li class="L1"><span class="pln">$</span><span class="pun">(</span><span class="str">"#myModal"</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">({</span><span class="pln"> keyboard</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln"> </span><span class="pun">})</span><span class="pln">   </span><span class="com">// initialized with no keyboard</span></li><li class="L2"><span class="pln">$</span><span class="pun">(</span><span class="str">"#myModal"</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">(</span><span class="str">'show'</span><span class="pun">)</span><span class="pln">                </span><span class="com">// initializes and invokes show immediately</span><p></p></li></ol></pre>
-				          <p>Each plugin also exposes it's raw constructor on a `Constructor` property: <code>$.fn.popover.Constructor</code>. If you'd like to get a particular plugin instance, retrieve it directly from an element: <code>$('[rel=popover]').data('popover')</code>.</p>
-
-				          <h3>Events</h3>
-				          <p>Bootstrap provides custom events for most plugin's unique actions. Generally, these come in an infinitive and past participle form - where the infinitive (ex. <code>show</code>) is triggered at the start of an event, and it's past participle form (ex. <code>shown</code>) is trigger on the completion of an action.</p>
-				          <p>All infinitive events provide preventDefault functionality. This provides the abililty to stop the execution of an action before it starts.</p>
-				<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#myModal'</span><span class="pun">).</span><span class="pln">on</span><span class="pun">(</span><span class="str">'show'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></li><li class="L1"><span class="pln">    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">data</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> e</span><span class="pun">.</span><span class="pln">preventDefault</span><span class="pun">()</span><span class="pln"> </span><span class="com">// stops modal from being shown</span></li><li class="L2"><span class="pun">})</span></li></ol></pre>
-				        </section>
-						<section id="modals">
-						          <div class="page-header">
-						            <h1>Modals <small>bootstrap-modal.js</small></h1>
-						          </div>
-
-
-						          <h2>Examples</h2>
-						          <p>Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.</p>
-
-						          <h3>Static example</h3>
-						          <p>A rendered modal with header, body, and set of actions in the footer.</p>
-						          <div class="bs-docs-example" style="background-color: #f5f5f5;">
-						            <div class="modal" style="position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
-						              <div class="modal-header">
-						                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						                <h3>Modal header</h3>
-						              </div>
-						              <div class="modal-body">
-						                <p>One fine body…</p>
-						              </div>
-						              <div class="modal-footer">
-						                <a href="#" class="btn">Close</a>
-						                <a href="#" class="btn btn-primary">Save changes</a>
-						              </div>
-						            </div>
-						          </div>
-						<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal hide fade"</span><span class="tag">&gt;</span></li><li class="L1"><span class="pln">  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-header"</span><span class="tag">&gt;</span></li><li class="L2"><span class="pln">    </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"close"</span><span class="pln"> </span><span class="atn">data-dismiss</span><span class="pun">=</span><span class="atv">"modal"</span><span class="pln"> </span><span class="atn">aria-hidden</span><span class="pun">=</span><span class="atv">"true"</span><span class="tag">&gt;</span><span class="pln">&amp;times;</span><span class="tag">&lt;/button&gt;</span></li><li class="L3"><span class="pln">    </span><span class="tag">&lt;h3&gt;</span><span class="pln">Modal header</span><span class="tag">&lt;/h3&gt;</span></li><li class="L4"><span class="pln">  </span><span class="tag">&lt;/div&gt;</span></li><li class="L5"><span class="pln">  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-body"</span><span class="tag">&gt;</span></li><li class="L6"><span class="pln">    </span><span class="tag">&lt;p&gt;</span><span class="pln">One fine body…</span><span class="tag">&lt;/p&gt;</span></li><li class="L7"><span class="pln">  </span><span class="tag">&lt;/div&gt;</span></li><li class="L8"><span class="pln">  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-footer"</span><span class="tag">&gt;</span></li><li class="L9"><span class="pln">    </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"btn"</span><span class="tag">&gt;</span><span class="pln">Close</span><span class="tag">&lt;/a&gt;</span></li><li class="L0"><span class="pln">    </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"btn btn-primary"</span><span class="tag">&gt;</span><span class="pln">Save changes</span><span class="tag">&lt;/a&gt;</span></li><li class="L1"><span class="pln">  </span><span class="tag">&lt;/div&gt;</span></li><li class="L2"><span class="tag">&lt;/div&gt;</span></li></ol></pre>
-
-						          <h3>Live demo</h3>
-						          <p>Toggle a modal via JavaScript by clicking the button below. It will slide down and fade in from the top of the page.</p>
-						          <!-- sample modal content -->
-						          <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						            <div class="modal-header">
-						              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						              <h3 id="myModalLabel">Modal Heading</h3>
-						            </div>
-						            <div class="modal-body">
-						              <h4>Text in a modal</h4>
-						              <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.</p>
-
-						              <h4>Popover in a modal</h4>
-						              <p>This <a href="#" role="button" class="btn popover-test" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">button</a> should trigger a popover on hover.</p>
-
-						              <h4>Tooltips in a modal</h4>
-						              <p><a href="#" class="tooltip-test" data-original-title="Tooltip">This link</a> and <a href="#" class="tooltip-test" data-original-title="Tooltip">that link</a> should have tooltips on hover.</p>
-
-						              <hr>
-
-						              <h4>Overflowing text to show optional scrollbar</h4>
-						              <p>We set a fixed <code>max-height</code> on the <code>.modal-body</code>. Watch it overflow with all this extra lorem ipsum text we've included.</p>
-						              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-						              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-						              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-						              <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-						              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-						              <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-						            </div>
-						            <div class="modal-footer">
-						              <button class="btn" data-dismiss="modal">Close</button>
-						              <button class="btn btn-primary">Save changes</button>
-						            </div>
-						          </div>
-						          <div class="bs-docs-example" style="padding-bottom: 24px;">
-						            <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-large">Launch demo modal</a>
-						          </div>
-						<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">&lt;-- Button to trigger modal --&gt;</span></li><li class="L1"><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"#myModal"</span><span class="pln"> </span><span class="atn">role</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"btn"</span><span class="pln"> </span><span class="atn">data-toggle</span><span class="pun">=</span><span class="atv">"modal"</span><span class="tag">&gt;</span><span class="pln">Launch demo modal</span><span class="tag">&lt;/a&gt;</span></li><li class="L2"><span class="pln">&nbsp;</span></li><li class="L3"><span class="pln">&lt;-- Modal --&gt;</span></li><li class="L4"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal"</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"myModal"</span><span class="pln"> </span><span class="atn">tabindex</span><span class="pun">=</span><span class="atv">"-1"</span><span class="pln"> </span><span class="atn">role</span><span class="pun">=</span><span class="atv">"dialog"</span><span class="pln"> </span><span class="atn">aria-labelledby</span><span class="pun">=</span><span class="atv">"myModalLabel"</span><span class="pln"> </span><span class="atn">aria-hidden</span><span class="pun">=</span><span class="atv">"true"</span><span class="tag">&gt;</span></li><li class="L5"><span class="pln">  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-header"</span><span class="tag">&gt;</span></li><li class="L6"><span class="pln">    </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"close"</span><span class="pln"> </span><span class="atn">data-dismiss</span><span class="pun">=</span><span class="atv">"modal"</span><span class="pln"> </span><span class="atn">aria-hidden</span><span class="pun">=</span><span class="atv">"true"</span><span class="tag">&gt;</span><span class="pln">×</span><span class="tag">&lt;/button&gt;</span></li><li class="L7"><span class="pln">    </span><span class="tag">&lt;h3</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"myModalLabel"</span><span class="tag">&gt;</span><span class="pln">Modal header</span><span class="tag">&lt;/h3&gt;</span></li><li class="L8"><span class="pln">  </span><span class="tag">&lt;/div&gt;</span></li><li class="L9"><span class="pln">  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-body"</span><span class="tag">&gt;</span></li><li class="L0"><span class="pln">    </span><span class="tag">&lt;p&gt;</span><span class="pln">One fine body…</span><span class="tag">&lt;/p&gt;</span></li><li class="L1"><span class="pln">  </span><span class="tag">&lt;/div&gt;</span></li><li class="L2"><span class="pln">  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-footer"</span><span class="tag">&gt;</span></li><li class="L3"><span class="pln">    </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"btn"</span><span class="pln"> </span><span class="atn">data-dismiss</span><span class="pun">=</span><span class="atv">"modal"</span><span class="pln"> </span><span class="atn">aria-hidden</span><span class="pun">=</span><span class="atv">"true"</span><span class="tag">&gt;</span><span class="pln">Close</span><span class="tag">&lt;/button&gt;</span></li><li class="L4"><span class="pln">    </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"btn btn-primary"</span><span class="tag">&gt;</span><span class="pln">Save changes</span><span class="tag">&lt;/button&gt;</span></li><li class="L5"><span class="pln">  </span><span class="tag">&lt;/div&gt;</span></li><li class="L6"><span class="tag">&lt;/div&gt;</span></li></ol></pre>
-
-
-						          <hr class="bs-docs-separator">
-
-
-						          <h2>Usage</h2>
-
-						          <h3>Via data attributes</h3>
-						          <p>Activate a modal without writing JavaScript. Set <code>data-toggle="modal"</code> on a controller element, like a button, along with a <code>data-target="#foo"</code> or <code>href="#foo"</code> to target a specific modal to toggle.</p>
-						          <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">data-toggle</span><span class="pun">=</span><span class="atv">"modal"</span><span class="pln"> </span><span class="atn">data-target</span><span class="pun">=</span><span class="atv">"#myModal"</span><span class="tag">&gt;</span><span class="pln">Launch modal</span><span class="tag">&lt;/button&gt;</span></li></ol></pre>
-
-						          <h3>Via JavaScript</h3>
-						          <p>Call a modal with id <code>myModal</code> with a single line of JavaScript:</p>
-						          <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#myModal'</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">(</span><span class="pln">options</span><span class="pun">)</span></li></ol></pre>
-
-						          <h3>Options</h3>
-						          <p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to <code>data-</code>, as in <code>data-backdrop=""</code>.</p>
-						          <table class="table table-bordered table-striped">
-						            <thead>
-						             <tr>
-						               <th style="width: 100px;">Name</th>
-						               <th style="width: 50px;">type</th>
-						               <th style="width: 50px;">default</th>
-						               <th>description</th>
-						             </tr>
-						            </thead>
-						            <tbody>
-						             <tr>
-						               <td>backdrop</td>
-						               <td>boolean</td>
-						               <td>true</td>
-						               <td>Includes a modal-backdrop element. Alternatively, specify <code>static</code> for a backdrop which doesn't close the modal on click.</td>
-						             </tr>
-						             <tr>
-						               <td>keyboard</td>
-						               <td>boolean</td>
-						               <td>true</td>
-						               <td>Closes the modal when escape key is pressed</td>
-						             </tr>
-						             <tr>
-						               <td>show</td>
-						               <td>boolean</td>
-						               <td>true</td>
-						               <td>Shows the modal when initialized.</td>
-						             </tr>
-						             <tr>
-						               <td>remote</td>
-						               <td>path</td>
-						               <td>false</td>
-						               <td><p>If a remote url is provided, content will be loaded via jQuery's <code>load</code> method and injected into the <code>.modal-body</code>. If you're using the data api, you may alternatively use the <code>href</code> tag to specify the remote source. An example of this is shown below:</p>
-						              <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">data-toggle</span><span class="pun">=</span><span class="atv">"modal"</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"remote.html"</span><span class="pln"> </span><span class="atn">data-target</span><span class="pun">=</span><span class="atv">"#modal"</span><span class="tag">&gt;</span><span class="pln">click me</span><span class="tag">&lt;/a&gt;</span></code></li></ol></pre></td>
-						             </tr>
-						            </tbody>
-						          </table>
-
-						          <h3>Methods</h3>
-						          <h4>.modal(options)</h4>
-						          <p>Activates your content as a modal. Accepts an optional options <code>object</code>.</p>
-						<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#myModal'</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">({</span></li><li class="L1"><span class="pln">  keyboard</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span></li><li class="L2"><span class="pun">})</span></li></ol></pre>
-						          <h4>.modal('toggle')</h4>
-						          <p>Manually toggles a modal.</p>
-						          <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#myModal'</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">(</span><span class="str">'toggle'</span><span class="pun">)</span></li></ol></pre>
-						          <h4>.modal('show')</h4>
-						          <p>Manually opens a modal.</p>
-						          <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#myModal'</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">(</span><span class="str">'show'</span><span class="pun">)</span></li></ol></pre>
-						          <h4>.modal('hide')</h4>
-						          <p>Manually hides a modal.</p>
-						          <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#myModal'</span><span class="pun">).</span><span class="pln">modal</span><span class="pun">(</span><span class="str">'hide'</span><span class="pun">)</span></li></ol></pre>
-						          <h3>Events</h3>
-						          <p>Bootstrap's modal class exposes a few events for hooking into modal functionality.</p>
-						          <table class="table table-bordered table-striped">
-						            <thead>
-						             <tr>
-						               <th style="width: 150px;">Event</th>
-						               <th>Description</th>
-						             </tr>
-						            </thead>
-						            <tbody>
-						             <tr>
-						               <td>show</td>
-						               <td>This event fires immediately when the <code>show</code> instance method is called.</td>
-						             </tr>
-						             <tr>
-						               <td>shown</td>
-						               <td>This event is fired when the modal has been made visible to the user (will wait for css transitions to complete).</td>
-						             </tr>
-						             <tr>
-						               <td>hide</td>
-						               <td>This event is fired immediately when the <code>hide</code> instance method has been called.</td>
-						             </tr>
-						             <tr>
-						               <td>hidden</td>
-						               <td>This event is fired when the modal has finished being hidden from the user (will wait for css transitions to complete).</td>
-						             </tr>
-						            </tbody>
-						          </table>
-						<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">$</span><span class="pun">(</span><span class="str">'#myModal'</span><span class="pun">).</span><span class="pln">on</span><span class="pun">(</span><span class="str">'hidden'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></li><li class="L1"><span class="pln">  </span><span class="com">// do something…</span></li><li class="L2"><span class="pun">})</span></li></ol></pre>
-						        </section>
+		<section id="sensor">
+				<h2> SENSOR ™ <small>In a glimpse</small></h2>
+				<hr/>
+				<p>
+					Sensor is TelecomDesign™ underlying platform in charge of 
+					<ul>
+						<li>Data gathering  and storage</li>
+						<li>Global M2M operation management (upgrade, configuration, definition)</li>
+						<li>Metrics (Technical / Business) computation </li>
+						<li>Business Service Provider through DSL's remote endpoint exposition</li>
+					</ul>
+					<br/>
+					
+					Sensor™ platform has been used successfully for years in many Industrial M2M Projects, and is designed to cope with the worsts environments (poor bandwidth, scarse network, low memory / cpu consumption....)
+				</p>
+				
+				<div class="thumbnail">
+					<img src="/images/sensorarchi1.png">
+					<div class="caption">
+						<center><h5>Sensor TD1202 remote Interfaces</h5></center>
+					</div>
+				</div>
+	          	<h3>Live API <small>Event callback</small></h3>
+				<p>
+					Sensor Live API provides real time notification upon event broadcast, either to your backend in case of an application configured, either by fallback polling using Device / Application API.
+					Pushing through WebSocket is under experimentation and intend to shortly become our target for both App / Device fallback, and preferred to polling (we don't like polls <strong>at all</strong>).
+				</p>
+				<br/>
+				<h4> How does it works  ? </h4>
+				
+				<p>
+					Live API access requires registration from you. Upon successull registration process, you get acces to Application management at dashboard level. 
+					See <a href="#dashboard">Dashboard implementation</a> for more information about dashboard features implementation.
+				</p>
+				
+	          	<h3>General considerations</h3>
+				
+			</section>
+			<section id="device">
+	            <h2>Device API</h2>
+				<br/>
+				<h4>Authentication</h4>
+				<p>
+					Device Access requires custom header for authentication check.
+					<br/>
+					<table class="table table-bordered">
+			            <thead>
+			                <tr>
+			                    <th>Header</th>
+			                    <th>Description</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <td>x-snsr-device-key</td>
+			                    <td>your device token received upon authentication</td>
+			                </tr>
+			            </tbody>
+			        </table>
+				</p>
+				<hr/>
+				<h4><a name="getMsgsHistory">/mcs/devices/msgs/history.json</a></h4>
+				<br/>
+				<table class="table">
+				            <tbody>
+				                <tr>
+				                    <td><h6>Description</h6></td>
+				                    <td>Device Messages history resolution</td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Url</h6></td>
+				                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/history.json</code></td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Method</h6></td>
+				                    <td>GET</td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Parameters</h6></td>
+				                    <td>
+				                        <ol>
+				                            <li><code>sn</code> <i>required</i> the module serial number</li>
+				                            <li><code>until</code> <i>optional</i> the date (GMT) as end date</li>
+				                            <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved </li>
+				                        </ol>
+				                    </td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Returns</h6></td>
+				                    <td>Information about last
+				                    <p>
+				                        <strong>Sample JSON response</strong></p>
+				                        <pre style="overflow:auto">
+				                        </pre>
+				                        <h5>Return value definitions</h5>
+				                        <table class="table table-bordered">
+				                            <thead>
+				                                <tr>
+				                                    <th>Field</th>
+				                                    <th>Description</th>
+				                                </tr>
+				                            </thead>
+				                            <tbody>
+				                                <tr>
+				                                    <td>id</td>
+				                                    <td>Unique integer identifying the order</td>
+				                                </tr>
+				                                <tr>
+				                                    <td>recipientName</td>
+				                                    <td>Who the order will be addressed to</td>
+				                                </tr>
+				                                <tr>
+				                                    <td>address1</td>
+				                                    <td>First line of recipient address</td>
+				                                </tr>
+				                                <tr>
+				                                    <td>address2</td>
+				                                    <td>Second line of recipient address</td>
+				                                </tr>
+				                                <tr>
+				                                    <td>addressTownOrCity</td>
+				                                    <td>Town/City of recipient address</td>
+				                                </tr>
+				                                <tr>
+				                                    <td>stateOrCounty</td>
+				                                    <td>State (US) or County (UK) of recipient address</td>
+				                                </tr>
+				                                <tr>
+				                                    <td>postalOrZipCode</td>
+				                                    <td>Postal/Zipcode of recipient address</td>
+				                                </tr>
+				                                <tr>
+				                                    <td>country</td>
+				                                    <td>Country of recipient (we support almost every country in the world!)</td>
+				                                </tr>
+				                                <tr>
+				                                    <td>status</td>
+				                                    <td>Status of order. Can be <code>NotYetSubmitted</code>,
+				                                     <code>Submitted</code>,<code>Complete</code>, or <code>Cancelled</code>
+				                                     </td>
+				                                </tr>
+				                                <tr>
+				                                    <td>photos</td>
+				                                    <td>An array of objects representing the photos in the order. For structure of these objects see
+				                                    <a href="#PhotosGet">/Photos (GET)</a></td>
+				                                </tr>
+				                                <tr>
+				                                    <td>documents</td>
+				                                    <td>An array of documents representing the documents in the order. For structure of these objects see
+				                                    <a href="#DocumentsGet">/Documents (GET)</a></td>
+				                                </tr>
+				                                <tr>
+				                                    <td>stickers</td>
+				                                    <td>An array of object representing the Stickers in the order. For structure of these objects see
+				                                    <a href="#StickersGet">/Stickers (GET)</a></td>
+				                                </tr>
+				                            </tbody>
+				                        </table>
+				                    </td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Errors</h6></td>
+				                    <td>
+				                        <ul class="unstyled">
+				                            <li><code>404</code> - The order with the specified id was not found</li>
+				                        </ul>
+				                    </td>
+				                </tr>
+				            </tbody>
+				        </table>				
+	        </section>
+			<section id="application">
+	            <h2>Application API</h2>
+				<hr/>
+        	</section>
+			<section id="dasbhoard">
+	            <h2>Sample Application - Dashboard</h2>
+				<hr/>
+				<h3> Dashboard Features <small>unregistered</small></h3>
+				<p>
+					Device API is available freely providing authentication key. See General consideration
+				</p>
+				<br/>
+				<h3> Dashboard Features <small>registered</small></h3>
+				<p>
+					At application level, one can perform CRUD operation on application, and
+					<ul>
+						<li>manage modules association (one module can be associated to several applications),</li>
+						<li>manage remote Backend callback definition, </li>
+						<li>get access to callback history / status</li>
+					</ul>
+				</p>
+        	</section>
 	</div>
 </div>
