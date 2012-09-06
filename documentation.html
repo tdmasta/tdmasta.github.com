@@ -8,17 +8,25 @@ weight: 3
 scripts:
 - name: custom
   type: inline
-  content: "$(function() {$('.bs-docs-sidenav').affix(); })"
+  content: "$(function() {$('.bs-docs-sidenav').affix();})"
 ---
 {% include JB/setup %}
 
 <div class="row">
 	<div class="span3 bs-docs-sidebar">
 		<ul class="nav nav-list bs-docs-sidenav affix">
-			<li class="active"><a href="#sensor"><i class="icon-chevron-right"></i> About Sensor </a></li>
-			<li><a href="#device"><i class="icon-chevron-right"></i>Device API</a></li>
-			<li><a href="#application"><i class="icon-chevron-right"></i> Application API</a></li>
-			<li><a href="#dashboard"><i class="icon-chevron-right"></i> Example App : Dashboard </a></li>
+			<li class="active">
+				<a href="#sensor"><i class="icon-chevron-right"></i> About Sensor </a>
+			</li>
+			<li>
+				<a href="#device"><i class="icon-chevron-right"></i>Device API</a>
+			</li>
+			<li>
+				<a href="#application"><i class="icon-chevron-right"></i> App API</a>
+			</li>
+			<li>
+				<a href="#dashboard"><i class="icon-chevron-right"></i> Example App : Dashboard </a>
+			</li>
 		</ul>
 	</div>
 	<div class="span9">
@@ -57,15 +65,23 @@ scripts:
 					See <a href="#dashboard">Dashboard implementation</a> for more information about dashboard features implementation.
 				</p>
 				
+	          	<h3>Remote API <small>standard way</small></h3>
+				
 	          	<h3>General considerations</h3>
 				
 				<h4>URLS</h4>
 				
-				<h4>Authentication token</h4>
+				<p>
+					All request should be made over SSL, against the live api URL :	
+					<code>https://sensor.insgroup.fr</code>
+				</p>
+				
+				<h4>Authentication and security</h4>
 				
 			</section>
 			<section id="device">
 	            <h2>Device API</h2>
+				<hr/>
 				<br/>
 				<h4>Authentication</h4>
 				<p>
@@ -80,14 +96,133 @@ scripts:
 			            </thead>
 			            <tbody>
 			                <tr>
-			                    <td>x-snsr-device-key</td>
+			                    <td>X-Snsr-Device-Key</td>
 			                    <td>your device token received upon authentication</td>
 			                </tr>
 			            </tbody>
 			        </table>
 				</p>
-				<hr/>
-				<h4><a name="getMsgsHistory">/mcs/devices/msgs/history.json</a></h4>
+				<br/><br/>
+										<h4><a name="getMsgsBefore">/mcs/devices/msgs/history.json</a></h4>
+										<br/>
+										<table class="table">
+										            <tbody>
+										                <tr>
+										                    <td><h6>Description</h6></td>
+										                    <td>Device Messages history resolution</td>
+										                </tr>
+										                <tr>
+										                    <td><h6>Url</h6></td>
+										                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/history.json</code></td>
+										                </tr>
+										                <tr>
+										                    <td><h6>Method</h6></td>
+										                    <td>GET</td>
+										                </tr>
+										                <tr>
+										                    <td><h6>Parameters</h6></td>
+										                    <td>
+										                        <ol>
+										                            <li><code>sn</code> <i>required</i> the module serial number</li>
+										                            <li><code>until</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
+										                            <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved, default to 20 </li>
+										                        </ol>
+										                    </td>
+										                </tr>
+										                <tr>
+										                    <td><h6>Returns</h6></td>
+										                    <td>Information about last
+										                    <p>
+										                        <strong>Sample JSON response</strong></p>
+										                        <pre style="overflow:auto;">
+[{
+        "hr": "Hello World!", 
+        "lvl": "32.56", 
+        "raw": "48656c6c6f20576f726c6421", 
+        "station": "003B", 
+        "when": 1346768706050
+    }, 
+    {
+        "hr": "", 
+        "lvl": "22.6", 
+        "raw": "", 
+        "station": "003B", 
+        "when": 1346768689287
+    }, 
+    {
+        "hr": "hello World\u0000", 
+        "lvl": "24.64", 
+        "raw": "68656c6c6f20576f726c6400", 
+        "station": "003B", 
+        "when": 1346768588135
+    }, 
+    {
+        "hr": "hello World\u0000", 
+        "lvl": "15.78", 
+        "raw": "68656c6c6f20576f726c6400", 
+        "station": "002F", 
+        "when": 1346768559178
+    }, 
+    {
+        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
+        "lvl": "32.36", 
+        "raw": "01020304050607080900", 
+        "station": "003B", 
+        "when": 1346431311641
+    }, 
+    {
+        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
+        "lvl": "5.68", 
+        "raw": "01020304050607080900", 
+        "station": "002F", 
+        "when": 1346431298994
+    }]
+										                        </pre>
+										                        <h5>Return value definitions</h5>
+										                        <table class="table table-bordered">
+										                            <thead>
+										                                <tr>
+										                                    <th>Field</th>
+										                                    <th>Description</th>
+										                                </tr>
+										                            </thead>
+										                            <tbody>
+										                                <tr>
+										                                    <td>when</td>
+										                                    <td>Message reception timestamp (GMT)</td>
+										                                </tr>
+										                                <tr>
+										                                    <td>raw</td>
+										                                    <td>Raw Message content</td>
+										                                </tr>
+										                                <tr>
+										                                    <td>hr</td>
+										                                    <td>Human readable translation of the raw content</td>
+										                                </tr>
+										                                <tr>
+										                                    <td>lvl</td>
+										                                    <td>Signal level upon reception</td>
+										                                </tr>
+																		<tr>
+																			<td>station</td>
+																			<td>Receiver station id</td>
+																		</tr>
+										                            </tbody>
+										                        </table>
+										                    </td>
+										                </tr>
+										                <tr>
+										                    <td><h6>Errors</h6></td>
+										                    <td>
+										                        <ul class="unstyled">
+										                            <li><code>404</code> - The serial number was not found </li>
+																	<li><code>401</code> - The authentication token is invalid or missing </li>
+										                        </ul>
+										                    </td>
+										                </tr>
+										            </tbody>
+										        </table>
+				<h4><a name="getMsgsAfter">/mcs/devices/msgs/recents.json</a></h4>
 				<br/>
 				<table class="table">
 				            <tbody>
@@ -97,7 +232,7 @@ scripts:
 				                </tr>
 				                <tr>
 				                    <td><h6>Url</h6></td>
-				                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/history.json</code></td>
+				                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/recents.json</code></td>
 				                </tr>
 				                <tr>
 				                    <td><h6>Method</h6></td>
@@ -108,21 +243,64 @@ scripts:
 				                    <td>
 				                        <ol>
 				                            <li><code>sn</code> <i>required</i> the module serial number</li>
-				                            <li><code>until</code> <i>optional</i> the date (GMT) as end date</li>
-				                            <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved </li>
+				                            <li><code>after</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
+				                            <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved, default to 20 </li>
 				                        </ol>
 				                    </td>
 				                </tr>
 				                <tr>
 				                    <td><h6>Returns</h6></td>
-				                    <td>Information about last
-				                    <p>
-				                        <strong>Sample JSON response</strong></p>
-				                        <pre style="overflow:auto">
-				                        </pre>
-				                        <h5>Return value definitions</h5>
-				                        <table class="table table-bordered">
-				                            <thead>
+				                    <td>
+										Array of mcs messages
+										<p>
+										<strong>Sample JSON response</strong></p>
+										<pre style="overflow:auto">
+[{
+        "hr": "Hello World!", 
+        "lvl": "32.56", 
+        "raw": "48656c6c6f20576f726c6421", 
+        "station": "003B", 
+        "when": 1346768706050
+    }, 
+    {
+        "hr": "", 
+        "lvl": "22.6", 
+        "raw": "", 
+        "station": "003B", 
+        "when": 1346768689287
+    }, 
+    {
+        "hr": "hello World\u0000", 
+        "lvl": "24.64", 
+        "raw": "68656c6c6f20576f726c6400", 
+        "station": "003B", 
+        "when": 1346768588135
+    }, 
+    {
+        "hr": "hello World\u0000", 
+        "lvl": "15.78", 
+        "raw": "68656c6c6f20576f726c6400", 
+        "station": "002F", 
+        "when": 1346768559178
+    }, 
+    {
+        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
+        "lvl": "32.36", 
+        "raw": "01020304050607080900", 
+        "station": "003B", 
+        "when": 1346431311641
+    }, 
+    {
+        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
+        "lvl": "5.68", 
+        "raw": "01020304050607080900", 
+        "station": "002F", 
+        "when": 1346431298994
+    }]
+										</pre>
+										<h5>Return value definitions</h5>
+										<table class="table table-bordered">
+											<thead>
 				                                <tr>
 				                                    <th>Field</th>
 				                                    <th>Description</th>
@@ -163,13 +341,36 @@ scripts:
 				                    </td>
 				                </tr>
 				            </tbody>
-				        </table>				
+				        </table>
 	        </section>
+	
 			<section id="application">
 	            <h2>Application API</h2>
 				<hr/>
+				<br/>
+				<h4>Authentication</h4>
+				<p>
+					Application Access requires custom header for authentication check.
+					<br/>
+					<table class="table table-bordered">
+			            <thead>
+			                <tr>
+			                    <th>Header</th>
+			                    <th>Description</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <td>x-snsr-app-key</td>
+			                    <td>your application token received upon authentication</td>
+			                </tr>
+			            </tbody>
+			        </table>
+				</p>
+				<br/><br/>
         	</section>
-			<section id="dasbhoard">
+
+			<section id="dashboard">
 	            <h2>Sample Application - Dashboard</h2>
 				<hr/>
 				<h3> Dashboard Features <small>unregistered</small></h3>
