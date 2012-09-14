@@ -19,13 +19,16 @@ scripts:
 				<a href="#sensor"><i class="icon-chevron-right"></i> About Sensor </a>
 			</li>
 			<li>
+				<a href="#developer"><i class="icon-chevron-right"></i>Developer API</a>
+			</li>
+			<li>
 				<a href="#device"><i class="icon-chevron-right"></i>Device API</a>
 			</li>
 			<li>
-				<a href="#application"><i class="icon-chevron-right"></i> App API</a>
+				<a href="#application"><i class="icon-chevron-right"></i> Application</a>
 			</li>
 			<li>
-				<a href="#dashboard"><i class="icon-chevron-right"></i> Example App : Dashboard </a>
+				<a href="#sample"><i class="icon-chevron-right"></i> Example App : Dashboard </a>
 			</li>
 		</ul>
 	</div>
@@ -77,7 +80,100 @@ scripts:
 				</p>
 				
 				<h4>Authentication and security</h4>
+				<p>
+					Three API are available for <big>you</big> Hacker 
+					<ul>
+						<li>A <a href="#developer">developer API</a>, providing remote WS access for automated process</li>
+						<li>A <a href="#device">device API</a>, with no registration requirements to access single device message history</li>
+						<li>An <a href="#application">Application API</a> available upon succesfull registration operation </li>
+					</ul>
+				</p>
 				
+			</section>
+			<section id="developer">
+	            <h2>Developer API</h2>
+				<hr/>
+				<br/>
+				<h4>Authentication</h4>
+				<p>
+					Developer Authentication rely on Basic HTTP Auth based on login / password combination provided at registration step.
+					<table class="table table-bordered">
+			            <thead>
+			                <tr>
+			                    <th>Header</th>
+			                    <th>Description</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <td>Authorization: Basic XXXX</td>
+			                    <td>Either Standard http auth token computation, or remote WS authentication result content</td>
+			                </tr>
+			            </tbody>
+			        </table>
+				</p>
+				<br/><br/>
+				<h4><a name="DevAuthentication">GET | POST /security/authentication</a></h4>
+				<br/>
+				<table class="table">
+				            <tbody>
+				                <tr>
+				                    <td><h6>Description</h6></td>
+				                    <td>Developer Authentication operation</td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Url</h6></td>
+				                    <td><code>https://sensor.insgroup.fr/security/authentication</code></td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Method</h6></td>
+				                    <td>GET or POST</td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Parameters</h6></td>
+				                    <td>
+				                        <ol>
+				                            <li><code>login</code> <i>required</i> Developer account login</li>
+				                            <li><code>pwd</code> <i>required</i> Developer account password</li>
+				                        </ol>
+				                    </td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Returns</h6></td>
+				                    <td>Device token for use with corresponding header token
+				                    <p>
+			                        <strong>Sample JSON response</strong></p>
+			                        <pre style="overflow:auto;">
+QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+									</pre>
+			                        <h5>Return value definitions</h5>
+			                        <table class="table table-bordered">
+			                            <thead>
+			                                <tr>
+			                                    <th>Field</th>
+			                                    <th>Description</th>
+			                                </tr>
+			                            </thead>
+			                            <tbody>
+			                                <tr>
+			                                    <td>token</td>
+			                                    <td>Base64 encoded token, to store and use for next indiviudal remote Developer WS resources</td>
+			                                </tr>
+			                            </tbody>
+			                        </table>
+			                    </td>
+			                </tr>
+			                <tr>
+			                    <td><h6>Errors</h6></td>
+			                    <td>
+			                        <ul class="unstyled">
+			                            <li><code>404</code> - The developer account was not found </li>
+										<li><code>401</code> - The authentication information are missing or invalid </li>
+			                        </ul>
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table>
 			</section>
 			<section id="device">
 	            <h2>Device API</h2>
@@ -97,44 +193,105 @@ scripts:
 			            <tbody>
 			                <tr>
 			                    <td>X-Snsr-Device-Key</td>
-			                    <td>your device token received upon authentication</td>
+			                    <td>your device token received upon authentication, see <a href="#DeviceAuthentication">Device authentication for more info</a></td>
 			                </tr>
 			            </tbody>
 			        </table>
 				</p>
 				<br/><br/>
-										<h4><a name="getMsgsBefore">/mcs/devices/msgs/history.json</a></h4>
-										<br/>
-										<table class="table">
-										            <tbody>
-										                <tr>
-										                    <td><h6>Description</h6></td>
-										                    <td>Device Messages history resolution</td>
-										                </tr>
-										                <tr>
-										                    <td><h6>Url</h6></td>
-										                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/history.json</code></td>
-										                </tr>
-										                <tr>
-										                    <td><h6>Method</h6></td>
-										                    <td>GET</td>
-										                </tr>
-										                <tr>
-										                    <td><h6>Parameters</h6></td>
-										                    <td>
-										                        <ol>
-										                            <li><code>sn</code> <i>required</i> the module serial number</li>
-										                            <li><code>until</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
-										                            <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved, default to 20 </li>
-										                        </ol>
-										                    </td>
-										                </tr>
-										                <tr>
-										                    <td><h6>Returns</h6></td>
-										                    <td>Information about last
-										                    <p>
-										                        <strong>Sample JSON response</strong></p>
-										                        <pre style="overflow:auto;">
+				<h4><a name="DeviceAuthentication">GET /mcs/devices/crc.json</a></h4>
+				<br/>
+				<table class="table">
+				            <tbody>
+				                <tr>
+				                    <td><h6>Description</h6></td>
+				                    <td>Device Authentication operation</td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Url</h6></td>
+				                    <td><code>https://sensor.insgroup.fr/mcs/devices/crc.json</code></td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Method</h6></td>
+				                    <td>GET</td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Parameters</h6></td>
+				                    <td>
+				                        <ol>
+				                            <li><code>sn</code> <i>required</i> the module serial number</li>
+				                            <li><code>key</code> <i>required</i> The key provided with your device, available at packaging level</li>
+				                        </ol>
+				                    </td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Returns</h6></td>
+				                    <td>Device token for use with corresponding header token
+				                    <p>
+			                        <strong>Sample JSON response</strong></p>
+			                        <pre style="overflow:auto;">
+QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+</pre>
+			                        <h5>Return value definitions</h5>
+			                        <table class="table table-bordered">
+			                            <thead>
+			                                <tr>
+			                                    <th>Field</th>
+			                                    <th>Description</th>
+			                                </tr>
+			                            </thead>
+			                            <tbody>
+			                                <tr>
+			                                    <td>token</td>
+			                                    <td>Base64 encoded token, to store and use for next indiviudal remote Device WS resources</td>
+			                                </tr>
+			                            </tbody>
+			                        </table>
+			                    </td>
+			                </tr>
+			                <tr>
+			                    <td><h6>Errors</h6></td>
+			                    <td>
+			                        <ul class="unstyled">
+			                            <li><code>404</code> - The serial number was not found </li>
+										<li><code>401</code> - The authentication information are missing or invalid </li>
+			                        </ul>
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table>
+				<h4><a name="getMsgsBefore">GET /mcs/devices/msgs/history.json</a></h4>
+				<br/>
+				<table class="table">
+				            <tbody>
+				                <tr>
+				                    <td><h6>Description</h6></td>
+				                    <td>Device Messages history resolution</td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Url</h6></td>
+				                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/history.json</code></td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Method</h6></td>
+				                    <td>GET</td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Parameters</h6></td>
+				                    <td>
+				                        <ol>
+				                            <li><code>sn</code> <i>required</i> the module serial number</li>
+				                            <li><code>until</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
+				                            <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved, default to 20 </li>
+				                        </ol>
+				                    </td>
+				                </tr>
+				                <tr>
+				                    <td><h6>Returns</h6></td>
+				                    <td>Information about last
+				                    <p>
+				                        <strong>Sample JSON response</strong></p>
+				                        <pre style="overflow:auto;">
 [{
         "hr": "Hello World!", 
         "lvl": "32.56", 
@@ -177,52 +334,52 @@ scripts:
         "station": "002F", 
         "when": 1346431298994
     }]
-										                        </pre>
-										                        <h5>Return value definitions</h5>
-										                        <table class="table table-bordered">
-										                            <thead>
-										                                <tr>
-										                                    <th>Field</th>
-										                                    <th>Description</th>
-										                                </tr>
-										                            </thead>
-										                            <tbody>
-										                                <tr>
-										                                    <td>when</td>
-										                                    <td>Message reception timestamp (GMT)</td>
-										                                </tr>
-										                                <tr>
-										                                    <td>raw</td>
-										                                    <td>Raw Message content</td>
-										                                </tr>
-										                                <tr>
-										                                    <td>hr</td>
-										                                    <td>Human readable translation of the raw content</td>
-										                                </tr>
-										                                <tr>
-										                                    <td>lvl</td>
-										                                    <td>Signal level upon reception</td>
-										                                </tr>
-																		<tr>
-																			<td>station</td>
-																			<td>Receiver station id</td>
-																		</tr>
-										                            </tbody>
-										                        </table>
-										                    </td>
-										                </tr>
-										                <tr>
-										                    <td><h6>Errors</h6></td>
-										                    <td>
-										                        <ul class="unstyled">
-										                            <li><code>404</code> - The serial number was not found </li>
-																	<li><code>401</code> - The authentication token is invalid or missing </li>
-										                        </ul>
-										                    </td>
-										                </tr>
-										            </tbody>
-										        </table>
-				<h4><a name="getMsgsAfter">/mcs/devices/msgs/recents.json</a></h4>
+		                        </pre>
+		                        <h5>Return value definitions</h5>
+		                        <table class="table table-bordered">
+		                            <thead>
+		                                <tr>
+		                                    <th>Field</th>
+		                                    <th>Description</th>
+		                                </tr>
+		                            </thead>
+		                            <tbody>
+		                                <tr>
+		                                    <td>when</td>
+		                                    <td>Message reception timestamp (GMT)</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>raw</td>
+		                                    <td>Raw Message content</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>hr</td>
+		                                    <td>Human readable translation of the raw content</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>lvl</td>
+		                                    <td>Signal level upon reception</td>
+		                                </tr>
+										<tr>
+											<td>station</td>
+											<td>Receiver station id</td>
+										</tr>
+		                            </tbody>
+		                        </table>
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td><h6>Errors</h6></td>
+		                    <td>
+		                        <ul class="unstyled">
+		                            <li><code>404</code> - The serial number was not found </li>
+									<li><code>401</code> - The authentication token is invalid or missing </li>
+		                        </ul>
+		                    </td>
+		                </tr>
+		            </tbody>
+		        </table>
+				<h4><a name="getMsgsAfter">GET /mcs/devices/msgs/recents.json</a></h4>
 				<br/>
 				<table class="table">
 				            <tbody>
@@ -343,7 +500,6 @@ scripts:
 				            </tbody>
 				        </table>
 	        </section>
-	
 			<section id="application">
 	            <h2>Application API</h2>
 				<hr/>
@@ -361,16 +517,17 @@ scripts:
 			            </thead>
 			            <tbody>
 			                <tr>
-			                    <td>x-snsr-app-key</td>
-			                    <td>your application token received upon authentication</td>
+			                    <td>S-Snsr-App-Key</td>
+			                    <td>your app token available at dashboard level</td>
 			                </tr>
 			            </tbody>
 			        </table>
 				</p>
 				<br/><br/>
+				<h4> <center>Soon available </center></h4>
+				<br/>
         	</section>
-
-			<section id="dashboard">
+			<section id="sample">
 	            <h2>Sample Application - Dashboard</h2>
 				<hr/>
 				<h3> Dashboard Features <small>unregistered</small></h3>
