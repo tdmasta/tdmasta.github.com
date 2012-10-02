@@ -5,7 +5,7 @@
 */
 
 // Authentication controller
-function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, Context) {
+function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, Context, Notif) {
 
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
@@ -22,22 +22,24 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
                 .error(function(data, status) {
                     $log.error('checkCRC KO : Failed request status = ' + status + ' & data = ' + data);
                     $cookieStore.remove('dtoken');
+                    $cookieStore.remove('utoken');
 					Context.setSerial(undefined);
                     Context.setDashBoardVisibilty(false);
+					Notif.error(data);
                 });
         }
     };
 
     // AuthenticationByEmailSubmit button
     $scope.authenticationByEmailSubmit = function() {
-        alert('By Email Submit : ' + JSON.stringify($scope.account));
+		Notifs.info("Coming up soon");
     };
 
 }
 
 
 // Registration controller
-function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices) {
+function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices, Notif) {
 
     // Registration button
     $scope.registrationSubmit = function() {
@@ -48,9 +50,11 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
             .success(function(data, status) {
                 $cookieStore.put('utoken', data);
                 $log.info('Registration OK : utoken = ' + data);
+				Notif.success('A confirmation email has been sent to the registered email adress, checkout your mbox');
             }).error(function(data, status) {
                 $cookieStore.remove('utoken');
                 $log.error('Registration KO : Failed request status = ' + status + ' & data = ' + data);
+				Notif.error(data);
             });
     };
 
@@ -67,9 +71,11 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
                         $log.error('Delete KO : Failed request status = ' + status + ' & data = ' + data);
                     });
             } else {
+				Notif.error('User token missing, please check parameters');
                 $log.error('UToken is missing');
             }
         } else {
+			Notif.error('User email is required, please check parameters');
             $log.error('Email is required');
         }
     };
@@ -77,7 +83,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 
 
 // Dashboard controller
-function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Context) {
+function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Context, Notif) {
 
     $scope.messages = [];
     $scope.lastUpdate = new Date().getTime();
@@ -109,6 +115,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
                         title: ''+new Date(item.when),
                         text: item.hr,
                         hide: false,
+						type: 'info',
                         styling: 'bootstrap'
                     });
                     $scope.messages.splice(0, 0, item);
@@ -145,7 +152,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     });
 }
 
-function LogOutCtrl($scope, $log, $cookieStore, Context) {
+function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 	
 	$scope.display = false;
 	$scope.serial = undefined;
@@ -155,12 +162,7 @@ function LogOutCtrl($scope, $log, $cookieStore, Context) {
 		$cookieStore.remove('utoken');
 		Context.setSerial(undefined);
         Context.setDashBoardVisibilty(false);
-        jQuery.pnotify({
-            title: 'Bye Bye',
-            text: 'See you later alligator',
-            hide: true,
-            styling: 'bootstrap'
-        });
+		Notif.info('See you Soon');
 	}
 	
 	// Event handleDisplayDashboard

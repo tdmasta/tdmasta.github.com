@@ -1,5 +1,51 @@
 'use strict';
 
+
+angular.module('NotificationModule', [], function($provide) {
+	
+	$provide.factory('Notif', function() {
+		
+		return {
+			info: function(msg) {
+				jQuery.pnotify({
+                    title: 'Info',
+                    text: msg,
+					type: 'info',
+                    hide: true,
+                    styling: 'bootstrap'
+                });
+			},
+			error: function(msg) {
+				jQuery.pnotify({
+                    title: 'Ooops',
+                    text: msg,
+					type: 'error',
+                    hide: true,
+                    styling: 'bootstrap'
+                });
+			},
+			warn:  function(msg) {
+				jQuery.pnotify({
+                    title: 'Attention please',
+                    text: msg,
+					type: 'warning',
+                    hide: true,
+                    styling: 'bootstrap'
+                });
+			},
+			success: function(msg) {
+				jQuery.pnotify({
+                    title: 'Hurray !',
+                    text: msg,
+					type: 'success',
+                    hide: true,
+                    styling: 'bootstrap'
+                });
+			}
+		}
+	})
+});
+
 //
 // Module : DevicesModule
 //

@@ -27,7 +27,7 @@ scripts:
                     <div class="control-group">
                         <label class="control-label" for="inputSerial" rel="popover" data-content="<p>Module id appears either on product parcel sticker<br/> either by perfoming AT&V command within a terminal session.</p>" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Enter module id </a></label>
                         <div class="controls">
-                            <input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required placeholder="e.g 0000XXXX, case insentitive" />
+                            <input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required placeholder="e.g XXXX, case insentitive, with no 0 padding" />
                             <span class="field-validation-valid" data-valmsg-for="inputSerial" data-valmsg-replace="true"></span>
                         </div>
                     </div>
@@ -76,8 +76,8 @@ scripts:
     <div ng:show="displayDashboard == true">
 			<ul class="nav nav-tabs">
 			  <li class="active	"><a href="#home" data-toggle="tab"> <i class="icon-dashboard"> </i> Device dashboard</a></li>
-			  <li><a href="#profile" data-toggle="tab"> <i class="icon-cloud"> </i> Applications</a></li>
-			  <li><a href="#messages" data-toggle="tab"><i class="icon-dashboard"> </i> Attach new Device</a></li>
+			  <li><a href="#profile" data-toggle="tab"> <i class="icon-cloud"> </i> Applications </a></li>
+			  <li><a href="#messages" data-toggle="tab"><i class="icon-dashboard"> </i> Devices </a></li>
 			  <li><a href="#settings" data-toggle="tab"><i class="icon-dashboard"> </i> Callbacks </a></li>
 			</ul>
 			<div class="tab-content">
@@ -121,10 +121,10 @@ scripts:
 					</div>
 				</div>
 				<div class="tab-pane" id="profile">
-		            	<h3> Work In Progress <small> Yeah Baby </small></h3>
+		            	<h3> Work In Progress <small> Soon available </small></h3>
 				</div>
 				<div class="tab-pane" id="profile">
-		            	<h3> Work In Progress <small> Yeah Baby </small></h3>
+		            	<h3> Work In Progress <small> Soon available </small></h3>
 				</div>				
 			</div>
     </div>

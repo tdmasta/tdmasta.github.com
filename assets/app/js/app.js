@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context']).directive('whenScrolled', function() {
+var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context', 'NotificationModule']).directive('whenScrolled', function() {
     return function(scope, elm, attr) {
         var raw = elm[0];
         elm.bind('scroll', function() {
