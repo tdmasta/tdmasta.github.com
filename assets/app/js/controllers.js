@@ -38,6 +38,87 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
 }
 
 
+// iotSimulator controller
+function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesServices, Notif) {
+
+    $scope.generatedmessages = [];
+
+    $scope.typeMessagesSelect = [
+        { name: 'Random', value: 'RANDOM' }, 
+        { name: 'Battery low', value: 'BATTERY_LOW' }, 
+        { name: 'Battery ok', value: 'BATTERY_OK' },
+        { name: 'Connection lost', value: 'CONNECTION_LOST' },
+        { name: 'Connection ok', value: 'CONNECTION_OK' },
+        { name: 'Opening Detector close', value: 'OPENINGDETECTOR_CLOSE' },
+        { name: 'Opening Detector open', value: 'OPENINGDETECTOR_OPEN' },
+        { name: 'Button off', value: 'BUTTON_OFF' },
+        { name: 'Button on', value: 'BUTTON_ON' },
+        { name: 'Activity changing', value: 'ACTIVITY_CHANGING' },
+        { name: 'Temperature changing', value: 'TEMPERATURE_CHANGING' },
+        { name: 'Pressure changing', value: 'PRESSURE_CHANGING' },
+        { name: 'Location changing', value: 'LOCATION_CHANGING' },
+        { name: 'Battery changing', value: 'BATTERY_CHANGING' },
+        { name: 'Emergency call', value: 'EMERGENCY_CALL' },
+        { name: 'Beacon detection lost', value: 'BEACONDETECTION_LOST' },
+        { name: 'Beacon detection ok', value: 'BEACONDETECTION_OK' },
+        { name: 'Inductive carrier charger low', value: 'INDUCTIVECARRIERCHARGER_LOW' },
+        { name: 'Inductive carrier charger ok', value: 'INDUCTIVECARRIERCHARGER_OK' },
+        { name: 'Device disable', value: 'DEVICE_DISABLE' },
+        { name: 'Device enable', value: 'DEVICE_ENABLE' }
+    ];
+
+    $scope.simulation = {
+        url : 'http://localhost:9010',
+        deviceserial : '9999',
+
+        type : $scope.typeMessagesSelect[0].value,
+        frequency : 5,
+        hits : 0
+    };
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            $scope.$apply(function(){
+                $scope.simulation.longitude = position.coords.longitude;
+                $scope.simulation.latitude = position.coords.latitude;
+            });
+        });
+    }
+
+    var check = null;
+
+    // startStopSimulation button
+    $scope.startStopSimulation = function() {
+        if (! $('.generatebt').hasClass('active')) {
+            if (check == null) {
+                var cnt = 0;
+
+                check = setInterval(function () {
+                    DevicesServices.iotSimulation($scope.simulation)
+                        .success(function(data, status){
+                            $log.info("iotSimulation success & data => " + JSON.stringify(data));
+                            $scope.generatedmessages.push(data);
+                        })
+                        .error(function(data, status){
+                            $log.info("iotSimulation error & data => " + JSON.stringify(data) + " & status = " + status);
+                        });
+                    cnt++;
+                    $scope.$apply(function(){
+                        $scope.simulation.hits = cnt;
+                    });
+                }, $scope.simulation.frequency * 1000);
+            }
+            $('.generatebt').addClass($('.generatebt').attr('class-toggle'));
+        } else {
+            clearInterval(check);
+            check = null;
+            $scope.simulation.hits = '0';
+            $('.generatebt').removeClass($('.generatebt').attr('class-toggle'));
+        }
+    };
+}
+
+
 // Registration controller
 function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices, Notif) {
 

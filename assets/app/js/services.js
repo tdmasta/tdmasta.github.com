@@ -50,6 +50,7 @@ angular.module('NotificationModule', [], function($provide) {
 // Module : DevicesModule
 //
 // Services : 
+//      iotSimulation
 //      getMessagesBefore
 //      getMessagesAfter
 angular.module('DevicesModule', ['ngCookies'], function($provide) {
@@ -57,6 +58,16 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
     $provide.factory('DevicesServices', function($http, $log, $cookieStore, CONSTANTS) {
 
         return {
+            // iotSimulation method
+            iotSimulation: function(params) {
+                var url = CONSTANTS.remote + '/mcs/simulator.json';
+                $log.info('URL built up : ' + url + ' & params : ' + JSON.stringify(params));
+                return $http({
+                    method : 'POST',
+                    url : url,
+                    data : params
+                });  
+            },
 
             // getMessagesBefore method
             getMessagesBefore: function(sn, before, amount) {
