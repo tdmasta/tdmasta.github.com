@@ -1,0 +1,68 @@
+---
+layout: page
+title: "IOT API"
+description: ""
+tagline: "Internet Of Things made easy with SENSOR&trade;"
+scripts:
+- name: custom
+  type: inline
+  content: "$(function() {$('.bs-docs-sidenav').affix();})"
+---
+{% include JB/setup %}
+
+<div>
+    <h2> SENSOR &trade; <small>In a glimpse</small></h2>
+    <hr/>
+    <p>
+        Sensor is TelecomDesign&trade; underlying platform in charge of 
+        <ul>
+            <li>Data gathering  and storage</li>
+            <li>Global M2M operation management (upgrade, configuration, definition)</li>
+            <li>Metrics (Technical / Business) computation </li>
+            <li>Business Service Provider through DSL's remote endpoint exposition</li>
+        </ul>
+        <br/>
+        
+        Sensor&trade; platform has been used successfully for years in many Industrial M2M Projects, and is designed to cope with the worsts environments (poor bandwidth, scarse network, low memory / cpu consumption....)
+    </p>
+    
+    <div class="thumbnail">
+        <img src="/images/sensorarchi1.png">
+        <div class="caption">
+            <center><h5>Sensor TD1202 remote Interfaces</h5></center>
+        </div>
+    </div>
+    <h3>Live API <small>Event callback</small></h3>
+    <p>
+        Sensor Live API provides real time notification upon event broadcast, either to your backend in case of an application configured, either by fallback polling using Device / Application API.
+        Pushing through WebSocket is under experimentation and intend to shortly become our target for both App / Device fallback, and preferred to polling (we don't like polls <strong>at all</strong>).
+    </p>
+    <br/>
+    <h4> How does it works  ? </h4>
+    
+    <p>
+        Live API access requires registration from you. Upon successull registration process, you get acces to Application management at dashboard level. 
+        See <a href="#dashboard">Dashboard implementation</a> for more information about dashboard features implementation.
+    </p>
+    
+    <h3>Remote API <small>standard way</small></h3>
+    
+    <h3>General considerations</h3>
+    
+    <h4>URLS</h4>
+    
+    <p>
+        All request should be made over SSL, against the live api URL : 
+        <code>https://sensor.insgroup.fr</code>
+    </p>
+    
+    <h4>Authentication and security</h4>
+    <p>
+        Three API are available for <big>you</big> Hacker 
+        <ul>
+            <li>A <a href="#developer">developer API</a>, providing remote WS access for automated process</li>
+            <li>A <a href="#device">device API</a>, with no registration requirements to access single device message history</li>
+            <li>An <a href="#application">Application API</a> available upon succesfull registration operation </li>
+        </ul>
+    </p>
+</div>

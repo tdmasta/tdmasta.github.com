@@ -1,0 +1,97 @@
+---
+layout: page
+title: "IOT API"
+description: ""
+tagline: "Internet Of Things made easy with SENSOR&trade;"
+scripts:
+- name: custom
+  type: inline
+  content: "$(function() {$('.bs-docs-sidenav').affix();})"
+---
+{% include JB/setup %}
+
+<div>
+                <h2>Developer API</h2>
+                <hr/>
+                <br/>
+                <h4>Authentication</h4>
+                <p>
+                    Developer Authentication rely on Basic HTTP Auth based on login / password combination provided at registration step.
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Header</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Authorization: Basic XXXX</td>
+                                <td>Either Standard http auth token computation, or remote WS authentication result content</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </p>
+                <br/><br/>
+                <h4><a name="DevAuthentication">GET | POST /security/authentication</a></h4>
+                <br/>
+                <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><h6>Description</h6></td>
+                                    <td>Developer Authentication operation</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Url</h6></td>
+                                    <td><code>https://sensor.insgroup.fr/security/authentication</code></td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Method</h6></td>
+                                    <td>GET or POST</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Parameters</h6></td>
+                                    <td>
+                                        <ol>
+                                            <li><code>login</code> <i>required</i> Developer account login</li>
+                                            <li><code>pwd</code> <i>required</i> Developer account password</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Returns</h6></td>
+                                    <td>Device token for use with corresponding header token
+                                    <p>
+                                    <strong>Sample JSON response</strong></p>
+                                    <pre style="overflow:auto;">
+QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+                                    </pre>
+                                    <h5>Return value definitions</h5>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Field</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>token</td>
+                                                <td>Base64 encoded token, to store and use for next indiviudal remote Developer WS resources</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h6>Errors</h6></td>
+                                <td>
+                                    <ul class="unstyled">
+                                        <li><code>404</code> - The developer account was not found </li>
+                                        <li><code>401</code> - The authentication information are missing or invalid </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+</div>

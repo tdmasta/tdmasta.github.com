@@ -1,0 +1,337 @@
+---
+layout: page
+title: "IOT API"
+description: ""
+tagline: "Internet Of Things made easy with SENSOR&trade;"
+scripts:
+- name: custom
+  type: inline
+  content: "$(function() {$('.bs-docs-sidenav').affix();})"
+---
+{% include JB/setup %}
+
+<div>
+                <h2>Device API</h2>
+                <hr/>
+                <br/>
+                <h4>Authentication</h4>
+                <p>
+                    Device Access requires custom header for authentication check.
+                    <br/>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Header</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>X-Snsr-Device-Key</td>
+                                <td>your device token received upon authentication, see <a href="#DeviceAuthentication">Device authentication for more info</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </p>
+                <br/><br/>
+                <h4><a name="DeviceAuthentication">GET /mcs/devices/crc.json</a></h4>
+                <br/>
+                <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><h6>Description</h6></td>
+                                    <td>Device Authentication operation</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Url</h6></td>
+                                    <td><code>https://sensor.insgroup.fr/mcs/devices/crc.json</code></td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Method</h6></td>
+                                    <td>GET</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Parameters</h6></td>
+                                    <td>
+                                        <ol>
+                                            <li><code>sn</code> <i>required</i> the module serial number</li>
+                                            <li><code>key</code> <i>required</i> The key provided with your device, available at packaging level</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Returns</h6></td>
+                                    <td>Device token for use with corresponding header token
+                                    <p>
+                                    <strong>Sample JSON response</strong></p>
+                                    <pre style="overflow:auto;">
+QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+</pre>
+                                    <h5>Return value definitions</h5>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Field</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>token</td>
+                                                <td>Base64 encoded token, to store and use for next indiviudal remote Device WS resources</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h6>Errors</h6></td>
+                                <td>
+                                    <ul class="unstyled">
+                                        <li><code>404</code> - The serial number was not found </li>
+                                        <li><code>401</code> - The authentication information are missing or invalid </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <h4><a name="getMsgsBefore">GET /mcs/devices/msgs/history.json</a></h4>
+                <br/>
+                <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><h6>Description</h6></td>
+                                    <td>Device Messages history resolution</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Url</h6></td>
+                                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/history.json</code></td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Method</h6></td>
+                                    <td>GET</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Parameters</h6></td>
+                                    <td>
+                                        <ol>
+                                            <li><code>sn</code> <i>required</i> the module serial number</li>
+                                            <li><code>until</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
+                                            <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved, default to 20 </li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Returns</h6></td>
+                                    <td>Information about last
+                                    <p>
+                                        <strong>Sample JSON response</strong></p>
+                                        <pre style="overflow:auto;">
+[{
+        "hr": "Hello World!", 
+        "lvl": "32.56", 
+        "raw": "48656c6c6f20576f726c6421", 
+        "station": "003B", 
+        "when": 1346768706050
+    }, 
+    {
+        "hr": "", 
+        "lvl": "22.6", 
+        "raw": "", 
+        "station": "003B", 
+        "when": 1346768689287
+    }, 
+    {
+        "hr": "hello World\u0000", 
+        "lvl": "24.64", 
+        "raw": "68656c6c6f20576f726c6400", 
+        "station": "003B", 
+        "when": 1346768588135
+    }, 
+    {
+        "hr": "hello World\u0000", 
+        "lvl": "15.78", 
+        "raw": "68656c6c6f20576f726c6400", 
+        "station": "002F", 
+        "when": 1346768559178
+    }, 
+    {
+        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
+        "lvl": "32.36", 
+        "raw": "01020304050607080900", 
+        "station": "003B", 
+        "when": 1346431311641
+    }, 
+    {
+        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
+        "lvl": "5.68", 
+        "raw": "01020304050607080900", 
+        "station": "002F", 
+        "when": 1346431298994
+    }]
+                                </pre>
+                                <h5>Return value definitions</h5>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Field</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>when</td>
+                                            <td>Message reception timestamp (GMT)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>raw</td>
+                                            <td>Raw Message content</td>
+                                        </tr>
+                                        <tr>
+                                            <td>hr</td>
+                                            <td>Human readable translation of the raw content</td>
+                                        </tr>
+                                        <tr>
+                                            <td>lvl</td>
+                                            <td>Signal level upon reception</td>
+                                        </tr>
+                                        <tr>
+                                            <td>station</td>
+                                            <td>Receiver station id</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h6>Errors</h6></td>
+                            <td>
+                                <ul class="unstyled">
+                                    <li><code>404</code> - The serial number was not found </li>
+                                    <li><code>401</code> - The authentication token is invalid or missing </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4><a name="getMsgsAfter">GET /mcs/devices/msgs/recents.json</a></h4>
+                <br/>
+                <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><h6>Description</h6></td>
+                                    <td>Device Messages history resolution</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Url</h6></td>
+                                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/recents.json</code></td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Method</h6></td>
+                                    <td>GET</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Parameters</h6></td>
+                                    <td>
+                                        <ol>
+                                            <li><code>sn</code> <i>required</i> the module serial number</li>
+                                            <li><code>after</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
+                                            <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved, default to 20 </li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Returns</h6></td>
+                                    <td>
+                                        Array of mcs messages
+                                        <p>
+                                        <strong>Sample JSON response</strong></p>
+                                        <pre style="overflow:auto">
+[{
+        "hr": "Hello World!", 
+        "lvl": "32.56", 
+        "raw": "48656c6c6f20576f726c6421", 
+        "station": "003B", 
+        "when": 1346768706050
+    }, 
+    {
+        "hr": "", 
+        "lvl": "22.6", 
+        "raw": "", 
+        "station": "003B", 
+        "when": 1346768689287
+    }, 
+    {
+        "hr": "hello World\u0000", 
+        "lvl": "24.64", 
+        "raw": "68656c6c6f20576f726c6400", 
+        "station": "003B", 
+        "when": 1346768588135
+    }, 
+    {
+        "hr": "hello World\u0000", 
+        "lvl": "15.78", 
+        "raw": "68656c6c6f20576f726c6400", 
+        "station": "002F", 
+        "when": 1346768559178
+    }, 
+    {
+        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
+        "lvl": "32.36", 
+        "raw": "01020304050607080900", 
+        "station": "003B", 
+        "when": 1346431311641
+    }, 
+    {
+        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
+        "lvl": "5.68", 
+        "raw": "01020304050607080900", 
+        "station": "002F", 
+        "when": 1346431298994
+    }]
+                                        </pre>
+                                        <h5>Return value definitions</h5>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Field</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>when</td>
+                                                    <td>Message reception timestamp (GMT)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>raw</td>
+                                                    <td>Raw Message content</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>hr</td>
+                                                    <td>Human readable translation of the raw content</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>lvl</td>
+                                                    <td>Signal level upon reception</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>station</td>
+                                                    <td>Receiver station id</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Errors</h6></td>
+                                    <td>
+                                        <ul class="unstyled">
+                                            <li><code>404</code> - The serial number was not found </li>
+                                            <li><code>401</code> - The authentication token is invalid or missing </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+</div>
