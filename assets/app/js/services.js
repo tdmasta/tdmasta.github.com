@@ -147,17 +147,14 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
                 });
             },
 
-            // authentication method            
-            authentication: function(account) {
-                var utoken = $cookieStore.get('utoken');
+            // authentication method
+            authentication: function(email, password) {
                 return $http({
                     method : 'GET',
                     url : CONSTANTS.remote + '/security/authentication',
                     params : {
-                        account : account
-                    },
-                    headers : {
-                        Authorization : 'Basic ' + utoken
+                        login : email,
+                        pwd : password
                     }
                 });
             },
@@ -193,10 +190,18 @@ angular.module('Context', []).factory('Context', function($rootScope, $cookieSto
 
     var state = {
 		serial : undefined,
+        simulator : {
+            visible: false
+        },
 		dashboard : {
 			visible: false
 		}
 	}
+
+    state.setSimulatorVisibility = function(flag) {
+        this.simulator.visible = flag;
+        this.notify('SimulatorEvent');
+    };
 
     state.setDashBoardVisibilty = function(flag) {
 		this.dashboard.visible = flag;

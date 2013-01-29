@@ -24,11 +24,13 @@ app.run(function($log, $cookieStore, Context, $timeout) {
     		$log.info("serial", sn);
     		Context.setSerial(sn);
     		Context.setDashBoardVisibilty(true);
+            Context.setSimulatorVisibility(false);   
     		$log.info("settings ok");
     	} else {
     		$log.info("no token found => clearing information");
     		Context.setSerial(undefined);
     		Context.setDashBoardVisibilty(false);	
+            Context.setSimulatorVisibility(false);   
     	}
     });
 });

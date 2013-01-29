@@ -32,14 +32,28 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
 
     // AuthenticationByEmailSubmit button
     $scope.authenticationByEmailSubmit = function() {
-		Notifs.info("Coming up soon");
-    };
+        if ($scope.account && $scope.account.inputEmail && $scope.account.inputPassword) {
+            // authentication service
+            SecurityServices.authentication($scope.account.inputEmail, $scope.account.inputPassword)
+                .success(function(data, status) {
+                    $log.info('authentication OK : data = ' + data);
+                    $cookieStore.put('utoken', data);
 
+                    Context.setSimulatorVisibility(true);
+                }).error(function(data, status) {
+                    $log.error('authentication KO : Failed request status = ' + status);
+                    $cookieStore.remove('dtoken');
+                    $cookieStore.remove('utoken');
+
+                    Context.setSimulatorVisibility(false);
+            });
+        }
+    };
 }
 
 
 // iotSimulator controller
-function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesServices, Notif) {
+function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesServices, Context, Notif) {
 
     $scope.generatedmessages = [];
 
@@ -116,6 +130,12 @@ function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesS
             $('.generatebt').removeClass($('.generatebt').attr('class-toggle'));
         }
     };
+
+    // Event handleDisplaySimulator
+    $scope.$on('SimulatorEvent', function() {
+        $log.info('waking up on simulator event');
+        $scope.displaySimulator = Context.simulator.visible;
+    });
 }
 
 

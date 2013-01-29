@@ -21,7 +21,33 @@ scripts:
 
     <div class="span12" ng-controller="iotSimulatorCtrl" ng-app="evbApp">
 
-    <div ng:show="true">
+    <div ng:show="displaySimulator != true" ng:cloak>
+        <div class="span4">
+            <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationByEmail" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(account)" >
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">Email</label>
+                    <div class="controls">
+                        <input id="inputEmail" name="account.inputEmail" ng-model="account.inputEmail" ng-model-instant data-val="true" type="email" data-val-required="Email is required." required placeholder="Email" />
+                        <span class="field-validation-valid" data-valmsg-for="inputEmail" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">Password</label>
+                    <div class="controls">
+                        <input id="inputPassword" name="account.inputPassword" ng-model="account.inputPassword" ng-model-instant data-val="true" type="password" data-val-required="Password is required." required placeholder="Password" />
+                        <span class="field-validation-valid" data-valmsg-for="inputPassword" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn">Sign in</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div ng:show="displaySimulator == true" ng:cloak>
             <ul class="nav nav-tabs">
               <li class="active"><a href="#simulator" data-toggle="tab"> <i class="icon-magic"> </i> IOT Simulator</a></li>
             </ul>
