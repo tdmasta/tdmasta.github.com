@@ -61,11 +61,15 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
             // iotSimulation method
             iotSimulation: function(params) {
                 var url = CONSTANTS.remote + '/mcs/simulator.json';
+                var utoken = $cookieStore.get('utoken');
                 $log.info('URL built up : ' + url + ' & params : ' + JSON.stringify(params));
                 return $http({
                     method : 'POST',
                     url : url,
-                    data : params
+                    data : params,
+                    headers : {
+                        Authorization : 'Basic ' + utoken
+                    }
                 });  
             },
 
