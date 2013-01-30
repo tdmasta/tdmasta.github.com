@@ -82,7 +82,7 @@ function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesS
     ];
 
     $scope.simulation = {
-        url : 'http://localhost:9010',
+        url : 'http://',
         deviceserial : '9999',
 
         type : $scope.typeMessagesSelect[0].value,
