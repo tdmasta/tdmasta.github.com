@@ -104,6 +104,7 @@ function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesS
     // reset button
     $scope.resetMessages = function() {
         $scope.generatedmessages = [];
+        $scope.simulation.hits = 0;
     };
 
     // startStopSimulation button
