@@ -101,6 +101,11 @@ function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesS
 
     var check = null;
 
+    // reset button
+    $scope.resetMessages = function() {
+        $scope.generatedmessages = [];
+    };
+
     // startStopSimulation button
     $scope.startStopSimulation = function() {
         if (! $('.generatebt').hasClass('active')) {
@@ -111,7 +116,7 @@ function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesS
                     DevicesServices.iotSimulation($scope.simulation)
                         .success(function(data, status){
                             $log.info("iotSimulation success & data => " + JSON.stringify(data));
-                            $scope.generatedmessages.push(data);
+                            $scope.generatedmessages.splice(0, 0, data);
                         })
                         .error(function(data, status){
                             $log.info("iotSimulation error & data => " + JSON.stringify(data) + " & status = " + status);
