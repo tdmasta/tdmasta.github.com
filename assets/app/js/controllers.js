@@ -32,6 +32,7 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
 
     // AuthenticationByEmailSubmit button
     $scope.authenticationByEmailSubmit = function() {
+
         if ($scope.account && $scope.account.inputEmail && $scope.account.inputPassword) {
             // authentication service
             SecurityServices.authentication($scope.account.inputEmail, $scope.account.inputPassword)
@@ -39,14 +40,17 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
                     $log.info('authentication OK : data = ' + data);
                     $cookieStore.put('utoken', data);
 
-                    Context.setSimulatorVisibility(true);
-                }).error(function(data, status) {
+                    Context.setSerial(undefined);
+                    Context.setDashBoardVisibilty(true);
+                })
+                .error(function(data, status) {
                     $log.error('authentication KO : Failed request status = ' + status);
                     $cookieStore.remove('dtoken');
                     $cookieStore.remove('utoken');
 
-                    Context.setSimulatorVisibility(false);
-            });
+                    Context.setSerial(undefined);
+                    Context.setDashBoardVisibilty(false);
+                });
         }
     };
 }

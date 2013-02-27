@@ -153,6 +153,7 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
 
             // authentication method
             authentication: function(email, password) {
+                $log.info('authentication : ' + email);
                 return $http({
                     method : 'GET',
                     url : CONSTANTS.remote + '/security/authentication',
