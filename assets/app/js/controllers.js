@@ -262,6 +262,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 			                    });
 			                    $scope.messages.splice(0, 0, item);
 			                });
+							$scope.ctxt = $scope.toCtxt($scope.messages[0]);
 						}
 		                $scope.lastUpdate = new Date().getTime();
 						break;
