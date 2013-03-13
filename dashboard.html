@@ -77,27 +77,46 @@ scripts:
     <div ng:show="displayDashboard == true">
 			<ul class="nav nav-tabs">
 			  <li class="active	"><a href="#home" data-toggle="tab"> <i class="icon-dashboard"> </i> Device dashboard</a></li>
-			  <li><a href="#profile" data-toggle="tab"> <i class="icon-cloud"> </i> Applications </a></li>
-			  <li><a href="#messages" data-toggle="tab"><i class="icon-dashboard"> </i> Devices </a></li>
-			  <li><a href="#settings" data-toggle="tab"><i class="icon-dashboard"> </i> Callbacks </a></li>
 			</ul>
 			<div class="tab-content">
+				<div class="row">
+					<div class="span12">
+						<center>last update {{"{{lastUpdate | date:'medium' "}}}} </center>
+					</div>
+				</div>
 				<div class="tab-pane active" id="home">
-			        <div when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
-		            	<h3> <i class="icon-dashboard"> </i>   EVB {{"{{serial"}}}} <small>last update {{"{{lastUpdate | date:'medium' "}}}} </small> <button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined != serial)" ng:cloak>Switch from {{"{{serial"}}}} </button> <button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined == serial)" ng:cloak>Logout</button> </h3>
+					<div class="row">
+						<div class="span12">
+							<h3> <i class="icon-dashboard"> </i> Module {{"{{serial"}}}} status <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined != serial)" ng:cloak>Switch from {{"{{serial"}}}} </button> <button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined == serial)" ng:cloak>Logout</button> </span></h3>
+							<div class="row" style="margin:0 auto; display:table;">
+								<div class="span4">
+									<ul class="unstyle inline">
+										<li><i class="icon-bolt icon-2x snsr-{{"{{ctxt.battery"}}}}"></i></li>
+										<li><i class="icon-signal icon-2x snsr-{{"{{ctxt.lvl"}}}}"></i></li>
+										<li><i class="icon-rss icon-2x snsr-{{"{{ctxt.network"}}}}"></i></li>
+										<li><i class="icon-certificate icon-2x snsr-{{"{{ctxt.temp"}}}}"></i></li>
+										<li><i class="icon-exclamation-sign icon-2x snsr-{{"{{ctxt.tamper"}}}}"></i></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="span12">
+							<h3> <i class="icon-time"> </i> History </h3>
+			        	<div when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
 			            <ng-switch on="messages.length == 0">
 			                <div ng-switch-when="true">
 			                    <table class="table table-striped table-condensed table-hover">
 			                        <thead>
-			                            <th>When</th>
-			                            <th>Text</th>
-			                            <th>Raw</th>
-			                            <th>Station</th>
-			                            <th>Signal</th>
+			                            <th>Date</th>
+			                            <th>Channel</th>
+			                            <th>Message</th>
+										<th>Payload</th>
 			                        </thead>
 			                        <tbody ng-switch>
 			                            <tr>
-			                                <td colspan="5"><center> <strong>No message found</strong></center></td>
+			                                <td colspan="4"><center><i class="icon-spin icon-spinner"></i> No message found</center></td>
 			                            </tr>
 			                        </tbody>
 			                    </table>
@@ -105,28 +124,29 @@ scripts:
 			                <div ng-switch-when="false">
 			                    <table class="table table-striped table-condensed table-hover">
 			                        <thead>
-			                            <th>When</th>
-			                            <th>Text</th>
-			                            <th>Raw</th>
-			                            <th>Station</th>
-			                            <th>Signal</th>
+			                            <th>Date</th>
+			                            <th>Channel</th>
+			                            <th>Message</th>
+			                            <th>Payload</th>
 			                        </thead>
 			                        <tbody ng-switch>
 			                            <tr ng-repeat="message in messages">
-			                                <td>{{"{{message.when | date:'medium' "}}}}</td><td>{{"{{message.hr"}}}}</td><td>{{"{{message.raw"}}}}</td><td>{{"{{message.station"}}}}</td><td>{{"{{message.lvl"}}}}</td>
+			                                <td>{{"{{message.when | date:'medium' "}}}}</td>
+											<td>{{"{{message.extra.ctxt.index"}}}}</td>
+											<td>{{"{{message.extra.type"}}}}</td>
+											<td>{{"{{message.extra.payload"}}}}</td>
 			                            </tr>
+										<tr>
+											<td colspan="4"><center><i class="icon-spin icon-spinner"></i></center></td>
+										</tr>
 			                        </tbody>
 			                    </table>
 			                </div>
 			            </ng-switch>
 					</div>
+						</div>
+					</div>
 				</div>
-				<div class="tab-pane" id="profile">
-		            	<h3> Work In Progress <small> Soon available </small></h3>
-				</div>
-				<div class="tab-pane" id="profile">
-		            	<h3> Work In Progress <small> Soon available </small></h3>
-				</div>				
 			</div>
     </div>
 </div>

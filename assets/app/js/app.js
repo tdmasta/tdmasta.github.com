@@ -1,6 +1,49 @@
 'use strict';
 
-var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context', 'NotificationModule']).directive('whenScrolled', function() {
+var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context', 'NotificationModule'],function($routeProvider, $locationProvider, $httpProvider){
+	
+	var interceptor = ['$rootScope', '$q', function (scope, $q) {
+
+	        function success(response) {
+	            return response;
+	        }
+
+	        function error(response) {
+	            var status = response.status;
+
+				switch (status) {
+					case 401:
+						var deferred = $q.defer();
+	                	var req = {
+	                    	config:response.config,
+	                    	deferred:deferred
+	                	}
+						scope.$broadcast('event:loginRequired');
+					break;
+					case 500:
+						var deferred = $q.defer();
+		                var req = {
+		                    config:response.config,
+		                    deferred:deferred
+		                }
+						scope.$broadcast('event:serverError');
+					break;
+					default:
+		            return $q.reject(response);
+				}
+	            // otherwise
+
+	        }
+
+	        return function (promise) {
+	            return promise.then(success, error);
+	        }
+
+	    }];
+	
+	    $httpProvider.responseInterceptors.push(interceptor);
+	
+}).directive('whenScrolled', function() {
     return function(scope, elm, attr) {
         var raw = elm[0];
         elm.bind('scroll', function() {
@@ -37,5 +80,5 @@ app.run(function($log, $cookieStore, Context, $timeout) {
 
 
 //app.constant('CONSTANTS', {remote : 'http://localhost:9010'});
-app.constant('CONSTANTS', {remote : 'http://sensor.insgroup.fr'});
+app.constant('CONSTANTS', {remote : 'https://sensor.insgroup.fr'});
 //app.constant('CONSTANTS', {remote : 'http://192.168.0.42:9010'});

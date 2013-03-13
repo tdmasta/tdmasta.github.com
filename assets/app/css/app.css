@@ -1,6 +1,30 @@
 /* app css stylesheet */
 
-    #fixed {
-        height: 500px;
-        overflow: auto;
-    }
+#fixed {
+    height: 500px;
+    overflow: auto;
+}
+
+.snsr-unknown {
+	color : grey;
+}
+
+.snsr-on {
+	color : green;
+}
+
+.snsr-off {
+	color : red;
+}
+
+.snsr-low {
+	color : orange;
+}
+
+.snsr-ok {
+	color : green;
+}
+
+.snsr-high {
+	color : orangered;
+}

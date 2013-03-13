@@ -60,23 +60,24 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
         return {
             // iotSimulation method
             iotSimulation: function(params) {
-                var url = CONSTANTS.remote + '/mcs/simulator.json';
+                var url = CONSTANTS.remote + '/iot/simulator.json';
                 var utoken = $cookieStore.get('utoken');
                 $log.info('URL built up : ' + url + ' & params : ' + JSON.stringify(params));
-                return $http({
+				var promise = $http({
                     method : 'POST',
                     url : url,
                     data : params,
                     headers : {
                         Authorization : 'Basic ' + utoken
                     }
-                });  
+                });
+				return promise;
             },
 
             // getMessagesBefore method
             getMessagesBefore: function(sn, before, amount) {
                 var dtoken = $cookieStore.get('dtoken');
-                var url = CONSTANTS.remote + '/mcs/devices/msgs/history.json';
+                var url = CONSTANTS.remote + '/iot/devices/msgs/history.json';
                 $log.info('url built up', url);
 
 				return $http({
@@ -96,7 +97,7 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
             // getMessagesAfter method
 			getMessagesAfter: function(sn, after, amount) {
                 var dtoken = $cookieStore.get('dtoken');
-                var url = CONSTANTS.remote + '/mcs/devices/msgs/recents.json';
+                var url = CONSTANTS.remote + '/iot/devices/msgs/recents.json';
                 $log.info('url built up', url);
 
 				return $http({
@@ -134,7 +135,7 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
             checkCRC : function(inputSerial, inputKey) {
                 return $http({
                     method : 'GET',
-                    url : CONSTANTS.remote + '/mcs/devices/crc.json',
+                    url : CONSTANTS.remote + '/iot/devices/crc.json',
                     params : {  
                         sn : inputSerial,
                         key : inputKey
@@ -146,7 +147,7 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
             registration: function(account) {
                 return $http({
                     method : 'POST',
-                    url : CONSTANTS.remote + '/mcs/register.json',
+                    url : CONSTANTS.remote + '/iot/register.json',
                     data : account
                 });
             },
@@ -169,7 +170,7 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
                 var utoken = $cookieStore.get('utoken');
                 return $http({
                     method : 'DELETE',
-                    url : CONSTANTS.remote + '/mcs/developers.json',
+                    url : CONSTANTS.remote + '/iot/developers.json',
                     params : {
                         email : email
                     },

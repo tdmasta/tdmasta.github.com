@@ -200,45 +200,110 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     $scope.lastUpdate = new Date().getTime();
 	$scope.timer = undefined;
 	$scope.serial = undefined;
+	$scope.stopPolling = false;
+	$scope.errors = [];
+	$scope.ctxt = undefined;
 
     // loadMore    
     $scope.loadMore = function() {
         var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
 
         DevicesServices.getMessagesBefore(Context.serial, oldest, 50)
-            .then(function(response){
-                $log.info("within resolved resources", response.data);
-                angular.forEach(response.data, function(value, key){
-                    $scope.messages.push(value);
-                });
-                $scope.lastUpdate = new Date().getTime();
-            });
+            .then(function(response) {
+				switch (response.status) {
+					case 200 :
+	                	$log.info("within resolved resources", response);
+	                	angular.forEach(response.data, function(value, key){
+	                    	$scope.messages.push(value);
+	                	});
+	                	$scope.lastUpdate = new Date().getTime();
+						$scope.ctxt = $scope.toCtxt($scope.messages[0].extra.ctxt);
+					break;
+					case 404 :
+						Notif.error("Resource not found, please check with tech support team.");
+					default :
+						$log.error('Unexpexted error', response.status, response.body);
+						Notif.error("Unexpexcted Error");
+				}
+			});
     }
+
+	$scope.toCtxt = function(ctxt) {
+		var res = {};
+		res.temp = (typeof ctxt.temp === "undefined") ? 'unknown' : ctxt.temp.toLowerCase();
+		res.lvl = (typeof ctxt.lvl === "undefined") ? 'unknown' : ctxt.lvl.toLowerCase();
+		res.tamper = (typeof ctxt.tamper === "undefined") ? 'unknown' : ctxt.tamper.toLowerCase();
+		res.network = (typeof ctxt.network === "undefined") ? 'unknown' : ctxt.network.toLowerCase();
+		res.battery = (typeof ctxt.battery === "undefined") ? 'unknown' : ctxt.battery.toLowerCase();
+		return res;
+	}
 
     // checkForNewMsg
     $scope.checkForNewMsg = function() {
         var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
 
         DevicesServices.getMessagesAfter(Context.serial, newest, 50)
-            .then(function(response){
-                angular.forEach(response.data.reverse(), function(item, value){
-                    jQuery.pnotify({
-                        title: ''+new Date(item.when),
-                        text: item.hr,
-                        hide: false,
-						type: 'info',
-                        styling: 'bootstrap'
-                    });
-                    $scope.messages.splice(0, 0, item);
-                });
-                $scope.lastUpdate = new Date().getTime();
+            .then(function(response) {
+				switch (response.status) {
+					case 200 :
+						if (typeof response.data!="undefined") {
+			                angular.forEach(response.data.reverse(), function(item, value){
+			                    jQuery.pnotify({
+			                        title: function(item){
+										var key = item.extra.type.split(':')[0];
+										return key;
+									},
+			                        text: function(item){
+											return item.extra.payload
+									},
+			                        hide: false,
+									type: 'info',
+			                        styling: 'bootstrap'
+			                    });
+			                    $scope.messages.splice(0, 0, item);
+			                });
+						}
+		                $scope.lastUpdate = new Date().getTime();
+						break;
+					case 404 :
+						Notif.error("Resource not found, please check with tech support team.");
+						break;
+					default :
+						$log.error('Unexpexted error', response.status, response.body);
+						Notif.error("Unexpexcted Error");
+						break;
+				}
             });
     }
 
     $scope.poll = function() {
-        $scope.checkForNewMsg();
-       	$scope.timer = $timeout($scope.poll, 5000);
+		if (true === $scope.stopPolling) {
+			clearInterval($scope.timer);
+		} else {
+	        $scope.checkForNewMsg()
+			$scope.timer = $timeout($scope.poll, 5000);
+		}
     }
+
+	$scope.$on('event:loginRequired', function(event){
+		$scope.stopPolling = true;
+		
+		if ($scope.errors.length == 0) {
+			Notif.error("Authentication failure => leaving");
+			$scope.errors.push()
+		} else {
+			$scope.errors.pop();
+		}
+        $cookieStore.remove('dtoken');
+        $cookieStore.remove('utoken');
+		Context.setSerial(undefined);
+        Context.setDashBoardVisibilty(false);
+	});
+	
+	
+	$scope.$on('event:serverError', function(event){
+		Notif.error(data);
+	});
 
     // Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
@@ -269,6 +334,7 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 	$scope.serial = undefined;
 	
 	$scope.logOut = function() {
+		$log.info('logout event');
 		$cookieStore.remove('dtoken');
 		$cookieStore.remove('utoken');
 		Context.setSerial(undefined);
@@ -282,6 +348,5 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
         $scope.display = Context.dashboard.visible;
         $scope.serial = Context.serial;
     });
-	
 	
 }
