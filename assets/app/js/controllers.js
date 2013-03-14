@@ -203,6 +203,25 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	$scope.stopPolling = false;
 	$scope.errors = [];
 	$scope.ctxt = undefined;
+	$scope.eventTitle = {
+		'event' : 'Nouvel Evènement',
+		'service' : 'Demande de service',
+		'raw' : 'Payload simple',
+		'data' : 'Stockage de données',
+		'register' : 'Nouvel Apparaige',
+		'keepalive' : 'KeepAlive'
+	};
+	
+	$scope.eventDetail = {
+		'batterylow' : 'Batterie Faible',
+		'batteryok' : 'Batterie OK',
+		'boot' : 'Redémarrage',
+		'switchon' : 'Switch On',
+		'switchoff' : 'Switch Off',
+		'tweet' : "Envoi d 'un tweet",
+		'keepalive' : 'Keepalive'
+	};
+	
 
     // loadMore    
     $scope.loadMore = function() {
@@ -217,7 +236,9 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	                    	$scope.messages.push(value);
 	                	});
 	                	$scope.lastUpdate = new Date().getTime();
-						$scope.ctxt = $scope.toCtxt($scope.messages[0].extra.ctxt);
+						if ($scope.messages[0].extra.ctxt) {
+							$scope.ctxt = $scope.toCtxt($scope.messages[0].extra.ctxt);
+						}
 					break;
 					case 404 :
 						Notif.error("Resource not found, please check with tech support team.");
@@ -231,7 +252,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	$scope.toCtxt = function(ctxt) {
 		var res = {};
 		res.temp = (typeof ctxt.temp === "undefined") ? 'unknown' : ctxt.temp.toLowerCase();
-		res.lvl = (typeof ctxt.lvl === "undefined") ? 'unknown' : ctxt.lvl.toLowerCase();
+		res.level = (typeof ctxt.level === "undefined") ? 'unknown' : ctxt.level.toLowerCase();
 		res.tamper = (typeof ctxt.tamper === "undefined") ? 'unknown' : ctxt.tamper.toLowerCase();
 		res.network = (typeof ctxt.network === "undefined") ? 'unknown' : ctxt.network.toLowerCase();
 		res.battery = (typeof ctxt.battery === "undefined") ? 'unknown' : ctxt.battery.toLowerCase();
@@ -244,25 +265,30 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 
         DevicesServices.getMessagesAfter(Context.serial, newest, 50)
             .then(function(response) {
+				$log.info('response', response.data);
 				switch (response.status) {
 					case 200 :
-						if (typeof response.data!="undefined") {
-			                angular.forEach(response.data.reverse(), function(item, value){
+						if (typeof response.data != "undefined") {
+							
+			                angular.forEach(response.data.reverse(), function(item, value) {
+								var infos = item.extra.type.split(':')
+								var ititle = function() {
+										return $scope.eventTitle[infos[0]];
+								};
+								var itext = [$scope.eventDetail[infos[1]], item.extra.payload || ''].join(' ');
+								
 			                    jQuery.pnotify({
-			                        title: function(item){
-										var key = item.extra.type.split(':')[0];
-										return key;
-									},
-			                        text: function(item){
-											return item.extra.payload
-									},
+			                        title: ititle,
+			                        text: itext,
 			                        hide: false,
 									type: 'info',
 			                        styling: 'bootstrap'
 			                    });
 			                    $scope.messages.splice(0, 0, item);
 			                });
-							$scope.ctxt = $scope.toCtxt($scope.messages[0]);
+							if (response.data.length != 0 && $scope.messages[0].extra.ctxt)  {
+								$scope.ctxt = $scope.toCtxt($scope.messages[0].extra.ctxt);
+							}
 						}
 		                $scope.lastUpdate = new Date().getTime();
 						break;
