@@ -12,7 +12,7 @@ scripts:
 - {name: pines, type: remote, url: "assets/app/lib/jquery.pnotify.min.js"}
 - {name: modernizr, type: remote, url: "assets/app/js/mdz.js"}
 - {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
-- {name: popover, type: inline, content: "$(function(){$('label[rel=\"popover\"]').popover({trigger:'hover'});})"}
+- {name: popover, type: inline, content: "$(function(){$('label[rel=\"popover\"]').popover({trigger:'hover'});$('a[data-toggle=\"tooltip\"]').tooltip({placement:'bottom'});})"}
 ---
 
 {% include JB/setup %}
@@ -89,13 +89,13 @@ scripts:
 						<div class="span12">
 							<h3> <i class="icon-dashboard"> </i> Module {{"{{serial"}}}} status <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined != serial)" ng:cloak>Switch from {{"{{serial"}}}} </button> <button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined == serial)" ng:cloak>Logout</button> </span></h3>
 							<div class="row" style="margin:0 auto; display:table;">
-								<div class="span4">
+								<div class="span5">
 									<ul class="unstyle inline">
-										<li><a href="#" data-toggle="tooltip" data-original-title="Indicateur du niveau de battery ON / OFF"><i class="icon-bolt icon-4x snsr-{{"{{ctxt.battery"}}}}"></i></li>
-										<li><i class="icon-signal icon-4x snsr-{{"{{ctxt.level"}}}}"></i></li>
-										<li><i class="icon-rss icon-4x snsr-{{"{{ctxt.network"}}}}"></i></li>
-										<li><i class="icon-certificate icon-4x snsr-{{"{{ctxt.temp"}}}}"></i></li>
-										<li><i class="icon-exclamation-sign icon-4x snsr-{{"{{ctxt.tamper"}}}}"></i></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Battery status indicator : {{"{{ctxt.battery"}}}}"><i class="icon-bolt icon-4x snsr-{{"{{ctxt.battery"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Sigfox wireless signal status indicator : {{"{{ctxt.level"}}}}"><i class="icon-signal icon-4x snsr-{{"{{ctxt.level"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Local network connection status indicator : {{"{{ctxt.network"}}}}"><i class="icon-rss icon-4x snsr-{{"{{ctxt.network"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Temperature status indicator : {{"{{ctxt.temp"}}}}"><i class="icon-certificate icon-4x snsr-{{"{{ctxt.temp"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Switch status indicator : {{"{{ctxt.tamper"}}}}"><i class="icon-exclamation-sign icon-4x snsr-{{"{{ctxt.tamper"}}}}"></i></a></li>
 									</ul>
 								</div>
 							</div>

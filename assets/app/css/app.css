@@ -5,8 +5,12 @@
     overflow: auto;
 }
 
+a.indicator:hover {
+	text-decoration : none;
+}
+
 .snsr-unknown {
-	color : grey;
+	color : #0088cc;
 }
 
 .snsr-on {
