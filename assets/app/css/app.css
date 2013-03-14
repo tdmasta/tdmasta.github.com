@@ -9,6 +9,10 @@ a.indicator:hover {
 	text-decoration : none;
 }
 
+a.indicator  {
+	transition: color 2s ease, height 3s linear;
+}
+
 .snsr-unknown {
 	color : #0088cc;
 }
