@@ -218,6 +218,8 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		'boot' : 'Redémarrage',
 		'switchon' : 'Switch On',
 		'switchoff' : 'Switch Off',
+		'rssilow' : 'Qualité signal faible',
+		'rssiok' : 'Qualité signal OK',
 		'tweet' : "Envoi d 'un tweet",
 		'keepalive' : 'Keepalive'
 	};
