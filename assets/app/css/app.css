@@ -1,4 +1,15 @@
 /* app css stylesheet */
+html, body { height:100%; }
+
+footer {
+	position:relative;
+    clear:both;
+    height:30px; /* Tinggi footer */
+    line-height:30px;
+}
+.content {
+	min-height: 100%;
+}
 
 #fixed {
     height: 500px;
@@ -7,10 +18,12 @@
 
 a.indicator:hover {
 	text-decoration : none;
+	opacity: 0.3;
 }
 
-a.indicator  {
-	transition: color 2s ease, height 3s linear;
+a.indicator i {
+	font-size: 7em;
+	-webkit-transition: all 1000ms; -moz-transition: all 1000ms; -o-transition: all 1000ms; transition: all 1000ms; 
 }
 
 .snsr-unknown {
@@ -26,7 +39,7 @@ a.indicator  {
 }
 
 .snsr-low {
-	color : orange;
+	color : blue;
 }
 
 .snsr-ok {

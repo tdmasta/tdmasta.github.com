@@ -203,6 +203,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	$scope.stopPolling = false;
 	$scope.errors = [];
 	$scope.ctxt = undefined;
+	
 	$scope.eventTitle = {
 		'event' : 'Nouvel Evènement',
 		'service' : 'Demande de service',
@@ -223,6 +224,8 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		'tweet' : "Envoi d 'un tweet",
 		'keepalive' : 'Keepalive'
 	};
+	
+	$scope._devices = {};
 	
 
     // loadMore    
@@ -252,7 +255,9 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     }
 
 	$scope.toCtxt = function(ctxt) {
-		var res = {};
+		var res = {}
+		res.category  = (typeof ctxt.cat === "undefined") ? '?' : ctxt.category;
+		res.uid  = (typeof ctxt.uid === "undefined") ? '?' : ctxt.uid;
 		res.temp = (typeof ctxt.temp === "undefined") ? 'unknown' : ctxt.temp.toLowerCase();
 		res.level = (typeof ctxt.level === "undefined") ? 'unknown' : ctxt.level.toLowerCase();
 		res.tamper = (typeof ctxt.tamper === "undefined") ? 'unknown' : ctxt.tamper.toLowerCase();

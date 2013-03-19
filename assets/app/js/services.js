@@ -98,7 +98,6 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
 			getMessagesAfter: function(sn, after, amount) {
                 var dtoken = $cookieStore.get('dtoken');
                 var url = CONSTANTS.remote + '/iot/devices/msgs/recents.json';
-                $log.info('url built up', url);
 
 				return $http({
                     method : 'GET',
@@ -112,7 +111,22 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
                         'x-snsr-device-key' : dtoken
                     }
                 });
+			},
+			
+			getChildren : function(sn) {
+                var dtoken = $cookieStore.get('dtoken');
+                var url = CONSTANTS.remote + '/iot/devices/children.json';
 
+				return $http({
+                    method : 'GET',
+                    url : url,
+                    params : {
+                        sn : sn
+                    },
+                    headers : {
+                        'x-snsr-device-key' : dtoken
+                    }
+                });
 			} 
         }
     });
