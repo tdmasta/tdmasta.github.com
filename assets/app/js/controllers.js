@@ -196,15 +196,17 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 // Dashboard controller
 function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Context, Notif) {
 
-    $scope.messages = [];
-    $scope.lastUpdate = new Date().getTime();
-	$scope.timer = undefined;
-	$scope.serial = undefined;
-	$scope.stopPolling = false;
-	$scope.errors = [];
-	$scope.ctxt = undefined;
+    $scope._messages = [];
+    $scope._lastUpdate = new Date().getTime();
+	$scope._timer = undefined;
+	$scope._serial = undefined;
+	$scope._stopPolling = false;
+	$scope._errors = [];
+	$scope._ctxt = undefined;
+	$scope._devices = [];
+	$scope._devicesMap = {};
 	
-	$scope.eventTitle = {
+	$scope._eventTitle = {
 		'event' : 'Nouvel Evènement',
 		'service' : 'Demande de service',
 		'raw' : 'Payload simple',
@@ -213,7 +215,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		'keepalive' : 'KeepAlive'
 	};
 	
-	$scope.eventDetail = {
+	$scope._eventDetail = {
 		'batterylow' : 'Batterie Faible',
 		'batteryok' : 'Batterie OK',
 		'boot' : 'Redémarrage',
@@ -225,12 +227,10 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		'keepalive' : 'Keepalive'
 	};
 	
-	$scope._devices = {};
-	
 
     // loadMore    
     $scope.loadMore = function() {
-        var oldest = $scope.messages.length != 0 ? $scope.messages[$scope.messages.length - 1].when : null;
+        var oldest = $scope._messages.length != 0 ? $scope._messages[$scope._messages.length - 1].when : null;
 
         DevicesServices.getMessagesBefore(Context.serial, oldest, 50)
             .then(function(response) {
@@ -238,11 +238,11 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 					case 200 :
 	                	$log.info("within resolved resources", response);
 	                	angular.forEach(response.data, function(value, key){
-	                    	$scope.messages.push(value);
+	                    	$scope._messages.push(value);
 	                	});
-	                	$scope.lastUpdate = new Date().getTime();
-						if ($scope.messages[0].extra.ctxt) {
-							$scope.ctxt = $scope.toCtxt($scope.messages[0].extra.ctxt);
+	                	$scope._lastUpdate = new Date().getTime();
+						if ($scope._messages[0].extra.ctxt) {
+							$scope._ctxt = $scope.toCtxt($scope._messages[0].extra.ctxt);
 						}
 					break;
 					case 404 :
@@ -256,8 +256,10 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 
 	$scope.toCtxt = function(ctxt) {
 		var res = {}
-		res.category  = (typeof ctxt.cat === "undefined") ? '?' : ctxt.category;
-		res.uid  = (typeof ctxt.uid === "undefined") ? '?' : ctxt.uid;
+		res.category  = (typeof ctxt.cat === "undefined") ? '?' : ctxt.category.toLowerCase();
+		res.uid  = (typeof ctxt.uid === "undefined") ? '?' : ctxt.uid.toLowerCase();
+		res.id  = (typeof ctxt.id === "undefined") ? '?' : ctxt.id.toLowerCase();
+		res.serial = (typeof ctxt.serial === "undefined") ? '?' : ctxt.serial.toLowerCase();
 		res.temp = (typeof ctxt.temp === "undefined") ? 'unknown' : ctxt.temp.toLowerCase();
 		res.level = (typeof ctxt.level === "undefined") ? 'unknown' : ctxt.level.toLowerCase();
 		res.tamper = (typeof ctxt.tamper === "undefined") ? 'unknown' : ctxt.tamper.toLowerCase();
@@ -268,7 +270,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 
     // checkForNewMsg
     $scope.checkForNewMsg = function() {
-        var newest = $scope.messages.length != 0 ? $scope.messages[0].when : null;
+        var newest = $scope._messages.length != 0 ? $scope._messages[0].when : null;
 
         DevicesServices.getMessagesAfter(Context.serial, newest, 50)
             .then(function(response) {
@@ -291,13 +293,13 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 									type: 'info',
 			                        styling: 'bootstrap'
 			                    });
-			                    $scope.messages.splice(0, 0, item);
+			                    $scope._messages.splice(0, 0, item);
 			                });
-							if (response.data.length != 0 && $scope.messages[0].extra.ctxt)  {
-								$scope.ctxt = $scope.toCtxt($scope.messages[0].extra.ctxt);
+							if (response.data.length != 0 && $scope._messages[0].extra.ctxt)  {
+								$scope._ctxt = $scope.toCtxt($scope._messages[0].extra.ctxt);
 							}
 						}
-		                $scope.lastUpdate = new Date().getTime();
+		                $scope._timer = new Date().getTime();
 						break;
 					case 404 :
 						Notif.error("Resource not found, please check with tech support team.");
@@ -311,22 +313,26 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     }
 
     $scope.poll = function() {
-		if (true === $scope.stopPolling) {
-			clearInterval($scope.timer);
+		if (true === $scope._stopPolling) {
+			clearInterval($scope._timer);
 		} else {
 	        $scope.checkForNewMsg()
-			$scope.timer = $timeout($scope.poll, 5000);
+			$scope._timer = $timeout($scope.poll, 5000);
 		}
     }
 
+	$scope.init = function() {
+		return DevicesServices.getChildren(Context.serial);
+	}
+
 	$scope.$on('event:loginRequired', function(event){
-		$scope.stopPolling = true;
+		$scope._stopPolling = true;
 		
-		if ($scope.errors.length == 0) {
+		if ($scope._errors.length == 0) {
 			Notif.error("Authentication failure => leaving");
-			$scope.errors.push()
+			$scope._errors.push()
 		} else {
-			$scope.errors.pop();
+			$scope._errors.pop();
 		}
         $cookieStore.remove('dtoken');
         $cookieStore.remove('utoken');
@@ -342,30 +348,38 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     // Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
 		$log.info('waking up on dashoard event');
-        $scope.displayDashboard = Context.dashboard.visible;
-		if (true == $scope.displayDashboard) {
-        	$scope.loadMore();	
-			if (undefined == $scope.timer) {
-				$log.info("calling polling operation");
-				$scope.poll();
-			} else {
-				$log.info("not calling polling operation");
-			}
+        $scope._displayDashboard = Context.dashboard.visible;
+		if (true == $scope._displayDashboard) {
+			
+			$scope.init().then(function(response) {
+				angular.forEach(response.data,function(device) {
+					$log.info("handling device ", device);
+					$scope._devicesMap[device.id] = $scope.toCtxt(device);
+				})
+				$scope._devices = response.data;
+	        	$scope.loadMore();
+				if (undefined == $scope._timer) {
+					$log.info("calling polling operation");
+					$scope.poll();
+				} else {
+					$log.info("not calling polling operation");
+				}
+			});
 		} else {
-			clearInterval($scope.timer);
+			clearInterval($scope._timer);
 		}
     });
 
     // Event handleDisplayDashboard
     $scope.$on('newSerialEvent', function() {
-        $scope.serial = Context.serial;
+        $scope._serial = Context.serial;
     });
 }
 
 function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 	
-	$scope.display = false;
-	$scope.serial = undefined;
+	$scope._display = false;
+	$scope._serial = undefined;
 	
 	$scope.logOut = function() {
 		$log.info('logout event');
@@ -379,8 +393,8 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 	// Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
 		$log.info('waking up on dashoard event');
-        $scope.display = Context.dashboard.visible;
-        $scope.serial = Context.serial;
+        $scope._display = Context.dashboard.visible;
+        $scope._serial = Context.serial;
     });
 	
 }

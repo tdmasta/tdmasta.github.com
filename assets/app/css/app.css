@@ -22,7 +22,6 @@ a.indicator:hover {
 }
 
 a.indicator i {
-	font-size: 7em;
 	-webkit-transition: all 1000ms; -moz-transition: all 1000ms; -o-transition: all 1000ms; transition: all 1000ms; 
 }
 

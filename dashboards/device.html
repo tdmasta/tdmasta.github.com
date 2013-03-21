@@ -19,7 +19,7 @@ scripts:
 
 <div ng-app="evbApp" ng-controller="DashboardCtrl">
 
-    <div ng:show="displayDashboard != true" ng:cloak>
+    <div ng:show="_displayDashboard != true" ng:cloak>
 	   <div class="row" style="margin: 0 auto;display: table;">
             <div class="span5">
                 <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account, displayDashboard)" >
@@ -47,42 +47,35 @@ scripts:
             </div>
         </div>
     </div>
-    <div ng:show="displayDashboard == true">
+    <div ng:show="_displayDashboard == true">
 		<div class="row">
 			<div class="span12">
-				<center>last update {{"{{lastUpdate | date:'medium' "}}}} </center>
+				<center>last update {{"{{_lastUpdate | date:'medium' "}}}} </center>
 			</div>
 		</div>
 		<div class="row">
 			<div class="span12">
-				<h3> <i class="icon-dashboard"> </i> Module {{"{{serial"}}}} status <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined != serial)" ng:cloak>Switch from {{"{{serial"}}}} </button> <button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined == serial)" ng:cloak>Logout</button> </span></h3>
-				<div class="row" style="margin:0 auto; display:table;">
-					<div class="well" style="margin-top:9em;margin-bottom:5em;">
-						<ul class="unstyle inline">
-							<li class="pull-left"><a href="#" class="indicator" data-toggle="popover" data-placement="bottom" data-original-title="Device information" data-content="<p>{{"{{ctxt.uid"}}}}<br/></p>" data-html="true"><i class="icon-hdd icon-4x snsr-{{"{{ctxt.uid"}}}}"></i></a></li>
-							<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Battery status indicator : {{"{{ctxt.battery"}}}}"><i class="icon-bolt icon-4x snsr-{{"{{ctxt.battery"}}}}"></i></a></li>
-							<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Sigfox wireless signal status indicator : {{"{{ctxt.level"}}}}"><i class="icon-signal icon-4x snsr-{{"{{ctxt.level"}}}}"></i></a></li>
-							<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Local network connection status indicator : {{"{{ctxt.network"}}}}"><i class="icon-rss icon-4x snsr-{{"{{ctxt.network"}}}}"></i></a></li>
-							<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Temperature status indicator : {{"{{ctxt.temp"}}}}"><i class="icon-certificate icon-4x snsr-{{"{{ctxt.temp"}}}}"></i></a></li>
-							<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Switch status indicator : {{"{{ctxt.tamper"}}}}"><i class="icon-exclamation-sign icon-4x snsr-{{"{{ctxt.tamper"}}}}"></i></a></li>
-						</ul>
-						<!--
-			            <ng-switch on="_devices">
-			                <div ng-switch-when="true">
-								<center>Aucune information</center>
+				<h3> <i class="icon-dashboard"> </i> Module {{"{{_serial"}}}} status <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_display == true) && (undefined != _serial)" ng:cloak>Switch from {{"{{_serial"}}}} </button> <button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined == _serial)" ng:cloak>Logout</button> </span></h3>
+					<ng-switch on="_devices.length == 0">
+		                <div ng-switch-when="true">
+							<center>Aucune information</center>
+						</div>
+						<div ng-switch-when="false">
+							<div class="well thumbnail span3" ng-repeat="(id,d) in _devicesMap">
+								<h3><i class="icon-hdd icon-2x snsr-{{"{{d.uid"}}}}"></i> <span class="label label-info">{{"{{d.uid"}}}}</span></h3>
+								<div class="caption">
+									<ul class="unstyle inline">
+										<li class="pull-left"><a href="#" class="indicator" data-toggle="popover" data-placement="bottom" data-original-title="Device information" data-content="<p>{{"{{d.uid"}}}<br/></p>" data-html="true"></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Battery status indicator : {{"{{d.battery"}}}}"><i class="icon-bolt icon-2x snsr-{{"{{d.battery"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Sigfox wireless signal status indicator : {{"{{d.level"}}}}"><i class="icon-signal icon-2x snsr-{{"{{d.level"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Local network connection status indicator : {{"{{d.network"}}}}"><i class="icon-rss icon-2x snsr-{{"{{d.network"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Temperature status indicator : {{"{{d.temp"}}}}"><i class="icon-certificate icon-2x snsr-{{"{{d.temp"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Switch status indicator : {{"{{d.tamper"}}}}"><i class="icon-exclamation-sign icon-2x snsr-{{"{{d.tamper"}}}}"></i></a></li>
+									</ul>
+								</div>
 							</div>
-							<div ng-switch-when="false">
-								<ul class="unstyle" ng-repeat="(id, ctxt) in _devices">
-									<li>
-										<div class="thumbnail">
-										</div>
-									</li>
-								</ul>
-							</div>
-						</ng-switch>
-						-->
-					</div>
-				</div>
+						</div>
+					</ng-switch>
 			</div>
 		</div>
 		
@@ -99,7 +92,7 @@ scripts:
 			</div>
 			<div class="modal-body">
 				<div class="span5" when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
-		            <ng-switch on="messages.length == 0">
+		            <ng-switch on="_messages.length == 0">
 		                <div ng-switch-when="true">
 		                    <table class="table table-striped table-condensed table-hover">
 		                        <thead>
@@ -124,7 +117,7 @@ scripts:
 		                            <th>[Payload]</th>
 		                        </thead>
 		                        <tbody ng-switch>
-		                            <tr ng-repeat="message in messages">
+		                            <tr ng-repeat="message in _messages">
 		                                <td>{{"{{message.when | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
 										<td>{{"{{message.extra.ctxt.index"}}}}</td>
 										<td>{{"{{message.extra.type"}}}}</td>
