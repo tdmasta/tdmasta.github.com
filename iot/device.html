@@ -9,11 +9,28 @@ scripts:
   content: "$(function() {$('.bs-docs-sidenav').affix();})"
 ---
 {% include JB/setup %}
+	
+			<div class="span3 bs-docs-sidebar">
+				<ul class="nav nav-list bs-docs-sidenav affix">
+		          <li><a href="#overview"><i class="icon-chevron-right"></i> Overview </a></li>
+		          <li><a href="#authentication"><i class="icon-chevron-right"></i> Authentication</a></li>
+		          <li><a href="#msgs_history"><i class="icon-chevron-right"></i> Fetching messages history</a></li>
+		          <li><a href="#recents_msgs"><i class="icon-chevron-right"></i> Fetching recents messages</a></li>
+		          <li><a href="#fetch_devices"><i class="icon-chevron-right"></i> Fetching devices</a></li>
+		          <li><a href="#change_status"><i class="icon-chevron-right"></i> Changing device status</a></li>
+ 				</ul>
+			</div>
 
-<div>
-                <h2>Device API</h2>
-                <hr/>
-                <br/>
+			<div class="span9">
+				<section id="overview">
+                	<h2>Device API <small>Overview</small></h2>
+					<p>
+						This api provides both module operations as well as stored data access through unified model. <br/>
+						Check the <a href="/iot/iot.html" target="_blank">Iot model definition</a> for more information about data made available throught the IoT API. <br/>
+					</p>
+				</section>
+				<hr/>
+				<section id="authentication">
                 <h4>Authentication</h4>
                 <p>
                     Device Access requires custom header for authentication check.
@@ -34,7 +51,7 @@ scripts:
                     </table>
                 </p>
                 <br/><br/>
-                <h4><a name="DeviceAuthentication">GET /mcs/devices/crc.json</a></h4>
+                <h4><a>GET /iot/devices/crc.json</a></h4>
                 <br/>
                 <table class="table">
                             <tbody>
@@ -44,7 +61,7 @@ scripts:
                                 </tr>
                                 <tr>
                                     <td><h6>Url</h6></td>
-                                    <td><code>https://sensor.insgroup.fr/mcs/devices/crc.json</code></td>
+                                    <td><code>https://sensor.insgroup.fr/iot/devices/crc.json</code></td>
                                 </tr>
                                 <tr>
                                     <td><h6>Method</h6></td>
@@ -95,7 +112,10 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                             </tr>
                         </tbody>
                     </table>
-                <h4><a name="getMsgsBefore">GET /mcs/devices/msgs/history.json</a></h4>
+				</section>
+				
+				<section id="msgs_history">
+                <h4><a>GET /iot/devices/msgs/history.json</a></h4>
                 <br/>
                 <table class="table">
                             <tbody>
@@ -105,7 +125,7 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                                 </tr>
                                 <tr>
                                     <td><h6>Url</h6></td>
-                                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/history.json</code></td>
+                                    <td><code>https://sensor.insgroup.fr/iot/devices/msgs/history.json</code></td>
                                 </tr>
                                 <tr>
                                     <td><h6>Method</h6></td>
@@ -127,48 +147,7 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                                     <p>
                                         <strong>Sample JSON response</strong></p>
                                         <pre style="overflow:auto;">
-[{
-        "hr": "Hello World!", 
-        "lvl": "32.56", 
-        "raw": "48656c6c6f20576f726c6421", 
-        "station": "003B", 
-        "when": 1346768706050
-    }, 
-    {
-        "hr": "", 
-        "lvl": "22.6", 
-        "raw": "", 
-        "station": "003B", 
-        "when": 1346768689287
-    }, 
-    {
-        "hr": "hello World\u0000", 
-        "lvl": "24.64", 
-        "raw": "68656c6c6f20576f726c6400", 
-        "station": "003B", 
-        "when": 1346768588135
-    }, 
-    {
-        "hr": "hello World\u0000", 
-        "lvl": "15.78", 
-        "raw": "68656c6c6f20576f726c6400", 
-        "station": "002F", 
-        "when": 1346768559178
-    }, 
-    {
-        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
-        "lvl": "32.36", 
-        "raw": "01020304050607080900", 
-        "station": "003B", 
-        "when": 1346431311641
-    }, 
-    {
-        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
-        "lvl": "5.68", 
-        "raw": "01020304050607080900", 
-        "station": "002F", 
-        "when": 1346431298994
-    }]
+ADD SOME JSON HERE
                                 </pre>
                                 <h5>Return value definitions</h5>
                                 <table class="table table-bordered">
@@ -214,7 +193,9 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                         </tr>
                     </tbody>
                 </table>
-                <h4><a name="getMsgsAfter">GET /mcs/devices/msgs/recents.json</a></h4>
+                </section>
+				<section id="recents_msgs">
+				<h4><a>GET /iot/devices/msgs/recents.json</a></h4>
                 <br/>
                 <table class="table">
                             <tbody>
@@ -224,7 +205,7 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                                 </tr>
                                 <tr>
                                     <td><h6>Url</h6></td>
-                                    <td><code>https://sensor.insgroup.fr/mcs/devices/msgs/recents.json</code></td>
+                                    <td><code>https://sensor.insgroup.fr/iot/devices/msgs/recents.json</code></td>
                                 </tr>
                                 <tr>
                                     <td><h6>Method</h6></td>
@@ -243,52 +224,11 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                                 <tr>
                                     <td><h6>Returns</h6></td>
                                     <td>
-                                        Array of mcs messages
+                                        Array of iot messages
                                         <p>
                                         <strong>Sample JSON response</strong></p>
                                         <pre style="overflow:auto">
-[{
-        "hr": "Hello World!", 
-        "lvl": "32.56", 
-        "raw": "48656c6c6f20576f726c6421", 
-        "station": "003B", 
-        "when": 1346768706050
-    }, 
-    {
-        "hr": "", 
-        "lvl": "22.6", 
-        "raw": "", 
-        "station": "003B", 
-        "when": 1346768689287
-    }, 
-    {
-        "hr": "hello World\u0000", 
-        "lvl": "24.64", 
-        "raw": "68656c6c6f20576f726c6400", 
-        "station": "003B", 
-        "when": 1346768588135
-    }, 
-    {
-        "hr": "hello World\u0000", 
-        "lvl": "15.78", 
-        "raw": "68656c6c6f20576f726c6400", 
-        "station": "002F", 
-        "when": 1346768559178
-    }, 
-    {
-        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
-        "lvl": "32.36", 
-        "raw": "01020304050607080900", 
-        "station": "003B", 
-        "when": 1346431311641
-    }, 
-    {
-        "hr": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u0000", 
-        "lvl": "5.68", 
-        "raw": "01020304050607080900", 
-        "station": "002F", 
-        "when": 1346431298994
-    }]
+ADD SOME JSON HERE
                                         </pre>
                                         <h5>Return value definitions</h5>
                                         <table class="table table-bordered">
@@ -334,4 +274,165 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                                 </tr>
                             </tbody>
                         </table>
-</div>
+				</section>
+				
+				<section id="fetch_devices">
+				<h4><a>GET /iot/devices/children.json</a></h4>
+                <br/>
+                <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><h6>Description</h6></td>
+                                    <td>Module devices resolution</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Url</h6></td>
+                                    <td><code>https://sensor.insgroup.fr/iot/devices/children.json</code></td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Method</h6></td>
+                                    <td>GET</td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Parameters</h6></td>
+                                    <td>
+                                        <ol>
+                                            <li><code>sn</code> <i>required</i> the module serial number</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Returns</h6></td>
+                                    <td>
+                                        Array of iot devices registered behind a gw module
+                                        <p>
+                                        <strong>Sample JSON response</strong></p>
+                                        <pre style="overflow:auto">
+                                        </pre>
+                                        <h5>Return value definitions</h5>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Field</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>when</td>
+                                                    <td>Message reception timestamp (GMT)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>raw</td>
+                                                    <td>Raw Message content</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>hr</td>
+                                                    <td>Human readable translation of the raw content</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>lvl</td>
+                                                    <td>Signal level upon reception</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>station</td>
+                                                    <td>Receiver station id</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h6>Errors</h6></td>
+                                    <td>
+                                        <ul class="unstyled">
+                                            <li><code>404</code> - The serial number was not found </li>
+                                            <li><code>401</code> - The authentication token is invalid or missing </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+				</section>
+
+				<section id="change_status">
+					<h4><a>POST /iot/devices/status.json</a></h4>
+	                <br/>
+	                <table class="table">
+	                            <tbody>
+	                                <tr>
+	                                    <td><h6>Description</h6></td>
+	                                    <td>Module devices Fetch Operation</td>
+	                                </tr>
+	                                <tr>
+	                                    <td><h6>Url</h6></td>
+	                                    <td><code>https://sensor.insgroup.fr/iot/devices/status.json</code></td>
+	                                </tr>
+	                                <tr>
+	                                    <td><h6>Method</h6></td>
+	                                    <td>POST</td>
+	                                </tr>
+	                                <tr>
+	                                    <td><h6>Parameters</h6></td>
+	                                    <td>
+	                                        <ol>
+	                                            <li><code>sn</code> <i>required</i> the module serial number</li>
+	                                        </ol>
+	                                    </td>
+	                                </tr>
+	                                <tr>
+	                                    <td><h6>Returns</h6></td>
+	                                    <td>
+	                                        Array of iot Devices
+	                                        <p>
+	                                        <strong>Sample JSON response</strong></p>
+	                                        <pre style="overflow:auto">
+	
+	                                        </pre>
+	                                        <h5>Return value definitions</h5>
+	                                        <table class="table table-bordered">
+	                                            <thead>
+	                                                <tr>
+	                                                    <th>Field</th>
+	                                                    <th>Description</th>
+	                                                </tr>
+	                                            </thead>
+	                                            <tbody>
+	                                                <tr>
+	                                                    <td>when</td>
+	                                                    <td>Message reception timestamp (GMT)</td>
+	                                                </tr>
+	                                                <tr>
+	                                                    <td>raw</td>
+	                                                    <td>Raw Message content</td>
+	                                                </tr>
+	                                                <tr>
+	                                                    <td>hr</td>
+	                                                    <td>Human readable translation of the raw content</td>
+	                                                </tr>
+	                                                <tr>
+	                                                    <td>lvl</td>
+	                                                    <td>Signal level upon reception</td>
+	                                                </tr>
+	                                                <tr>
+	                                                    <td>station</td>
+	                                                    <td>Receiver station id</td>
+	                                                </tr>
+	                                            </tbody>
+	                                        </table>
+	                                    </td>
+	                                </tr>
+	                                <tr>
+	                                    <td><h6>Errors</h6></td>
+	                                    <td>
+	                                        <ul class="unstyled">
+	                                            <li><code>404</code> - The serial number was not found </li>
+	                                            <li><code>401</code> - The authentication token is invalid or missing </li>
+	                                        </ul>
+	                                    </td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+					</section>
+				</div>
+				</div>	

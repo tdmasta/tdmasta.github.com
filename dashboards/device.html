@@ -12,7 +12,6 @@ scripts:
 - {name: pines, type: remote, url: "/assets/app/lib/jquery.pnotify.min.js"}
 - {name: modernizr, type: remote, url: "/assets/app/js/mdz.js"}
 - {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
-- {name: popover, type: inline, content: "$(function(){$('[data-toggle=\"popover\"]').popover({trigger:'hover'});$('[data-toggle=\"tooltip\"]').tooltip({placement:'bottom'});})"}
 ---
 
 {% include JB/setup %}
@@ -58,12 +57,14 @@ scripts:
 				<h3> <i class="icon-dashboard"> </i> Module {{"{{_serial"}}}} status <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_display == true) && (undefined != _serial)" ng:cloak>Switch from {{"{{_serial"}}}} </button> <button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined == _serial)" ng:cloak>Logout</button> </span></h3>
 					<ng-switch on="_devices.length == 0">
 		                <div ng-switch-when="true">
-							<center>Aucune information</center>
+							<center><i class="icon-spinner icon-spin"></i></center>
 						</div>
 						<div ng-switch-when="false">
-							<div class="well thumbnail span3" ng-repeat="(id,d) in _devicesMap">
-								<h3><i class="icon-hdd icon-2x snsr-{{"{{d.uid"}}}}"></i> <span class="label label-info">{{"{{d.uid"}}}}</span></h3>
-								<div class="caption">
+							<div class="well span3 fade in" ng-repeat="(id, d) in _devicesMap | orderBy:'d.idx'">
+								<div class="modal-header">
+								<i class="icon-hdd icon-2x snsr-{{"{d.uid"}}}}"></i> <span class="label label-info">{{"{{d.uid"}}}}</span></a> | <span class="badge badge-success">{{"{{d.idx"}}}}</span> |  <span class="label label-warning">{{"{{d.category"}}}}</span>
+								</div>
+								<div class="modal-footer">
 									<ul class="unstyle inline">
 										<li class="pull-left"><a href="#" class="indicator" data-toggle="popover" data-placement="bottom" data-original-title="Device information" data-content="<p>{{"{{d.uid"}}}<br/></p>" data-html="true"></a></li>
 										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Battery status indicator : {{"{{d.battery"}}}}"><i class="icon-bolt icon-2x snsr-{{"{{d.battery"}}}}"></i></a></li>
@@ -78,7 +79,7 @@ scripts:
 					</ng-switch>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="span2 pull-right">
 				<a href="#history" data-toggle="modal" >Show details</a>
