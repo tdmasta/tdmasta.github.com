@@ -10,10 +10,9 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
 	<ul class="nav nav-list bs-docs-sidenav affix">
          <li><a href="#overview"><i class="icon-chevron-right"></i> Overview </a></li>
          <li><a href="#iot_device"><i class="icon-chevron-right"></i> IoT Device</a></li>
-         <li><a href="#iot_context"><i class="icon-chevron-right"></i> IoT Context </a></li>
+         <li><a href="#iot_context"><i class="icon-chevron-right"></i> IoT Message </a></li>
          <li><a href="#iot_callback"><i class="icon-chevron-right"></i> IoT Callback</a></li>
          <li><a href="#iot_application"><i class="icon-chevron-right"></i> IoT Application</a></li>
-         <li><a href="#iot_graph"><i class="icon-chevron-right"></i> IoT Graph</a></li>
 		</ul>
 </div>
 
@@ -62,7 +61,7 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
                   <tr>
                       <td>id</td>
                       <td>STRING</td>
-                      <td>Device technical id</td>
+                      <td>Device technical id as stored against Sensor</td>
                   </tr>
 
                   <tr>
@@ -151,12 +150,15 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
 
 	<section id="iot_context">
 		<div class="page-header">
-      		<h2> Iot Message Structure </h2>
+      		<h2> Iot Message overview </h2>
 		</div>
       
       <p>
-          The underlying structure definition is common to all IOT UDM Devices
+		Every single frame emitted by TD1202 module that reaches Sensor hosting platform gets stored, analyzed and broadcasted to remote information systems.
       </p>
+		<p>
+			Here is the information structure description
+		</p>
       
       <table class="table">
           <thead>
@@ -189,16 +191,6 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
                   <td>Message longiture coordinate</td>
               </tr>
               <tr>
-                  <td>raw</td>
-                  <td>STRING (HEX)</td>
-                  <td>Message raw data</td>
-              </tr>
-              <tr>
-                  <td>raw</td>
-                  <td>STRING (human readable)</td>
-                  <td>Message ASCII converted</td>
-              </tr>
-              <tr>
                   <td>level</td>
                   <td>FLOAT</td>
                   <td>Rx signal level upon message reception</td>
@@ -207,6 +199,31 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
                   <td>station</td>
                   <td>STRING</td>
                   <td>Rx station idenditifier</td>
+              </tr>
+              <tr>
+                  <td>type</td>
+                  <td>STRING</td>
+                  <td>Message type</td>
+              </tr>
+              <tr>
+                  <td>payload</td>
+                  <td>STRING</td>
+                  <td>Payload information (when required)</td>
+              </tr>
+              <tr>
+                  <td>ctxt</td>
+				  <td>MAP</td>
+                  <td>Iot target device structure at the time of the frame reception</td>
+              </tr>
+              <tr>
+                  <td>contrib</td>
+                  <td>MAP</td>
+                  <td>Iot device fields / values converted from initial frame</td>
+              </tr>
+              <tr>
+                  <td>extra</td>
+                  <td>MAP</td>
+                  <td>Extra info storage map for convenience</td>
               </tr>
           </tbody>
       </table>
@@ -217,13 +234,46 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
       		<h2> IoT Callback Structure </h2>
 		</div>
       <p>
-          Callback structure encapsulates :
-          
-          <ol>
-              <li> Device in UDM format </li>
-              <li> Message in UDM format</li>
-          </ol>
+          Callback structure encapsulates  Iot Message
       </p>
+
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>
+                      Field name
+                  </th>
+                  <th>
+                      Field type
+                  </th>
+                  <th>
+                      Field description
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>id</td>
+                  <td>LONG</td>
+                  <td>Callback technical id</td>
+              </tr>
+              <tr>
+                  <td>timestamp</td>
+                  <td>DATE (GMT)</td>
+                  <td>Callback emission date</td>
+              </tr>
+              <tr>
+                  <td>msg</td>
+                  <td>Iot Frame</td>
+                  <td>Converted fram</td>
+              </tr>
+              <tr>
+                  <td>extra</td>
+                  <td>MAP</td>
+                  <td>Extra info storage map for convenience</td>
+              </tr>
+          </tbody>
+      </table>
       
 	</section>
      
@@ -232,7 +282,7 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
       		<h2> IoT Application  model </h2>
 		</div>
       <p>
-          Application structure represents IOT Device group      
+          Application structure represents IOT Device group
       </p>
       
       <table class="table">
@@ -261,21 +311,6 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
                   <td>App creation date</td>
               </tr>
               <tr>
-                  <td>key</td>
-                  <td>STRING</td>
-                  <td>App key (for APP Api use)</td>
-              </tr>
-              <tr>
-                  <td>secret</td>
-                  <td>STRING</td>
-                  <td>App secret (for APP Api use)</td>
-              </tr>
-              <tr>
-                  <td>callbackurl</td>
-                  <td>STRING</td>
-                  <td>App callback url </td>
-              </tr>
-              <tr>
                   <td>name</td>
                   <td>STRING</td>
                   <td>App name</td>
@@ -285,46 +320,32 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
                   <td>STRING</td>
                   <td>App description</td>
               </tr>
+
+              <tr>
+                  <td>key</td>
+                  <td>STRING</td>
+                  <td>App key (sensitive)</td>
+              </tr>
+
+              <tr>
+                  <td>secret</td>
+                  <td>STRING</td>
+                  <td>App secret (sensitive), used for app API authentication</td>
+              </tr>
+
+              <tr>
+                  <td>callbackurl</td>
+                  <td>STRING</td>
+                  <td>Remote callback url for backend to backend notification</td>
+              </tr>
+
+              <tr>
+                  <td>reftime</td>
+                  <td>DATE (GMT)</td>
+                  <td>Reference time for field values computation</td>
+              </tr>
+
           </tbody>
       </table>
-	</section>
-	
-	<section id="iot_graph">
-		<div class="page-header">
-      		<h2> IoT Graph </h2>
-		</div>
-      <p>
-          Graph structure represents Device linked together
-      
-      </p>
-      
-      <table class="table">
-          <thead>
-              <tr>
-                  <th>
-                      Field name
-                  </th>
-                  <th>
-                      Field type
-                  </th>
-                  <th>
-                      Field description
-                  </th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr>
-                  <td>root</td>
-                  <td>DEVICE</td>
-                  <td>root Device value reference</td>
-              </tr>
-              <tr>
-                  <td>children</td>
-                  <td>SET<DEVICE></td>
-                  <td>children Device values reference</td>
-              </tr>
-          </tbody>
-      </table>
-     </section>
-	
+	</section>	
 </div>
