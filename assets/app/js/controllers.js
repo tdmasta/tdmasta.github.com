@@ -263,9 +263,13 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     }
 
 	$scope.toCtxt = function(ctxt) {
+		return ctxt;
+		/**
 		var res = {}
 		res.category  = (typeof ctxt.category === "undefined") ? '?' : ctxt.category.toLowerCase();
 		res.uid  = (typeof ctxt.uid === "undefined") ? '?' : ctxt.uid.toLowerCase();
+		res.firstseen = ctxt.firstseen;
+		res.lastseen = ctxt.lastseen;
 		res.id  = (typeof ctxt.id === "undefined") ? '?' : ctxt.id.toLowerCase();
 		res.serial = (typeof ctxt.serial === "undefined") ? '?' : ctxt.serial.toLowerCase();
 		res.temp = (typeof ctxt.temp === "undefined") ? 'unknown' : ctxt.temp.toLowerCase();
@@ -274,7 +278,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		res.network = (typeof ctxt.network === "undefined") ? 'unknown' : ctxt.network.toLowerCase();
 		res.battery = (typeof ctxt.battery === "undefined") ? 'unknown' : ctxt.battery.toLowerCase();
 		res.idx = (typeof ctxt.index === "undefined") ? 'unknown' : ctxt.index;
-		return res;
+		return res;*/
 	}
 
     // checkForNewMsg

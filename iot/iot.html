@@ -3,308 +3,328 @@ layout: page
 title: "IOT API"
 description: ""
 tagline: "Internet Of Things made easy with SENSOR&trade;"
-scripts:
-- name: custom
-  type: inline
-  content: "$(function() {$('.bs-docs-sidenav').affix();})"
 ---
 {% include JB/setup %}
 
-<div>
-                <h2>Internet Of Things</h2>
-                <hr />
-                <h3> Motivations </h3>
-                <p>
-                    TD1202 stack was designed to provide dyiers the essentials tools for quickly set up and build IOT apps with TD1202 connected devices</br>
-                    This lead to Unified Device Model notion being defined, in order to ease S.M.A.R.T devices management and commons services implementation against those notions.
-                    <br/>
-                    
-                </p>
-                
-                <h3> IOT Data Model </h3>
-                    
-                <p>
-                    The following table provides field description regarding iot UDM Device model <br/>
-                </p>
-                
-                <h4> Unified Device Model structure </h4>
-                    
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Field name
-                                </th>
-                                <th>
-                                    Field type
-                                </th>
-                                <th>
-                                    Field description
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>id</td>
-                                <td>STRING</td>
-                                <td>Device technical id</td>
-                            </tr>
-                            <tr>
-                                <td>serial</td>
-                                <td>STRING</td>
-                                <td>Serial number</td>
-                            </tr>
-                            <tr>
-                                <td>gateway</td>
-                                <td>STRING</td>
-                                <td>Gateway serial number (when used behind a gw)</td>
-                            </tr>
-                            <tr>
-                                <td>firstseen</td>
-                                <td>DATE</td>
-                                <td>Server registration date (GMT)</td>
-                            </tr>
-                            <tr>
-                                <td>lastseen</td>
-                                <td>DATE</td>
-                                <td>Last communication date (GMT)</td>
-                            </tr>
-                            <tr>
-                                <td>active</td>
-                                <td>BOOLEAN</td>
-                                <td>Technical status (ON / OFF)</td>
-                            </tr>
-                            <tr>
-                                <td>status</td>
-                                <td>STRING</td>
-                                <td>Fuctional status (similar to tagging system)</td>
-                            </tr>
-                            <tr>
-                                <td>msgs</td>
-                                <td>INTEGER</td>
-                                <td>Total messages number</td>
-                            </tr>
-                            <tr>
-                                <td>losts</td>
-                                <td>INTEGER</td>
-                                <td>Total messages losts</td>
-                            </tr>
-                            <tr>
-                                <td>network</td>
-                                <td>ON | OFF | UNKNOWN</td>
-                                <td>Local network status</td>
-                            </tr>
-                            <tr>
-                                <td>battery</td>
-                                <td>ON | OFF | UNKNOWN</td>
-                                <td>Battery charge status</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                
-                <h4> UDM Message Structure </h4>
-                
-                <p>
-                    The underlying structure definition is common to all IOT UDM Devices
-                </p>
-                
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Field name
-                            </th>
-                            <th>
-                                Field type
-                            </th>
-                            <th>
-                                Field description
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>when</td>
-                            <td>STAMP</td>
-                            <td>Message occurence</td>
-                        </tr>
-                        <tr>
-                            <td>lat</td>
-                            <td>STRING</td>
-                            <td>Message latitude coordinate</td>
-                        </tr>
-                        <tr>
-                            <td>lng</td>
-                            <td>STRING</td>
-                            <td>Message longiture coordinate</td>
-                        </tr>
-                        <tr>
-                            <td>raw</td>
-                            <td>STRING (HEX)</td>
-                            <td>Message raw data</td>
-                        </tr>
-                        <tr>
-                            <td>raw</td>
-                            <td>STRING (human readable)</td>
-                            <td>Message ASCII converted</td>
-                        </tr>
-                        <tr>
-                            <td>level</td>
-                            <td>FLOAT</td>
-                            <td>Rx signal level upon message reception</td>
-                        </tr>
-                        <tr>
-                            <td>station</td>
-                            <td>STRING</td>
-                            <td>Rx station idenditifier</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h4> UDM Callback Structure </h4>
-                <p>
-                    Callback structure encapsulates :
-                    
-                    <ol>
-                        <li> Device in UDM format </li>
-                        <li> Message in UDM format</li>
-                    </ol>
-                </p>
-                
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Field name
-                            </th>
-                            <th>
-                                Field type
-                            </th>
-                            <th>
-                                Field description
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>id</td>
-                            <td>STRING</td>
-                            <td>Callback identifier</td>
-                        </tr>
-                        <tr>
-                            <td>timestamp</td>
-                            <td>DATE (GMT)</td>
-                            <td>Callback creation time</td>
-                        </tr>
-                        <tr>
-                            <td>emitter</td>
-                            <td>DEVICE</td>
-                            <td>Device value reference</td>
-                        </tr>
-                        <tr>
-                            <td>msg</td>
-                            <td>MESSAGE</td>
-                            <td>Message value reference</td>
-                        </tr>
-                        <tr>
-                            <td>context</td>
-                            <td>MAP<STRING, OBJECT></td>
-                            <td>Additional information</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h4> UDM Graph Structure </h4>
-                <p>
-                    Graph structure represents Device linked together
-                
-                </p>
-                
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Field name
-                            </th>
-                            <th>
-                                Field type
-                            </th>
-                            <th>
-                                Field description
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>root</td>
-                            <td>DEVICE</td>
-                            <td>root Device value reference</td>
-                        </tr>
-                        <tr>
-                            <td>children</td>
-                            <td>SET<DEVICE></td>
-                            <td>children Device values reference</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                
-                <h4> UDM App Structure </h4>
-                <p>
-                    Application structure represents IOT Device group
-                
-                </p>
-                
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Field name
-                            </th>
-                            <th>
-                                Field type
-                            </th>
-                            <th>
-                                Field description
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>id</td>
-                            <td>LONG</td>
-                            <td>App technical id</td>
-                        </tr>
-                        <tr>
-                            <td>created</td>
-                            <td>DATE (GMT)</td>
-                            <td>App creation date</td>
-                        </tr>
-                        <tr>
-                            <td>key</td>
-                            <td>STRING</td>
-                            <td>App key (for APP Api use)</td>
-                        </tr>
-                        <tr>
-                            <td>secret</td>
-                            <td>STRING</td>
-                            <td>App secret (for APP Api use)</td>
-                        </tr>
-                        <tr>
-                            <td>callbackurl</td>
-                            <td>STRING</td>
-                            <td>App callback url </td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>STRING</td>
-                            <td>App name</td>
-                        </tr>
-                        <tr>
-                            <td>description</td>
-                            <td>STRING</td>
-                            <td>App description</td>
-                        </tr>
-                    </tbody>
-                </table>
+<div class="span3 bs-docs-sidebar">
+	<ul class="nav nav-list bs-docs-sidenav affix">
+         <li><a href="#overview"><i class="icon-chevron-right"></i> Overview </a></li>
+         <li><a href="#iot_device"><i class="icon-chevron-right"></i> IoT Device</a></li>
+         <li><a href="#iot_context"><i class="icon-chevron-right"></i> IoT Context </a></li>
+         <li><a href="#iot_callback"><i class="icon-chevron-right"></i> IoT Callback</a></li>
+         <li><a href="#iot_application"><i class="icon-chevron-right"></i> IoT Application</a></li>
+         <li><a href="#iot_graph"><i class="icon-chevron-right"></i> IoT Graph</a></li>
+		</ul>
+</div>
+
+<div class="span9">
+	
+	<section id="overview">
+		<div class="page-header">
+      		<h1>Internet Of Things <small> made simple</small></h1>
+		</div>
+	      <p>
+	          	TD1202 stack was designed to provide dyiers the essentials tools for quickly set up and build IOT apps with TD1202 connected devices
+				<br/>
+				<br/>
+	          	This lead to Unified Device Model notion being defined, in order to ease S.M.A.R.T devices management and commons services implementation against those notions.
+	          	<br/>
+				<br/>
+	      </p>
+	</section>
+      
+	<section id="iot_device">
+		<div class="page-header">
+      		<h2> IOT Device Model </h2>
+		</div>
+          
+      <p>
+          The following table provides field description regarding iot UDM Device model <br/>
+      </p>
+      
+      <h4> Unified Device Model structure </h4>
+          
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>
+                          Field name
+                      </th>
+                      <th>
+                          Field type
+                      </th>
+                      <th>
+                          Field description
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>id</td>
+                      <td>STRING</td>
+                      <td>Device technical id</td>
+                  </tr>
+
+                  <tr>
+                      <td>uid</td>
+                      <td>STRING</td>
+                      <td>Device physical and unique id</td>
+                  </tr>
+
+                  <tr>
+                      <td>serial</td>
+                      <td>STRING</td>
+                      <td>Serial number</td>
+                  </tr>
+
+                  <tr>
+                      <td>gateway</td>
+                      <td>STRING</td>
+                      <td>Gateway serial number (when used behind a gw module)</td>
+                  </tr>
+
+                  <tr>
+                      <td>category</td>
+                      <td>STRING (hexa)</td>
+                      <td>Device category as set at registration time</td>
+                  </tr>
+
+                  <tr>
+                      <td>index</td>
+                      <td>INTEGER</td>
+                      <td>Device category as set at registration time</td>
+                  </tr>
+
+                  <tr>
+                      <td>firstseen</td>
+                      <td>DATE</td>
+                      <td>Server registration date (GMT)</td>
+                  </tr>
+                  <tr>
+                      <td>lastseen</td>
+                      <td>DATE</td>
+                      <td>Last communication date (GMT)</td>
+                  </tr>
+                  <tr>
+                      <td>active</td>
+                      <td>BOOLEAN</td>
+                      <td>Technical status (ON / OFF)</td>
+                  </tr>
+                  <tr>
+                      <td>status</td>
+                      <td>STRING</td>
+                      <td>Fuctional status (similar to tagging system)</td>
+                  </tr>
+                  <tr>
+                      <td>msgs</td>
+                      <td>INTEGER</td>
+                      <td>Total messages number</td>
+                  </tr>
+                  <tr>
+                      <td>losts</td>
+                      <td>INTEGER</td>
+                      <td>Total messages losts</td>
+                  </tr>
+                  <tr>
+                      <td>network</td>
+                      <td>ON | OFF | UNKNOWN</td>
+                      <td>Local network status</td>
+                  </tr>
+                  <tr>
+                      <td>battery</td>
+                      <td>ON | OFF | UNKNOWN</td>
+                      <td>Battery charge status</td>
+                  </tr>
+                  <tr>
+                      <td>tamper</td>
+                      <td>ON | OFF | UNKNOWN</td>
+                      <td>Switch status</td>
+                  </tr>
+                  <tr>
+                      <td>temp</td>
+                      <td>LOW | OK | HIGH</td>
+                      <td>Temperature status</td>
+                  </tr>
+              </tbody>
+          </table>
+    </section>
+
+	<section id="iot_context">
+		<div class="page-header">
+      		<h2> Iot Message Structure </h2>
+		</div>
+      
+      <p>
+          The underlying structure definition is common to all IOT UDM Devices
+      </p>
+      
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>
+                      Field name
+                  </th>
+                  <th>
+                      Field type
+                  </th>
+                  <th>
+                      Field description
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>when</td>
+                  <td>STAMP</td>
+                  <td>Message occurence</td>
+              </tr>
+              <tr>
+                  <td>lat</td>
+                  <td>STRING</td>
+                  <td>Message latitude coordinate</td>
+              </tr>
+              <tr>
+                  <td>lng</td>
+                  <td>STRING</td>
+                  <td>Message longiture coordinate</td>
+              </tr>
+              <tr>
+                  <td>raw</td>
+                  <td>STRING (HEX)</td>
+                  <td>Message raw data</td>
+              </tr>
+              <tr>
+                  <td>raw</td>
+                  <td>STRING (human readable)</td>
+                  <td>Message ASCII converted</td>
+              </tr>
+              <tr>
+                  <td>level</td>
+                  <td>FLOAT</td>
+                  <td>Rx signal level upon message reception</td>
+              </tr>
+              <tr>
+                  <td>station</td>
+                  <td>STRING</td>
+                  <td>Rx station idenditifier</td>
+              </tr>
+          </tbody>
+      </table>
+   	</section>
+
+	<section id="iot_callback">
+		<div class="page-header">
+      		<h2> IoT Callback Structure </h2>
+		</div>
+      <p>
+          Callback structure encapsulates :
+          
+          <ol>
+              <li> Device in UDM format </li>
+              <li> Message in UDM format</li>
+          </ol>
+      </p>
+      
+	</section>
+     
+	<section id="iot_application">
+		<div class="page-header">
+      		<h2> IoT Application  model </h2>
+		</div>
+      <p>
+          Application structure represents IOT Device group      
+      </p>
+      
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>
+                      Field name
+                  </th>
+                  <th>
+                      Field type
+                  </th>
+                  <th>
+                      Field description
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>id</td>
+                  <td>LONG</td>
+                  <td>App technical id</td>
+              </tr>
+              <tr>
+                  <td>created</td>
+                  <td>DATE (GMT)</td>
+                  <td>App creation date</td>
+              </tr>
+              <tr>
+                  <td>key</td>
+                  <td>STRING</td>
+                  <td>App key (for APP Api use)</td>
+              </tr>
+              <tr>
+                  <td>secret</td>
+                  <td>STRING</td>
+                  <td>App secret (for APP Api use)</td>
+              </tr>
+              <tr>
+                  <td>callbackurl</td>
+                  <td>STRING</td>
+                  <td>App callback url </td>
+              </tr>
+              <tr>
+                  <td>name</td>
+                  <td>STRING</td>
+                  <td>App name</td>
+              </tr>
+              <tr>
+                  <td>description</td>
+                  <td>STRING</td>
+                  <td>App description</td>
+              </tr>
+          </tbody>
+      </table>
+	</section>
+	
+	<section id="iot_graph">
+		<div class="page-header">
+      		<h2> IoT Graph </h2>
+		</div>
+      <p>
+          Graph structure represents Device linked together
+      
+      </p>
+      
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>
+                      Field name
+                  </th>
+                  <th>
+                      Field type
+                  </th>
+                  <th>
+                      Field description
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>root</td>
+                  <td>DEVICE</td>
+                  <td>root Device value reference</td>
+              </tr>
+              <tr>
+                  <td>children</td>
+                  <td>SET<DEVICE></td>
+                  <td>children Device values reference</td>
+              </tr>
+          </tbody>
+      </table>
+     </section>
+	
 </div>

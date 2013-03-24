@@ -60,18 +60,21 @@ scripts:
 							<center><i class="icon-spinner icon-spin"></i></center>
 						</div>
 						<div ng-switch-when="false">
-							<div class="well span3 fade in" ng-repeat="(id, d) in _devicesMap | orderBy:'d.idx'">
+							<div class="well span4 fade in" ng-repeat="(id, d) in _devicesMap">
 								<div class="modal-header">
-								<i class="icon-hdd icon-2x snsr-{{"{d.uid"}}}}"></i> <span class="label label-info">{{"{{d.uid"}}}}</span></a> | <span class="badge badge-success">{{"{{d.idx"}}}}</span> |  <span class="label label-warning">{{"{{d.category"}}}}</span>
+									<i class="icon-hdd icon-2x snsr-{{"{d.uid"}}}}"></i> <span class="label label-info">{{"{{d.uid"}}}}</span> </a> | <span class="badge badge-success">{{"{{d.index"}}}}</span> |  <span class="label label-warning">{{"{{d.category"}}}}</span>
+								</div>
+								<div id="modal-body">
+									Since {{"{{d.firstseen|date:'dd MM'"}}}}
 								</div>
 								<div class="modal-footer">
 									<ul class="unstyle inline">
-										<li class="pull-left"><a href="#" class="indicator" data-toggle="popover" data-placement="bottom" data-original-title="Device information" data-content="<p>{{"{{d.uid"}}}<br/></p>" data-html="true"></a></li>
-										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Battery status indicator : {{"{{d.battery"}}}}"><i class="icon-bolt icon-2x snsr-{{"{{d.battery"}}}}"></i></a></li>
-										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Sigfox wireless signal status indicator : {{"{{d.level"}}}}"><i class="icon-signal icon-2x snsr-{{"{{d.level"}}}}"></i></a></li>
-										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Local network connection status indicator : {{"{{d.network"}}}}"><i class="icon-rss icon-2x snsr-{{"{{d.network"}}}}"></i></a></li>
-										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Temperature status indicator : {{"{{d.temp"}}}}"><i class="icon-certificate icon-2x snsr-{{"{{d.temp"}}}}"></i></a></li>
-										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Switch status indicator : {{"{{d.tamper"}}}}"><i class="icon-exclamation-sign icon-2x snsr-{{"{{d.tamper"}}}}"></i></a></li>
+										<li class="pull-left"><a href="#" class="indicator" data-toggle="popover" data-placement="bottom" data-original-title="Device information" data-content="<p>{{"{{d.uid"}}}}<br/></p>" data-html="true"></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Battery status indicator : {{"{{d.battery"}}}}"><i class="icon-bolt icon-2x snsr-{{"{{d.battery | lowercase"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Sigfox wireless signal status indicator : {{"{{d.level"}}}}"><i class="icon-signal icon-2x snsr-{{"{{d.level | lowercase"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Local network connection status indicator : {{"{{d.network"}}}}"><i class="icon-rss icon-2x snsr-{{"{{d.network | lowercase"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Temperature status indicator : {{"{{d.temp"}}}}"><i class="icon-certificate icon-2x snsr-{{"{{d.temp | lowercase"}}}}"></i></a></li>
+										<li><a href="#" class="indicator" data-toggle="tooltip" data-original-title="Switch status indicator : {{"{{d.tamper"}}}}"><i class="icon-exclamation-sign icon-2x snsr-{{"{{d.tamper | lowercase"}}}}"></i></a></li>
 									</ul>
 								</div>
 							</div>
@@ -98,7 +101,7 @@ scripts:
 		                    <table class="table table-striped table-condensed table-hover">
 		                        <thead>
 		                            <th>Date</th>
-		                            <th>Channel</th>
+		                            <th>Index</th>
 		                            <th>Msg</th>
 									<th>[Payload]</th>
 		                        </thead>
@@ -113,7 +116,7 @@ scripts:
 		                    <table class="table table-striped table-condensed table-hover">
 		                        <thead>
 		                            <th>Date</th>
-		                            <th>Channel</th>
+		                            <th>Index</th>
 		                            <th>Msg</th>
 		                            <th>[Payload]</th>
 		                        </thead>
