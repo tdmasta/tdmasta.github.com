@@ -150,39 +150,112 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                                  <p>
                                      <strong>Sample JSON response</strong></p>
                                      <pre style="overflow:auto;">
-ADD SOME JSON HERE
+[
+    {
+        "contrib": {
+            "temp": "LOW"
+        }, 
+        "ctxt": {
+            "active": true, 
+            "alerts": 0, 
+            "alerts_ack": 0, 
+            "battery": "UNKNOWN", 
+            "firstseen": "Mar 25, 2013 2:35:36 PM", 
+            "id": "125010855", 
+            "index": 6, 
+            "lastseen": "Mar 25, 2013 2:35:32 PM", 
+            "level": "UNKNOWN", 
+            "losts": 0, 
+            "msgs": 0, 
+            "network": "UNKNOWN", 
+            "serial": "1FA0/6", 
+            "status": "UNDEFINED", 
+            "tamper": "UNKNOWN", 
+            "temp": "LOW", 
+            "type": "OTHER", 
+            "watched": false
+        }, 
+        "extra": {}, 
+        "lvl": "34.49", 
+        "station": "003B", 
+        "type": "event:templow", 
+        "when": 1364222132034
+    }, 
+    {
+        "contrib": {
+            "level": "ON"
+        }, 
+        "ctxt": {
+            "active": true, 
+            "alerts": 0, 
+            "alerts_ack": 0, 
+            "battery": "ON", 
+            "firstseen": "Mar 25, 2013 2:28:43 PM", 
+            "id": "125010772", 
+            "index": 4, 
+            "lastseen": "Mar 25, 2013 2:29:43 PM", 
+            "level": "ON", 
+            "losts": 0, 
+            "msgs": 1, 
+            "network": "UNKNOWN", 
+            "serial": "1FA0/4", 
+            "status": "UNDEFINED", 
+            "tamper": "UNKNOWN", 
+            "temp": "UNKNOWN", 
+            "type": "OTHER", 
+            "watched": false
+        }, 
+        "extra": {}, 
+        "lvl": "34.47", 
+        "station": "003B", 
+        "type": "event:rssiok", 
+        "when": 1364221783996
+    }
+]
+
                              </pre>
                              <h5>Return value definitions</h5>
-                             <table class="table table-bordered">
-                                 <thead>
-                                     <tr>
-                                         <th>Field</th>
-                                         <th>Description</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody>
-                                     <tr>
-                                         <td>when</td>
-                                         <td>Message reception timestamp (GMT)</td>
-                                     </tr>
-                                     <tr>
-                                         <td>raw</td>
-                                         <td>Raw Message content</td>
-                                     </tr>
-                                     <tr>
-                                         <td>hr</td>
-                                         <td>Human readable translation of the raw content</td>
-                                     </tr>
-                                     <tr>
-                                         <td>lvl</td>
-                                         <td>Signal level upon reception</td>
-                                     </tr>
-                                     <tr>
-                                         <td>station</td>
-                                         <td>Receiver station id</td>
-                                     </tr>
-                                 </tbody>
-                             </table>
+                              <table class="table table-bordered">
+                                  <thead>
+                                      <tr>
+                                          <th>Field</th>
+                                          <th>Description</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td>when</td>
+                                          <td>Message reception timestamp (GMT)</td>
+                                      </tr>
+                                      <tr>
+                                          <td>lvl</td>
+                                          <td>Signal level upon reception</td>
+                                      </tr>
+                                      <tr>
+                                          <td>station</td>
+                                          <td>Receiver station id</td>
+                                      </tr>
+                                      <tr>
+                                          <td>extra</td>
+                                          <td>Additional infos</td>
+                                      </tr>
+                                      <tr>
+                                          <td>type</td>
+                                          <td>Frame type</td>
+                                      </tr>
+                                      <tr>
+                                          <td>contrib</td>
+                                          <td>Device Field with corresponding value provided by the frame</td>
+                                      </tr>
+                                      <tr>
+                                          <td>ctxt</td>
+                                          <td>Device context at the time of frame reception</td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+								<p>
+									More information about message structure available <a href="/iot/iot.html#iot_frame" target="_blank"> Here </a>
+								</p>
                          </td>
                      </tr>
                      <tr>
@@ -234,7 +307,38 @@ ADD SOME JSON HERE
                                      <p>
                                      <strong>Sample JSON response</strong></p>
                                      <pre style="overflow:auto">
-ADD SOME JSON HERE
+[
+    {
+        "contrib": {
+            "temp": "LOW"
+        }, 
+        "ctxt": {
+            "active": true, 
+            "alerts": 0, 
+            "alerts_ack": 0, 
+            "battery": "UNKNOWN", 
+            "firstseen": "Mar 25, 2013 2:35:36 PM", 
+            "id": "125010855", 
+            "index": 6, 
+            "lastseen": "Mar 25, 2013 2:35:32 PM", 
+            "level": "UNKNOWN", 
+            "losts": 0, 
+            "msgs": 0, 
+            "network": "UNKNOWN", 
+            "serial": "1FA0/6", 
+            "status": "UNDEFINED", 
+            "tamper": "UNKNOWN", 
+            "temp": "LOW", 
+            "type": "OTHER", 
+            "watched": false
+        }, 
+        "extra": {}, 
+        "lvl": "34.49", 
+        "station": "003B", 
+        "type": "event:templow", 
+        "when": 1364222132034
+    }
+]
                                      </pre>
                                      <h5>Return value definitions</h5>
                                      <table class="table table-bordered">
@@ -250,14 +354,6 @@ ADD SOME JSON HERE
                                                  <td>Message reception timestamp (GMT)</td>
                                              </tr>
                                              <tr>
-                                                 <td>raw</td>
-                                                 <td>Raw Message content</td>
-                                             </tr>
-                                             <tr>
-                                                 <td>hr</td>
-                                                 <td>Human readable translation of the raw content</td>
-                                             </tr>
-                                             <tr>
                                                  <td>lvl</td>
                                                  <td>Signal level upon reception</td>
                                              </tr>
@@ -265,8 +361,27 @@ ADD SOME JSON HERE
                                                  <td>station</td>
                                                  <td>Receiver station id</td>
                                              </tr>
+                                             <tr>
+                                                 <td>extra</td>
+                                                 <td>Additional infos</td>
+                                             </tr>
+                                             <tr>
+                                                 <td>type</td>
+                                                 <td>Frame type</td>
+                                             </tr>
+                                             <tr>
+                                                 <td>contrib</td>
+                                                 <td>Device Field with corresponding value provided by the frame</td>
+                                             </tr>
+                                             <tr>
+                                                 <td>ctxt</td>
+                                                 <td>Device context at the time of frame reception</td>
+                                             </tr>
                                          </tbody>
                                      </table>
+									<p>
+										More information about message structure available <a href="/iot/iot.html#iot_frame" target="_blank"> Here </a>
+									</p>
                                  </td>
                              </tr>
                              <tr>
@@ -317,6 +432,134 @@ ADD SOME JSON HERE
                                      <p>
                                      <strong>Sample JSON response</strong></p>
                                      <pre style="overflow:auto">
+[
+    {
+        "active": true, 
+        "alerts": 0, 
+        "alerts_ack": 0, 
+        "battery": "UNKNOWN", 
+        "category": "4321", 
+        "firstseen": "Mar 22, 2013 8:52:41 AM", 
+        "id": "124953171", 
+        "index": 2, 
+        "lastseen": "Mar 25, 2013 2:25:12 PM", 
+        "level": "UNKNOWN", 
+        "losts": 192, 
+        "msgs": 20, 
+        "network": "ON", 
+        "serial": "1FA0/2", 
+        "status": "UNDEFINED", 
+        "tamper": "UNKNOWN", 
+        "temp": "UNKNOWN", 
+        "type": "OTHER", 
+        "uid": "00004321", 
+        "watched": false
+    }, 
+    {
+        "active": true, 
+        "alerts": 0, 
+        "alerts_ack": 0, 
+        "battery": "ON", 
+        "category": "1001", 
+        "firstseen": "Mar 22, 2013 8:53:19 AM", 
+        "id": "124953184", 
+        "index": 0, 
+        "lastseen": "Mar 25, 2013 2:23:52 PM", 
+        "level": "UNKNOWN", 
+        "losts": 192, 
+        "msgs": 20, 
+        "network": "UNKNOWN", 
+        "serial": "1FA0/0", 
+        "status": "UNDEFINED", 
+        "tamper": "UNKNOWN", 
+        "temp": "UNKNOWN", 
+        "type": "OTHER", 
+        "uid": "00000001", 
+        "watched": false
+    }, 
+    {
+        "active": true, 
+        "alerts": 0, 
+        "alerts_ack": 0, 
+        "battery": "OFF", 
+        "firstseen": "Mar 22, 2013 8:54:08 AM", 
+        "id": "124953210", 
+        "index": 1, 
+        "lastseen": "Mar 25, 2013 2:28:10 PM", 
+        "level": "UNKNOWN", 
+        "losts": 192, 
+        "msgs": 20, 
+        "network": "UNKNOWN", 
+        "serial": "1FA0/1", 
+        "status": "UNDEFINED", 
+        "tamper": "OFF", 
+        "temp": "UNKNOWN", 
+        "type": "OTHER", 
+        "watched": false
+    }, 
+    {
+        "active": true, 
+        "alerts": 0, 
+        "alerts_ack": 0, 
+        "battery": "UNKNOWN", 
+        "category": "1001", 
+        "firstseen": "Mar 22, 2013 1:49:53 PM", 
+        "id": "124955666", 
+        "index": 3, 
+        "lastseen": "Mar 22, 2013 1:49:49 PM", 
+        "level": "UNKNOWN", 
+        "losts": 192, 
+        "msgs": 20, 
+        "network": "UNKNOWN", 
+        "serial": "1FA0/3", 
+        "status": "UNDEFINED", 
+        "tamper": "UNKNOWN", 
+        "temp": "UNKNOWN", 
+        "type": "OTHER", 
+        "uid": "00000001", 
+        "watched": false
+    }, 
+    {
+        "active": true, 
+        "alerts": 0, 
+        "alerts_ack": 0, 
+        "battery": "ON", 
+        "firstseen": "Mar 25, 2013 2:28:43 PM", 
+        "id": "125010772", 
+        "index": 4, 
+        "lastseen": "Mar 25, 2013 2:29:43 PM", 
+        "level": "ON", 
+        "losts": 192, 
+        "msgs": 20, 
+        "network": "UNKNOWN", 
+        "serial": "1FA0/4", 
+        "status": "UNDEFINED", 
+        "tamper": "UNKNOWN", 
+        "temp": "UNKNOWN", 
+        "type": "OTHER", 
+        "watched": false
+    }, 
+    {
+        "active": true, 
+        "alerts": 0, 
+        "alerts_ack": 0, 
+        "battery": "UNKNOWN", 
+        "firstseen": "Mar 25, 2013 2:35:36 PM", 
+        "id": "125010855", 
+        "index": 6, 
+        "lastseen": "Mar 25, 2013 2:35:32 PM", 
+        "level": "UNKNOWN", 
+        "losts": 192, 
+        "msgs": 20, 
+        "network": "UNKNOWN", 
+        "serial": "1FA0/6", 
+        "status": "UNDEFINED", 
+        "tamper": "UNKNOWN", 
+        "temp": "LOW", 
+        "type": "OTHER", 
+        "watched": false
+    }
+]
                                      </pre>
                                      <h5>Return value definitions</h5>
                                      <table class="table table-bordered">
@@ -388,7 +631,8 @@ ADD SOME JSON HERE
                                   <td><h6>Parameters</h6></td>
                                   <td>
                                       <ol>
-                                          <li><code>sn</code> <i>required</i> the module serial number</li>
+                                          <li><code>id</code> <i>required</i> The device id</li>
+                                          <li><code>value</code> <i>required</i> The new state value</li>
                                       </ol>
                                   </td>
                               </tr>

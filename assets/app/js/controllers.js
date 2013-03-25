@@ -222,9 +222,14 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		'switchoff' : 'Switch Off',
 		'rssilow' : 'Qualité signal faible',
 		'rssiok' : 'Qualité signal OK',
+		'connectionlost' : 'Réseau local KO',
+		'connectionok' : 'Réseau local OK',
 		'tweet' : "Envoi d 'un tweet",
 		'keepalive' : 'Keepalive',
 		'register' : 'Nouveau matériel Détecté',
+		'temphigh' : 'Il fait beau et chaud',
+		'templow' : 'Température Faible',
+		'tempok' : 'Température OK',
 		'undefined' : ''
 	};
 	
@@ -248,9 +253,10 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	                    	$scope._messages.push(value);
 	                	});
 	                	$scope._lastUpdate = new Date().getTime();
-						if ($scope._messages[0].extra.ctxt) {
-							var device = $scope.toCtxt($scope._messages[0].extra.ctxt);
-							$scope._devicesMap[device.id] = device;
+						if ($scope._messages[0].ctxt) {
+							var device = $scope._messages[0].ctxt;
+							var delta = $scope._messages[0].contrib;
+							$scope._devicesMap[device.id] = $scope.merge(device,delta);
 						}
 					break;
 					case 404 :
@@ -261,24 +267,12 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 				}
 			});
     }
-
-	$scope.toCtxt = function(ctxt) {
-		return ctxt;
-		/**
-		var res = {}
-		res.category  = (typeof ctxt.category === "undefined") ? '?' : ctxt.category.toLowerCase();
-		res.uid  = (typeof ctxt.uid === "undefined") ? '?' : ctxt.uid.toLowerCase();
-		res.firstseen = ctxt.firstseen;
-		res.lastseen = ctxt.lastseen;
-		res.id  = (typeof ctxt.id === "undefined") ? '?' : ctxt.id.toLowerCase();
-		res.serial = (typeof ctxt.serial === "undefined") ? '?' : ctxt.serial.toLowerCase();
-		res.temp = (typeof ctxt.temp === "undefined") ? 'unknown' : ctxt.temp.toLowerCase();
-		res.level = (typeof ctxt.level === "undefined") ? 'unknown' : ctxt.level.toLowerCase();
-		res.tamper = (typeof ctxt.tamper === "undefined") ? 'unknown' : ctxt.tamper.toLowerCase();
-		res.network = (typeof ctxt.network === "undefined") ? 'unknown' : ctxt.network.toLowerCase();
-		res.battery = (typeof ctxt.battery === "undefined") ? 'unknown' : ctxt.battery.toLowerCase();
-		res.idx = (typeof ctxt.index === "undefined") ? 'unknown' : ctxt.index;
-		return res;*/
+	
+	$scope.merge = function(obj1, obj2) {
+	    var obj3 = {};
+	    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+	    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+	    return obj3;
 	}
 
     // checkForNewMsg
@@ -293,11 +287,13 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 						if (typeof response.data != "undefined") {
 							
 			                angular.forEach(response.data.reverse(), function(item, value) {
-								var infos = item.extra.type.split(':')
+								var infos = item.type.split(':')
+								
 								var ititle = function() {
-										return $scope._eventTitle[infos[0] || 'undefined'];
+									return $scope._eventTitle[infos[0] || 'undefined'];
 								};
-								var itext = [$scope._eventDetail[infos[1] || 'undefined'], item.extra.payload || ''].join(' ');
+								
+								var itext = [$scope._eventDetail[infos[1] || 'undefined'], item.payload || ''].join(' ');
 								
 			                    jQuery.pnotify({
 			                        title: ititle,
@@ -308,9 +304,11 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 			                    });
 			                    $scope._messages.splice(0, 0, item);
 			                });
-							if (response.data.length != 0 && $scope._messages[0].extra.ctxt)  {
-								var device = $scope.toCtxt($scope._messages[0].extra.ctxt);
-								$scope._devicesMap[device.id] = device;
+			
+							if (response.data.length != 0 && $scope._messages[0].ctxt)  {
+								var device = $scope._messages[0].ctxt;
+								var delta  = $scope._messages[0].contrib;
+								$scope._devicesMap[device.id] = $scope.merge(device,delta);
 							}
 						}
 		                $scope._timer = new Date().getTime();
@@ -369,7 +367,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 				
 				angular.forEach(response.data,function(device) {
 					$log.info("handling device ", device);
-					$scope._devicesMap[device.id] = $scope.toCtxt(device);
+					$scope._devicesMap[device.id] = device;
 				});
 				
 	        	$scope.loadMore();
