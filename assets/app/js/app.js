@@ -80,5 +80,5 @@ app.run(function($log, $cookieStore, Context, $timeout) {
 
 
 //app.constant('CONSTANTS', {remote : 'http://localhost:9010'});
-app.constant('CONSTANTS', {remote : 'https://beta.insgroup.fr'});
+app.constant('CONSTANTS', {remote : 'https://sensor.insgroup.fr'});
 //app.constant('CONSTANTS', {remote : 'http://192.168.0.42:9010'});

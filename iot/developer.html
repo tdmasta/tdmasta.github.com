@@ -119,7 +119,7 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
 		</div>
      <p>
      <br/><br/>
-     <h4><a name="DevAuthentication">GET /iot/apps.json</a></h4>
+     <h4><a name="DevAuthentication">GET /iot/developers/apps.json</a></h4>
      <br/>
      <table class="table">
                  <tbody>
@@ -129,7 +129,7 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                      </tr>
                      <tr>
                          <td><h6>Url</h6></td>
-                         <td><code>https://sensor.insgroup.fr/iot/apps.json</code></td>
+                         <td><code>https://sensor.insgroup.fr/iot/developers/apps.json</code></td>
                      </tr>
                      <tr>
                          <td><h6>Method</h6></td>
@@ -145,7 +145,26 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                          <p>
                          <strong>Sample JSON response</strong></p>
                          <pre style="overflow:auto;">
-REPLACE WITH JSON
+[
+    {
+        "created": "Jul 3, 2012 12:00:00 AM", 
+        "description": "Lot : 20120703", 
+        "id": 12305378134, 
+        "key": "3a0b8cb3dda65aba53839452ff09", 
+        "name": "PACK TEST - BETA", 
+        "reftime": "Jul 3, 2012 12:00:00 AM", 
+        "secret": "eb46372bad4713e154f02800sffa0df0"
+    }, 
+    {
+        "callbackurl": "http://my.backend.url/callback", 
+        "created": "Oct 10, 2012 12:00:00 AM", 
+        "description": "Application that rocks regroupant l'ensemble des \u00e9l\u00e9ments PROD. LOT livr\u00e9 le 10/10/2010", 
+        "id": 12273973223323, 
+        "key": "f9d373e1188fd373193a97206881886b", 
+        "name": "20121010_COVEA_SMOKY", 
+        "secret": "14cdec0d66304fdc451fepopoFd"
+    }
+]
                          </pre>
                      </td>
                  </tr>
@@ -168,17 +187,17 @@ REPLACE WITH JSON
 		</div>
      <p>
      <br/><br/>
-     <h4><a name="DevAuthentication">POST /iot/apps.json</a></h4>
+     <h4><a name="DevAuthentication">POST /iot/developers/apps.json</a></h4>
      <br/>
      <table class="table">
               <tbody>
                   <tr>
                       <td><h6>Description</h6></td>
-                      <td>Iot app creation operation</td>
+                      <td>Iot app creation / update operation</td>
                   </tr>
                   <tr>
                       <td><h6>Url</h6></td>
-                      <td><code>https://sensor.insgroup.fr/iot/apps.json</code></td>
+                      <td><code>https://sensor.insgroup.fr/iot/developers/apps.json</code></td>
                   </tr>
                   <tr>
                       <td><h6>Method</h6></td>
@@ -191,19 +210,27 @@ REPLACE WITH JSON
                               <li><code>app</code> <i>required</i> Iot App json serialized</li>
                           </ol>
                        <p>
-                       <strong>Sample JSON request body</strong></p>
+                       <strong>Sample creation request command</strong></p>
                        <pre style="overflow:auto;">
-REPLACE WITH JSON
+curl -X POST -H "Authorization: Basic Blablafootoken=="  "http://sensor.insgroup.fr/iot/developers/apps.json" -d '{"name": "myApp", "description" : 'My app description lines go here ", "callbackurl" : "http://my.callback.url"}'
                        </pre>
                       </td>
                   </tr>
                   <tr>
                       <td><h6>Returns</h6></td>
-                      <td> Iot app list
+                      <td> Iot app created / updated
                       <p>
                       <strong>Sample JSON response body</strong></p>
                       <pre style="overflow:auto;">
-REPLACE WITH JSON
+{
+    "callbackurl": "http://my.callback.url", 
+    "created": "Mar 26, 2013 2:47:29 PM", 
+    "description": "My app description lines go here", 
+    "id": 125031196,
+    "key": "610c86a7e20c22090983232377934fffddffde", 
+    "name": "myApp", 
+    "secret": "00343982122308dfcbaeffefed093409"
+}
                       </pre>
                   </td>
               </tr>
@@ -226,7 +253,7 @@ REPLACE WITH JSON
 			</div>
 	     <p>
 	     <br/><br/>
-	     <h4><a name="DevAuthentication">DELETE /iot/apps.json</a></h4>
+	     <h4><a name="DevAuthentication">DELETE /iot/developers/apps.json</a></h4>
 	     <br/>
 	     <table class="table">
 	              <tbody>
@@ -236,7 +263,7 @@ REPLACE WITH JSON
 	                  </tr>
 	                  <tr>
 	                      <td><h6>Url</h6></td>
-	                      <td><code>https://sensor.insgroup.fr/iot/apps.json</code></td>
+	                      <td><code>https://sensor.insgroup.fr/iot/developers/apps.json</code></td>
 	                  </tr>
 	                  <tr>
 	                      <td><h6>Method</h6></td>

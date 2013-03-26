@@ -60,7 +60,7 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
         return {
             // iotSimulation method
             iotSimulation: function(params) {
-                var url = CONSTANTS.remote + '/iot/simulator.json';
+                var url = CONSTANTS.remote + '/iot/developers/simulator.json';
                 var utoken = $cookieStore.get('utoken');
                 $log.info('URL built up : ' + url + ' & params : ' + JSON.stringify(params));
 				var promise = $http({
@@ -161,7 +161,7 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
             registration: function(account) {
                 return $http({
                     method : 'POST',
-                    url : CONSTANTS.remote + '/iot/register.json',
+                    url : CONSTANTS.remote + '/iot/developers/register.json',
                     data : account
                 });
             },
