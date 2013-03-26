@@ -123,9 +123,9 @@ scripts:
 		                        <tbody ng-switch>
 		                            <tr ng-repeat="message in _messages">
 		                                <td>{{"{{message.when | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
-										<td>{{"{{message.extra.ctxt.index"}}}}</td>
-										<td>{{"{{message.extra.type"}}}}</td>
-										<td>{{"{{message.extra.payload"}}}}</td>
+										<td>{{"{{message.ctxt.index"}}}}</td>
+										<td>{{"{{message.type"}}}}</td>
+										<td>{{"{{message.payload"}}}}</td>
 		                            </tr>
 									<tr>
 										<td colspan="4"><center><i class="icon-spin icon-spinner"></i></center></td>
