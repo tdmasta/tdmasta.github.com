@@ -157,9 +157,11 @@ E1 V1 Q0 X1 S200:0 S300:24 S301:2 S302:14 S303:1
 
 OK
 </code></pre>
-Send Hello World ! SIGFOX™ Message <small>12 chars, hexa format</small>
+Send "Hello" message to mobile 0601020304
 <pre class="prettyprint">
-AT$SS=48656c6c6f20576f726c6421
+<code class="language-sh">AT$DP=0,0601020304
+OK
+AT$SSMS=Hello
 OK
 </code></pre>
 			</p>
