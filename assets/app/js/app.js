@@ -1,6 +1,8 @@
 'use strict';
 
-var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context', 'NotificationModule'],function($routeProvider, $locationProvider, $httpProvider){
+var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context', 'NotificationModule'],function($routeProvider, $locationProvider, $httpProvider) {
+	
+	//$httpProvider.defaults.withCredentials = true;
 	
 	var interceptor = ['$rootScope', '$q', function (scope, $q) {
 

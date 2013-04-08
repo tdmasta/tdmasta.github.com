@@ -109,10 +109,11 @@ scripts:
 		                            <th>Index</th>
 		                            <th>Msg</th>
 									<th>[Payload]</th>
+		                            <th>Lvl</th>
 		                        </thead>
 		                        <tbody ng-switch>
 		                            <tr>
-		                                <td colspan="4"><center><i class="icon-spin icon-spinner"></i> No message found</center></td>
+		                                <td colspan="5"><center><i class="icon-spin icon-spinner"></i> No message found</center></td>
 		                            </tr>
 		                        </tbody>
 		                    </table>
@@ -124,6 +125,7 @@ scripts:
 		                            <th>Index</th>
 		                            <th>Msg</th>
 		                            <th>[Payload]</th>
+		                            <th>Lvl</th>
 		                        </thead>
 		                        <tbody ng-switch>
 		                            <tr ng-repeat="message in _messages">
@@ -131,9 +133,10 @@ scripts:
 										<td>{{"{{message.ctxt.index"}}}}</td>
 										<td>{{"{{message.type"}}}}</td>
 										<td>{{"{{message.payload"}}}}</td>
+			                            <td>{{"{{message.lvl"}}}}</td>
 		                            </tr>
 									<tr>
-										<td colspan="4"><center><i class="icon-spin icon-spinner"></i></center></td>
+										<td colspan="5"><center><i class="icon-spin icon-spinner"></i></center></td>
 									</tr>
 		                        </tbody>
 		                    </table>

@@ -3,8 +3,8 @@ Modernizr.load({
 	nope: 'functional-polyfills.js',
 	complete: function() {
 		e = document.getElementById('fixed');
-		console.log('element', e);
+//		console.log('element', e);
 		scope = angular.element(e).scope();
-		console.log('scope', scope);
+//		console.log('scope', scope);
 	}
 });
