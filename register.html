@@ -31,10 +31,18 @@ scripts:
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="firstName">Full name</label>
+                    <label class="control-label" for="firstname">First name</label>
                     <div class="controls">
-                        <input id="fullName" name="account.fullName" ng-model="account.fullname" ng-model-instant data-val="true" type="text" data-val-required="Full name is required." required />
-                        <span class="field-validation-valid" data-valmsg-for="fullName" data-valmsg-replace="true"></span>
+                        <input id="firstname" name="account.firstname" ng-model="account.firstname" ng-model-instant data-val="true" type="text" data-val-required="First name is required." required />
+                        <span class="field-validation-valid" data-valmsg-for="firstname" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="lastname">Last name</label>
+                    <div class="controls">
+                        <input id="lastname" name="account.lastname" ng-model="account.lastname" ng-model-instant data-val="true" type="text" data-val-required="Last name is required." required />
+                        <span class="field-validation-valid" data-valmsg-for="lastname" data-valmsg-replace="true"></span>
                     </div>
                 </div>
 
