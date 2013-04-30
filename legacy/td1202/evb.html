@@ -1,0 +1,217 @@
+---
+layout: page
+title: "TD 1202 Evaluation Board"
+description: "Pragmatic M2M"
+tagline: "By hackers, for hackers"
+---
+{% include JB/setup %}
+
+
+<section class="container">
+	<div class="jumbotron hero-unit span10 offset1">
+		<h1>Module Hacking</h1>
+		
+		<div class="hero-content">
+			<h2>
+				Easy as A, B, C
+			</h2>
+			<div class="actions">
+				<a href="#quickstart" class="btn btn-success btn-large"><i class="icon-large icon-star-empty"></i> Quickstart steps </a>
+				<a href="{{site.production_url}}/downloads/td1202_evb_users_guide_rev1.0.pdf" target="_blank" class="btn btn-info btn-large"><i class="icon-large icon-download"></i> Download EVB User Guide</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<section class="container" id="overview">
+	<div class="page-header" style="text-align:center;">
+		<h2> <i class="icon-large icon-gift"></i> Overview <small> Boards of a feather... </small></h2>
+	</div>
+	<div class="row">
+		<div class="span4">
+			<h3> Description</h3>
+			<p>
+				The TD1202 Evaluation Board provides a development and demonstration platform for Telecom Design TD1202 SIGFOXTM gateway modules and software tools. <br/> <br/>
+				This overview focuses on the TD1202 evaluation board as a development platform for the TD1202 SIGFOX™ Gateway Module.
+			</p>
+			<p>
+				<form action="https://www.paypal.com/fr/cgi-bin/webscr" target="_blank" method="POST" accept-charset="utf-8">
+					<input type="hidden" name="cmd" value="_xclick">
+					<input type="hidden" name="business" value="webmaster.telecomdesign@gmail.com">
+					<input type="hidden" name="item_name" value="TD1202 - IN1202 Evaluation Board">
+					<input type="hidden" name="item_number" value="PROD0719">
+					<input type="hidden" name="amount" value="950">
+					<input type="hidden" name="currency_code" value="EUR">
+					<input type="hidden" name="undefined_quantity" value="1">
+					<input type="hidden" name="no_shipping" value="2">
+					<input type="hidden" name="tax_rate" value="20.0">
+					<input type="hidden" name="charset" value="utf-8">
+					<input type="hidden" name="return" value="{{site.production_url}}/td1202/order_placed.html">
+					<input type="hidden" name="cancel_return" value="{{site.production_url}}/td1202/order_cancelled.html">
+					<button type="submit" class="btn btn-large btn-success" target="_blank" href=""><i class="icon-shopping-cart"></i> Get your EVB </button>
+				</form>
+			</p>
+		</div>
+		<div class="span4">
+			<h3> Board features </h3>
+			<p>
+				TD1202 SIGFOX™ Gateway module in LGA25 package
+				<ul>
+					<li>SIGFOX™ certified</li>
+					<li> Frequency range = ISM 868 MHz </li>
+					<li> Receiver sensitivity =-126 dBm </li>
+					<li>  (G)FSK, 4(G)FSK, GMSK / OOK Modulation </li>
+					<li> Max output power : +14 dBm</li>
+					<li> Low active radio power consumption : 13/16 mA RX ,  37 mA TX @ +10 dBm </li>
+					<li> Power supply = 2.3 to 3.3 V </li>
+					<li> LGA25 (25.4×12.7×3.81mm) Land Grid Array package </li>
+					<li> Up to 13 GPIOs pins </li>
+					<li> I2C bus interface </li>
+				</ul>
+			</p>
+			<p>
+				<a class="btn btn-large btn-info" target="_blank" href="{{site.production_url}}/downloads/td1202_evb_users_guide_rev1.0.pdf"><i class="icon-plus-sign"></i> Complete features list </a>
+			</p>
+		</div>
+		
+		<div class="span4">
+			<h3> W.Y.G.I.W.Y.S </h3>
+			<p>
+				The EVB comes bundled with following
+				<ul>
+					<li>A TTL-232R-3V3 FTDI USB to TTL Serial Cable (3.3V)-1.8m </li>
+					<li> The TD1202 EVB Evaluation Board itself </li>
+					<li>A 20 cm 868 MHz-Band Swivel Antenna</li>
+				</ul>
+			</p>
+			<div class="span8 thumbnail offset1">
+				<img src="/images/evaluation-kit.jpg">
+				<div class="caption">
+					<strong> the EVB content pack </strong>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="row">
+	&nbsp;
+</div>
+
+<section class="container" id="quickstart">
+	<div class="page-header" style="text-align:center;">
+		<h2> <i class="icon-large icon-road"></i>  Quickstart <small>Up and runnning in seconds</small> </h2>
+	</div>
+	<div class="row">
+		<div class="span4">
+			<h3>Driver install / setup</h3>
+			<h4> On Linux O.S</h4>
+			<p> Latest common distros (debian based) comes with FTDI drivers installed, so one can get to step 2, or check <a href="http://nattster.siamdev.net/2010/02/getting-a-ftdi-usb-to-serial-converter-to-work-on-ubuntu-9-10/" target="_blank">this site</a> for more information </p>
+			<h4> On Mac OS X</h4>
+			<p>
+				Install the latest fdti VPC driver by downloading the bundle image available <a href="http://www.ftdichip.com/Drivers/VCP.htm" target="_blank">here</a>. No restart required
+			</p>
+			<h4> On WinX </h4>
+			<p>
+				Install the latest fdti VPC driver by downloading the install exe available <a href="http://www.ftdichip.com/Drivers/VCP.htm" target="_blank">here</a>
+			</p>
+		</div>
+		<div class="span4">
+			<h3>Open a Term session</h3>
+			
+			<h4> On Linux O.S </h4>
+			<p>
+				<pre class="prettyprint linenums"><code class="language-sh">screen /dev/ttyUSB0</code></pre>
+			</p>
+			<h4> On OS X </h4>
+			<p>
+				<pre class="prettyprint linenums"><code class="language-sh">screen /dev/tty.usbserial-XXXXX</code></pre>
+			</p>
+			
+			<h4> On winX </h4>
+			<p>	
+				Start an hyperterminal session using HyperTerm / PuTTy or your favorite terminal session editor
+			</p>
+			
+		</div>
+		<div class="span4">
+			<h3> Your first tw!!t</h3>
+			Check the system is up and running
+			<p>
+			<pre class="prettyprint">
+<code class="language-sh">ATZ
+OK
+</code></pre>	
+Get Module information
+<pre class="prettyprint">
+<code class="language-sh">AT&V
+Hardware Version: 0F
+Software Version: SOFT1100
+S/N: 0000XXXX
+ACTIVE PROFILE
+E1 V1 Q0 X1 S200:0 S300:24 S301:2 S302:14 S303:1
+
+OK
+</code></pre>
+Send "Hello" message to mobile 0601020304
+<pre class="prettyprint">
+<code class="language-sh">AT$DP=0,0601020304
+OK
+AT$SSMS=Hello
+OK
+</code></pre>
+			</p>
+		<h3> And then... ?</h3>
+		</div>
+	</div>
+</section>
+
+<div class="row">
+	&nbsp;
+</div>
+
+<section class="container" id="overview">
+	<div class="page-header" style="text-align:center;">
+		<h2> <i class="icon-large icon-cogs"></i> Dashboard and Apps <small> Let's tw!!t... </small></h2>
+	</div>
+	<div class="row">
+		<div class="span4">
+			<h3>Check out your module online</h3>
+			<p>
+				Access dashboard securely for free and and 
+				<ul> 
+					<li>Checkout device history</li>
+					<li>Get live notification</li>
+				</ul>
+			</p>
+			<p>
+				<br/>
+				<a href="{{site.production_url}}/dashboards/device.html" target="_blank" class="btn btn-large btn-warning"><i class="icon-dashboard icon-large"></i> To device dashboard</a>
+			</p>
+		</div>
+		<div class="span4">
+			<h3> Create your Apps </h3>
+			<p>
+				Want more ? <br/>
+				Register and create your Apps, organize your modules and get callbacks to your backend
+			</p>
+			<p>
+				<br/>
+				<a href="{{site.production_url}}/register.html" target="_blank" class="btn btn-large btn-success"><i class="icon-large icon-cloud"></i> Register</a>
+			</p>
+		</div>
+		
+		<div class="span4">
+			<h3> Remote API </h3>
+			<p>
+				Access Device information / messages history through our REST-S-WS hosted services stack and checkout out the  developer API documentation for more information.
+			</p>
+			<p>
+				<br/>
+				<a href="{{site.production_url}}/iot/about.html" target="_blank" class="btn btn-large btn-info"><i class="icon-book icon-large"></i> To Documentation</a>
+			</p>
+		</div>
+	</div>
+</section>
