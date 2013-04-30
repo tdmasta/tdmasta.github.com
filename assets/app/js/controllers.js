@@ -161,7 +161,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
             .success(function(data, status) {
                 $cookieStore.put('utoken', data);
                 $log.info('Registration OK : utoken = ' + data);
-				Notif.success('A confirmation email has been sent to the registered email adress, checkout your mbox');
+				// Notif.success('A confirmation email has been sent to the registered email adress, checkout your mbox');
             }).error(function(data, status) {
                 $cookieStore.remove('utoken');
                 $log.error('Registration KO : Failed request status = ' + status + ' & data = ' + data);
