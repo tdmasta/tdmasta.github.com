@@ -17,7 +17,7 @@ tagline: "By hackers, for hackers"
 			</h2>
 			<div class="actions">
 				<a href="#quickstart" class="btn btn-success btn-large"><i class="icon-large icon-star-empty"></i> Quickstart steps </a>
-				<a href="/downloads/TD1202_EVB_Users_Guide_rev3.0.pdf" target="_blank" class="btn btn-info btn-large"><i class="icon-large icon-download"></i> Download EVB User Guide</a>
+				<a href="/downloads/td1202_evb_users_guide_rev4.0.pdf" target="_blank" class="btn btn-info btn-large"><i class="icon-large icon-download"></i> Download EVB User Guide</a>
 			</div>
 		</div>
 	</div>
@@ -137,7 +137,7 @@ tagline: "By hackers, for hackers"
 			
 		</div>
 		<div class="span4">
-			<h3> Your first tw!!t</h3>
+			<h3> Your first frame</h3>
 			Check the system is up and running
 			<p>
 			<pre class="prettyprint">
@@ -155,13 +155,14 @@ E1 V1 Q0 X1 S200:0 S300:24 S301:2 S302:14 S303:1
 
 OK
 </code></pre>
-Send "Hello" message to mobile 0601020304
+Send "54 44"
 <pre class="prettyprint">
-<code class="language-sh">AT$DP=0,0601020304
+<code class="language-sh">ATE1
 OK
-AT$SSMS=Hello
+ATQ0
 OK
-</code></pre>
+AT$SS=54 44
+OK</code></pre>
 			</p>
 		<h3> And then... ?</h3>
 		</div>
@@ -174,7 +175,7 @@ OK
 
 <section class="container" id="overview">
 	<div class="page-header" style="text-align:center;">
-		<h2> <i class="icon-large icon-cogs"></i> Dashboard and Apps <small> Let's tw!!t... </small></h2>
+		<h2> <i class="icon-large icon-cogs"></i> Dashboard and Apps <small>  <label class="label label-important"> ONLY WITH TD1208 EVAL MODE</label> </small></h2>
 	</div>
 	<div class="row">
 		<div class="span4">
