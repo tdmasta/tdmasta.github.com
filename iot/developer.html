@@ -187,7 +187,7 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
              </tbody>
          </table>
 	</section>
-		
+
 	<section id="create_app">
 		<div class="page-header">
      		<h2>Iot Applications creation / update</h2>
@@ -219,7 +219,7 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                        <p>
                        <strong>Sample creation request command</strong></p>
                        <pre style="overflow:auto;">
-curl -X POST -H "Authorization: Basic Blablafootoken=="  "http://sensor.insgroup.fr/iot/developers/apps.json" -d '{"name": "myApp", "description" : 'My app description lines go here ", "callbackurl" : "http://my.callback.url"}'
+curl -X POST -H "Authorization: Basic Blablafootoken==" "http://sensor.insgroup.fr/iot/developers/apps.json" -d '{"name": "myApp", "description" : "My app description lines go here", "callbackurl" : "http://my.callback.url"}'
                        </pre>
                       </td>
                   </tr>
@@ -282,7 +282,10 @@ curl -X POST -H "Authorization: Basic Blablafootoken=="  "http://sensor.insgroup
 	                          <ol>
 	                              <li><code>id</code> <i>required</i> Iot App technical id</li>
 	                          </ol>
-	                       <p>
+                       <p><strong>Sample request command</strong></p>
+                       <pre style="overflow:auto;">
+curl -X DELETE -H "Authorization: Basic Blablafootoken==" "http://sensor.insgroup.fr/iot/developers/apps.json" -d '{}'
+                       </pre>
 	                      </td>
 	                  </tr>
 	                  <tr>
@@ -301,5 +304,252 @@ curl -X POST -H "Authorization: Basic Blablafootoken=="  "http://sensor.insgroup
 	          </tbody>
 	         </table>
 		</section>
-	
+
+    <section id="register_modules">
+        <div class="page-header">
+            <h2>Modules registration</h2>
+        </div>
+        <p>
+            <br/>
+            <br/>
+            <h4><a name="DevRegistrationModules">POST /iot/developers/modules.json</a></h4>
+            <br/>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><h6>Description</h6></td>
+                        <td>Attach a single or multiple module(s) to the developer's account</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Url</h6></td>
+                        <td><code>https://sensor.insgroup.fr/iot/developers/modules.json</code></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Method</h6></td>
+                        <td>POST</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Parameters</h6></td>
+                        <td>
+                            <ol>
+                                <li><code>modules</code> <i>required</i> Iot Module(s) json serialized (serial, key)</li>
+                            </ol>
+                            <p>
+                                <strong>Sample request command</strong>
+                            </p>
+                            <pre style="overflow:auto;">
+curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/modules.json" -d '[{"serial": "1FA0", "key": "A87A1EEA"}]'
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Returns</h6></td>
+                        <td>
+                            A data structure with :
+                            <ol>
+                                <li> a list of registered modules </li>
+                                <li> a list of not found modules </li>
+                                <li> a list of already registered modules </li>
+                                <li> a list of invalid keys </li>                                
+                            </ol>
+                            <p>
+                                <strong>Sample JSON response body</strong>
+                            </p>
+                            <pre style="overflow:auto;">
+{
+    "registered":["1FA0"],
+    "not_found":[],
+    "already_registered":[],
+    "invalid_key":[]
+}
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Errors</h6></td>
+                        <td>
+                            <ul class="unstyled">
+                                <li><code>404</code> - The developer account was not found </li>
+                                <li><code>401</code> - The authentication information are missing or invalid </li>
+                            </ul>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="list_modules">
+        <div class="page-header">
+            <h2>Registered modules listing</h2>
+        </div>
+        <p>
+            <br/>
+            <br/>
+            <h4><a name="DevRegisterdModulesListing">GET /iot/developers/modules.json</a></h4>
+            <br/>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><h6>Description</h6></td>
+                        <td>Listing of all modules attached to the developer's account</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Url</h6></td>
+                        <td><code>https://sensor.insgroup.fr/iot/developers/modules.json</code></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Method</h6></td>
+                        <td>GET</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Parameters</h6></td>
+                        <td>
+                            N.A
+                            <p>
+                                <strong>Sample request command</strong>
+                            </p>
+                            <pre style="overflow:auto;">
+curl -X GET -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/modules.json"
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Returns</h6></td>
+                        <td>
+                            A data structure with a list of Iot Modules (technical id, serial) :
+                            <p>
+                                <strong>Sample JSON response body</strong>
+                            </p>
+                            <pre style="overflow:auto;">
+[
+    {
+        "id":"92507426",
+        "serial":"1FA0"
+    }
+]
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Errors</h6></td>
+                        <td>
+                            <ul class="unstyled">
+                                <li><code>404</code> - The developer account was not found </li>
+                                <li><code>401</code> - The authentication information are missing or invalid </li>
+                            </ul>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="attach_modules">
+        <div class="page-header">
+            <h2>Module attachment</h2>
+        </div>
+        <p>
+            <br/>
+            <br/>
+            <h4><a name="DevDeviceAttachment">POST /iot/developers/apps/{idApp}/modules/attach.json</a></h4>
+            <br/>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><h6>Description</h6></td>
+                        <td>Modules attachment to an existing Iot App</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Url</h6></td>
+                        <td><code>https://sensor.insgroup.fr/iot/developers/apps/{idApp}/modules/attach.json</code></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Method</h6></td>
+                        <td>POST</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Parameters</h6></td>
+                        <td>
+                            <ol>
+                                <li><code>idApp</code> <i>required</i> Iot app's functional id </li>
+                                <li><code>modules</code> <i>required</i> Modules to attach </li>
+                            </ol>
+                            <p>
+                                <strong>Sample request command to attach the module : 1FA0 to app with id : 123456789</strong>
+                            </p>
+                            <pre style="overflow:auto;">
+curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/apps/123456789/modules/attach.json" -d '{"serials": "1FA0"}'
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Returns</h6></td>
+                        <td>void</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Errors</h6></td>
+                        <td>
+                            <ul class="unstyled">
+                                <li><code>404</code> - The developer account was not found </li>
+                                <li><code>401</code> - The authentication information are missing or invalid </li>
+                            </ul>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="detach_modules">
+        <div class="page-header">
+            <h2>Module detachment</h2>
+        </div>
+        <p>
+            <br/>
+            <br/>
+            <h4><a name="DevDeviceDetachment">POST /iot/developers/apps/{idApp}/modules/detach.json</a></h4>
+            <br/>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><h6>Description</h6></td>
+                        <td>Modules detachment to an existing Iot App</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Url</h6></td>
+                        <td><code>https://sensor.insgroup.fr/iot/developers/apps/{idApp}/modules/detach.json</code></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Method</h6></td>
+                        <td>POST</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Parameters</h6></td>
+                        <td>
+                            <ol>
+                                <li><code>idApp</code> <i>required</i> Iot app's functional id </li>
+                                <li><code>modules</code> <i>required</i> Modules to detach </li>
+                            </ol>
+                            <p>
+                                <strong>Sample request command to detach the module : 1FA0 to app with id : 123456789</strong>
+                            </p>
+                            <pre style="overflow:auto;">
+curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/apps/123456789/modules/detach.json" -d '{"serials": "1FA0"}'
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Returns</h6></td>
+                        <td>void</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Errors</h6></td>
+                        <td>
+                            <ul class="unstyled">
+                                <li><code>404</code> - The developer account was not found </li>
+                                <li><code>401</code> - The authentication information are missing or invalid </li>
+                            </ul>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </section>
 </div>
