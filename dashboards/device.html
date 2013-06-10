@@ -93,17 +93,18 @@ scripts:
 			</div>
 		</div>
 			
-		<div id="history" class="modal hide fade in">
+		<div id="history" class="modal hide fade in container">
 			<div class="modal-header">
 				<a class="close" data-dismiss="modal">&times;</a>
 				<h3> <i class="icon-time"> </i> History </h3>
 			</div>
 			<div class="modal-body">
-				<div class="span5" when-scrolled="loadMore();" ng:cloak class="container" id="fixed">
+				<div when-scrolled="loadMore();" ng:cloak id="fixed">
 		            	<div ng:show="_messages.length == 0">
 		                    <table class="table table-striped table-condensed table-hover">
 		                        <thead>
-		                            <th>Date</th>
+                                    <th>Emission Date</th>
+		                            <th>Reception Date</th>
 		                            <th>Index</th>
 		                            <th>Msg</th>
 									<th>[Payload]</th>
@@ -111,7 +112,7 @@ scripts:
 		                        </thead>
 		                        <tbody ng-switch>
 		                            <tr>
-		                                <td colspan="5"><center><i class="icon-spin icon-spinner"></i> No message found</center></td>
+		                                <td colspan="6"><center><i class="icon-spin icon-spinner"></i> No message found</center></td>
 		                            </tr>
 		                        </tbody>
 		                    </table>
@@ -119,7 +120,8 @@ scripts:
 		                <div ng:show="_messages.length > 0">
 		                    <table class="table table-striped table-condensed table-hover">
 		                        <thead>
-		                            <th>Date</th>
+                                    <th>Emission Date</th>
+                                    <th>Reception Date</th>
 		                            <th>Index</th>
 		                            <th>Msg</th>
 		                            <th>[Payload]</th>
@@ -127,6 +129,7 @@ scripts:
 		                        </thead>
 		                        <tbody ng-switch>
 		                            <tr ng-repeat="message in _messages">
+                                        <td>{{"{{message.received | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
 		                                <td>{{"{{message.when | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
 										<td>{{"{{message.ctxt.index"}}}}</td>
 										<td>{{"{{message.type"}}}}</td>
