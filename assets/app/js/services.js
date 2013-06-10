@@ -53,9 +53,8 @@ angular.module('NotificationModule', [], function($provide) {
 //      iotSimulation
 //      getMessagesBefore
 //      getMessagesAfter
-angular.module('DevicesModule', ['ngCookies'], function($provide) {
+angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', function($http, $log, $cookieStore, CONSTANTS) {
 
-    $provide.factory('DevicesServices', function($http, $log, $cookieStore, CONSTANTS) {
 
         return {
             // iotSimulation method
@@ -116,7 +115,6 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
 			getChildren : function(sn) {
                 var dtoken = $cookieStore.get('dtoken');
                 var url = CONSTANTS.remote + '/iot/devices/children.json';
-
 				return $http({
                     method : 'GET',
                     url : url,
@@ -130,7 +128,7 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
 			} 
         }
     });
-});
+
 
 
 //
@@ -142,9 +140,7 @@ angular.module('DevicesModule', ['ngCookies'], function($provide) {
 //      authentication
 //      deleteAccount
 angular.module('SecurityModule', []).factory('SecurityServices', function($http, $log, $cookieStore, CONSTANTS) {
-
     return {
-
             // checkCRC method
             checkCRC : function(inputSerial, inputKey) {
                 return $http({
@@ -153,7 +149,7 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
                     params : {  
                         sn : inputSerial,
                         key : inputKey
-                    }
+                    },
                 });
             },
 

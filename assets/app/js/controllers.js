@@ -6,7 +6,7 @@
 
 // Authentication controller
 function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, Context, Notif) {
-
+	$http.defaults.useXDomain = true;
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
 
@@ -151,7 +151,6 @@ function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesS
 
 // Registration controller
 function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices, Notif) {
-
     // Registration button
     $scope.registrationSubmit = function() {
         var hosturl = CONSTANTS.remote;
@@ -203,6 +202,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	$scope._stopPolling = false;
 	$scope._errors = [];
 	$scope._devicesMap = {};
+	$scope._devices =0;
 	
 	$scope._eventTitle = {
 		'event' : 'Nouvel Evènement',
@@ -361,15 +361,17 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     $scope.$on('DashBoardEvent', function() {
 		$log.info('waking up on dashoard event');
         $scope._displayDashboard = Context.dashboard.visible;
+        
 		if (true == $scope._displayDashboard) {
 			
 			$scope.init().then(function(response) {
-				
+				$scope._devices=0;
 				angular.forEach(response.data,function(device) {
 					$log.info("handling device ", device);
 					$scope._devicesMap[device.id] = device;
+					$scope._devices = $scope._devices + 1;
 				});
-				
+				$log.info("_devices",$scope._devices);
 	        	$scope.loadMore();
 	
 				if (undefined == $scope._timer) {

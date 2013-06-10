@@ -1,8 +1,8 @@
 'use strict';
 
 var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context', 'NotificationModule'],function($routeProvider, $locationProvider, $httpProvider) {
-	
-	//$httpProvider.defaults.withCredentials = true;
+	//delete $httpProvider.defaults.headers.common['X-Requested-With'];
+	$httpProvider.defaults.withCredentials = true;
 	
 	var interceptor = ['$rootScope', '$q', function (scope, $q) {
 
@@ -80,7 +80,6 @@ app.run(function($log, $cookieStore, Context, $timeout) {
     });
 });
 
-
 //app.constant('CONSTANTS', {remote : 'http://localhost:9010'});
-app.constant('CONSTANTS', {remote : 'https://sensor.insgroup.fr'});
-//app.constant('CONSTANTS', {remote : 'http://192.168.0.42:9010'});
+//app.constant('CONSTANTS', {remote : 'https://sensor.insgroup.fr'});
+app.constant('CONSTANTS', {remote : 'http://192.168.1.14:9010'});
