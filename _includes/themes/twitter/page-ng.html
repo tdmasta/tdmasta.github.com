@@ -140,8 +140,7 @@ document.createElement('ng:view');
 		<div class="page-header container">
 		  <h1>{{ page.title }} {% if page.tagline %} <small>{{ page.tagline }}</small>{% endif %}</h1>
 		</div>
-		
-        {{ content }}
+		<!--[if (!IE) | (gt IE 10)]><!-->{{ content }}<!--<![endif]-->
       </div>
 
 	<div class="row" style="margin:0 auto; display:table">
