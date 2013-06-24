@@ -278,54 +278,56 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     // checkForNewMsg
     $scope.checkForNewMsg = function() {
         var newest = $scope._messages.length != 0 ? $scope._messages[0].when : null;
-
-        DevicesServices.getMessagesAfter(Context.serial, newest, 50)
-            .then(function(response) {
-				$log.info('response', response.data);
-				switch (response.status) {
-					case 200 :
-						if (typeof response.data != "undefined") {
-							
-			                angular.forEach(response.data.reverse(), function(item, value) {
-								var infos = item.type.split(':')
+        var dtoken = $cookieStore.get('dtoken');
+		if(undefined != dtoken)
+	        DevicesServices.getMessagesAfter(Context.serial, newest, 50)
+	            .then(function(response) {
+					$log.info('response', response.data);
+					switch (response.status) {
+						case 200 :
+							if (typeof response.data != "undefined") {
 								
-								var ititle = function() {
-									return $scope._eventTitle[infos[0] || 'undefined'];
-								};
-								
-								var itext = [$scope._eventDetail[infos[1] || 'undefined'], item.payload || ''].join(' ');
-								
-			                    jQuery.pnotify({
-			                        title: ititle,
-			                        text: itext,
-			                        hide: false,
-									type: 'info',
-			                        styling: 'bootstrap'
-			                    });
-			                    $scope._messages.splice(0, 0, item);
-			                });
-			
-							if (response.data.length != 0 && $scope._messages[0].ctxt)  {
-								var device = $scope._messages[0].ctxt;
-								var delta  = $scope._messages[0].contrib;
-								$scope._devicesMap[device.id] = $scope.merge(device,delta);
+				                angular.forEach(response.data.reverse(), function(item, value) {
+									var infos = item.type.split(':')
+									
+									var ititle = function() {
+										return $scope._eventTitle[infos[0] || 'undefined'];
+									};
+									
+									var itext = [$scope._eventDetail[infos[1] || 'undefined'], item.payload || ''].join(' ');
+									
+				                    jQuery.pnotify({
+				                        title: ititle,
+				                        text: itext,
+				                        hide: false,
+										type: 'info',
+				                        styling: 'bootstrap'
+				                    });
+				                    $scope._messages.splice(0, 0, item);
+				                });
+				
+								if (response.data.length != 0 && $scope._messages[0].ctxt)  {
+									var device = $scope._messages[0].ctxt;
+									var delta  = $scope._messages[0].contrib;
+									$scope._devicesMap[device.id] = $scope.merge(device,delta);
+								}
 							}
-						}
-		                $scope._timer = new Date().getTime();
-						break;
-					case 404 :
-						Notif.error("Resource not found, please check with tech support team.");
-						break;
-					default :
-						$log.error('Unexpexted error', response.status, response.body);
-						Notif.error("Unexpexcted Error");
-						break;
-				}
-            });
+			                $scope._timer = new Date().getTime();
+							break;
+						case 404 :
+							Notif.error("Resource not found, please check with tech support team.");
+							break;
+						default :
+							$log.error('Unexpexted error', response.status, response.body);
+							Notif.error("Unexpexcted Error");
+							break;
+					}
+	            });
     }
 
     $scope.poll = function() {
-		if (true === $scope._stopPolling) {
+		if (undefined == Context.serial) {
+			$log.info('Stopping polling');
 			clearInterval($scope._timer);
 		} else {
 	        $scope.checkForNewMsg()
@@ -401,6 +403,8 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 		$log.info('logout event');
 		$cookieStore.remove('dtoken');
 		$cookieStore.remove('utoken');
+		//desactivation du polling
+		$scope._stopPolling = true;
 		Context.setSerial(undefined);
         Context.setDashBoardVisibilty(false);
 		Notif.info('See you Soon');
