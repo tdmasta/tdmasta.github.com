@@ -552,4 +552,71 @@ curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup
             </tbody>
         </table>
     </section>
+
+    <section id="list_app_modules">
+        <div class="page-header">
+            <h2>Fetching app modules</h2>
+        </div>
+        <p>
+            <br/>
+            <br/>
+            <h4><a name="DevAppModules">GET /iot/developers/apps/{idApp}/modules.json</a></h4>
+            <br/>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><h6>Description</h6></td>
+                        <td>Fetching app modules</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Url</h6></td>
+                        <td><code>https://sensor.insgroup.fr/iot/developers/apps/{idApp}/modules.json</code></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Method</h6></td>
+                        <td>GET</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Parameters</h6></td>
+                        <td>
+                            <ol>
+                                <li><code>idApp</code> <i>required</i> Iot app's functional id </li>
+                            </ol>
+                            <p>
+                                <strong>Sample request command to fetch the idApp 123456789 modules</strong>
+                            </p>
+                            <pre style="overflow:auto;">
+curl -X GET -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/apps/123456789/modules.json"
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Returns</h6></td>
+                        <td>
+                            A data structure with a list of Iot Modules (technical id, serial) :
+                            <p>
+                                <strong>Sample JSON response body</strong>
+                            </p>
+                            <pre style="overflow:auto;">
+[
+    {
+        "id":"92507426",
+        "serial":"1FA0"
+    }
+]
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Errors</h6></td>
+                        <td>
+                            <ul class="unstyled">
+                                <li><code>404</code> - The developer account was not found </li>
+                                <li><code>401</code> - The authentication information are missing or invalid </li>
+                            </ul>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </section>
 </div>
