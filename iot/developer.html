@@ -474,10 +474,10 @@ curl -X GET -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.
                                 <li><code>modules</code> <i>required</i> Modules to attach </li>
                             </ol>
                             <p>
-                                <strong>Sample request command to attach the module : 1FA0 to app with id : 123456789</strong>
+                                <strong>Sample request command to attach modules : 1FA0 and 1019 to app with id : 123456789</strong>
                             </p>
                             <pre style="overflow:auto;">
-curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/apps/123456789/modules/attach.json" -d '{"serials": "1FA0"}'
+curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/apps/123456789/modules/attach.json" -d '{"serials":["1019","1FA0"]}'
                             </pre>
                         </td>
                     </tr>
@@ -529,10 +529,10 @@ curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup
                                 <li><code>modules</code> <i>required</i> Modules to detach </li>
                             </ol>
                             <p>
-                                <strong>Sample request command to detach the module : 1FA0 to app with id : 123456789</strong>
+                                <strong>Sample request command to detach modules : 1FA0 and 1019 to app with id : 123456789</strong>
                             </p>
                             <pre style="overflow:auto;">
-curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/apps/123456789/modules/detach.json" -d '{"serials": "1FA0"}'
+curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/apps/123456789/modules/detach.json" -d '{"serials":["1019","1FA0"]}'
                             </pre>
                         </td>
                     </tr>
