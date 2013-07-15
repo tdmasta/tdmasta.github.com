@@ -1,50 +1,146 @@
 ---
 layout: page-ng
-title: Device dashboard
-tagline: Messages history
+title: Developer dashboard
+tagline: Applications management
 description: Dashboard with transmitted datas
 scripts:
 - {name: validation, type: remote, url: "https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"}
 - {name: validation.nonobs, type: remote, url: "https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"}
-- {name: app, type: remote, url: "assets/app/js/app.js"}
-- {name: controller, type: remote, url: "assets/app/js/controllers.js"}
-- {name: service, type: remote, url: "assets/app/js/services.js"}
-- {name: pines, type: remote, url: "assets/app/lib/jquery.pnotify.min.js"}
-- {name: modernizr, type: remote, url: "assets/app/js/mdz.js"}
+- {name: app, type: remote, url: "/assets/app/js/app.js"}
+- {name: controller, type: remote, url: "/assets/app/js/controllers.js"}
+- {name: service, type: remote, url: "/assets/app/js/services.js"}
+- {name: pines, type: remote, url: "/assets/app/lib/jquery.pnotify.min.js"}
+- {name: modernizr, type: remote, url: "/assets/app/js/mdz.js"}
 - {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
+- {name: bootrap, type: remote, url: "http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.4.0.js"}
+- {name: ngTable, type: remote, url: "http://esvit.github.io/ng-table/js/ng-table.js"}
+- {name: popover, type: inline, content: "$(function(){$('[data-toggle=\"popover\"]').popover({trigger:'hover'});$('[data-toggle=\"tooltip\"]').tooltip({placement:'bottom'});})"}
 ---
 
 {% include JB/setup %}
 
-<div ng-app="evbApp" ng-controller="DashboardCtrl">
+<div ng-app="evbApp" ng-controller="DeveloperDashboardCtrl">
 
-    <div ng:show="displayDashboard != true" ng:cloak>
-	   <div class="row">
+    <div ng:show="_displayDashboard != true" ng:cloak>
+	   <div class="row" style="margin: 0 auto;display: table;">
             <div class="span5">
-                <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationByEmail" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(account, displayDashboard)" >
-                    <legend> Member Authentication</legend>
+                <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationByEmailForm" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(inputEmail, inputPassword)" >
+					<legend> Developer Authentication</legend>
                     <div class="control-group">
-                        <label class="control-label" for="inputEmail">Email</label>
+                        <label class="control-label" for="inputEmail" data-toggle="popover" data-placement="bottom" data-content="<p>developer's email<br/> used for registration.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Enter developper email </a></label>
                         <div class="controls">
-                            <input id="inputEmail" name="account.inputEmail" ng-model="account.inputEmail" ng-model-instant data-val="true" type="email" data-val-required="Email is required." required placeholder="Member's login" />
+                            <input id="inputEmail" name="inputEmail" ng-model="inputEmail" ng-model-instant data-val="true" type="email" data-val-required="Email is required." required placeholder="Member's login" />
                             <span class="field-validation-valid" data-valmsg-for="inputEmail" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="inputPassword">Password</label>
+                        <label class="control-label" for="inputPassword" data-toggle="popover" data-placement="bottom" data-content="<p>the password you received when registering</p>" data-html="true" data-original-title="<strong>Where can I get the password?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  password </a></label>
                         <div class="controls">
-                            <input id="inputPassword" name="account.inputPassword" ng-model="account.inputPassword" ng-model-instant data-val="true" type="password" data-val-required="Password is required." required placeholder="Member's password" />
+                            <input id="inputPassword" name="inputPassword" ng-model="inputPassword" type="password"  required  password-required="Password is required."  placeholder="Member's password" />
                             <span class="field-validation-valid" data-valmsg-for="inputPassword" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-primary btn-large"><i class="icon-white icon-user"></i> Customer's dashboard</button>
+                            <button type="submit" class="btn btn-success btn-large">Then get to dashoard</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl">
+    	<h3> <i class="icon-dashboard"> </i> <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak>Logout</button></span></h3>
+  		<tabset>
+    		<tab heading="Applications" select="loadApplications()">
+    			<table ng-table="tableApps" class="table">
+    				<tr ng-repeat="appli in appsList" ng-click="showAppliDetails(appli, $index)">
+    					<td title="ID" sortable="id">
+    					{{"{{appli.id"}}}}
+    					</td>
+    					<td title="NAME" sortable="name">
+    					{{"{{appli.name"}}}}
+    					</td>
+    					<td title="DESCRIPTION" >
+    					{{"{{appli.description"}}}}
+    					</td>
+    					<td title="CREATED" sortable="created">
+    					{{"{{appli.created"}}}}
+    					</td>
+    					<td title="&nbsp;">
+    						<button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger">Delete</button>
+    					</td>
+				    </tr>
+    			</table>
+    			<button class="btn" ng-click="showAppliDetails({})">Add</button>
+				<div class="appModal modal hide fade">
+					<div class="modal-header">
+						<h3>Application : {{"{{appli.name"}}}}</h3>
+					</div>
+					<div class="modal-body">
+  		<tabset>
+    		<tab heading="Details">
+						<label>Name*</label>
+						<input type="text" ng-model="appli.name" ng-model-instant data-val="true"data-val-required="Name is required." required/>
+						<label>callbackurl*</label>
+						<input type="text" ng-model="appli.callbackurl" ng-model-instant data-val="true"data-val-required="callbackurl is required." required/>
+						<label>description</label>
+						<input type="text" ng-model="appli.description" />
+						<label ng:show="appli.id != undefined">created</label>
+						<input type="text" ng-model="appli.created" readonly="true" ng:show="appli.id != undefined"/>
+						<label ng:show="appli.id != undefined">key</label>
+						<input type="text" ng-model="appli.key" readonly="true" ng:show="appli.id != undefined"/>
+						<label ng:show="appli.id != undefined">secret</label>
+						<input type="text" ng-model="appli.secret" readonly="true" ng:show="appli.id != undefined"/>
+			</tab>
+			<tab heading="Modules" >
+				   <div id="ModulesList">
+				   		<h3>Attached : {{"{{appli.modules.length"}}}}</h3>
+				   		<ul>
+				   			<li class="alert alert-info nomargin" ng-repeat="item in appli.modules">{{"{{item.serial"}}}}-<button ng-click="toggleDetach(item,$index)">Detach</button></li>
+            			</ul>
+				   		<h3>Availables : {{"{{appli.availablesModules.length"}}}}</h3>
+				   		<ul>
+				   			<li class="alert alert-error nomargin" ng-repeat="item in appli.availablesModules">{{"{{item.serial"}}}}-<button ng-click="toggleAttach(item,$index)">Attach</button></li>
+				   		</ul>
+			    </div>
+			</tab>
+		</tabset>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" ng-click="saveAppli()">Save</button>
+						<button class="btn" ng-click="cancelAppli()">Cancel</button>
+					</div>
+				</div>
+    		</tab>
+    		<tab heading="Registered Modules" select="loadDevices()">
+    			<table ng-table="tableDevices" class="table">
+    				<tr ng-repeat="device in devicesList">
+    					<td title="ID" sortable="id">
+    					{{"{{device.id"}}}}
+						</td>
+    					<td title="SERIAL" sortable="serial">
+    					{{"{{device.serial"}}}}
+    					</td>
+				    </tr>
+    			</table>
+    			<button class="btn" ng-click="showDeviceDetails({})">Add</button>
+				<div class="deviceModal modal hide fade">
+					<div class="modal-header">
+						<h3>Module</h3>
+					</div>
+					<div class="modal-body">
+						<label>serial *</label>
+						<input type="text" ng-model="device.serial" ng-model-instant data-val="true"data-val-required="Name is required." required/>
+						<label>key *</label>
+						<input type="text" ng-model="device.key" ng-model-instant data-val="true"data-val-required="Name is required." required/>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" ng-click="saveDevice()">Save</button>
+						<button class="btn" ng-click="cancelDevice()">Cancel</button>
+					</div>
+				</div>
+    		</tab>
+  		</tabset>
 	</div>
 </div>

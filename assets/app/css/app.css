@@ -48,3 +48,14 @@ a.indicator i {
 .snsr-high {
 	color : orangered;
 }
+
+/*style.css*/
+.ng-table {
+    border: 1px solid #000;
+}
+.nomargin {
+    margin-top: 0px; margin-bottom: 0px;
+}
+label {
+	white-space: nowrap;
+}

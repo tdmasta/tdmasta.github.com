@@ -1,6 +1,5 @@
 'use strict';
-
-var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context', 'NotificationModule'],function($routeProvider, $locationProvider, $httpProvider) {
+var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'SecurityModule', 'Context', 'NotificationModule','ui.bootstrap','ngTable'],function($routeProvider, $locationProvider, $httpProvider) {
 	//delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	$httpProvider.defaults.withCredentials = true;
 	
@@ -55,22 +54,27 @@ var app = angular.module('evbApp', ['DevicesModule', 'SecurityModule', 'Context'
         });
     };
 });
-
 app.run(function($log, $cookieStore, Context, $timeout) {
 	$log.info("config step");
-	var token = $cookieStore.get('dtoken');
-	$log.info("token information", token);
+	var dtoken = $cookieStore.get('dtoken');
+	var utoken = $cookieStore.get('utoken');
+	$log.info("dtoken information", dtoken);
+	$log.info("utoken information", utoken);
     $timeout(function() {
-    	if (undefined != token) {
+    	if (undefined != dtoken) {
     		// decode token to get the serial
-    		var clear = base64.decode(token);
+    		var clear = base64.decode(dtoken);
     		var sn = clear.split(":")[0];
     		sn = sn.substring(sn.length-4);
     		$log.info("serial", sn);
     		Context.setSerial(sn);
     		Context.setDashBoardVisibilty(true);
             Context.setSimulatorVisibility(false);   
-    		$log.info("settings ok");
+    		$log.info("settings Device ok");
+    	} if (undefined != utoken) {
+    		// decode token to get the serial
+    		Context.setDashBoardVisibilty(true);
+    		$log.info("settings Developer ok");
     	} else {
     		$log.info("no token found => clearing information");
     		Context.setSerial(undefined);
@@ -81,5 +85,5 @@ app.run(function($log, $cookieStore, Context, $timeout) {
 });
 
 //app.constant('CONSTANTS', {remote : 'http://localhost:9010'});
-app.constant('CONSTANTS', {remote : 'https://sensor.insgroup.fr'});
-//app.constant('CONSTANTS', {remote : 'http://192.168.1.14:9010'});
+//app.constant('CONSTANTS', {remote : 'https://sensor.insgroup.fr'});
+app.constant('CONSTANTS', {remote : 'http://192.168.1.15:9010'});
