@@ -608,10 +608,8 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		if($scope._displayDashboard == true) {
 			// ajax request to api
 			$log.info("watch tableApps");
-			 $scope.appsList = $scope.appsList.slice(
-			(params.page - 1) * params.count,
-			params.page * params.count
-			);
+			var orderedData = params.sorting ? $filter('orderBy')($scope.appsList, params.orderBy()) : $scope.appsList;
+			$scope.appsList = orderedData.slice( (params.page - 1) * params.count, params.page * params.count );
 		}
 	}, true);
     // watch for changes of parameters
