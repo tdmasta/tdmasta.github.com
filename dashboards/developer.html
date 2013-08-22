@@ -20,127 +20,236 @@ scripts:
 {% include JB/setup %}
 
 <div ng-app="evbApp" ng-controller="DeveloperDashboardCtrl">
-
     <div ng:show="_displayDashboard != true" ng:cloak>
-	   <div class="row" style="margin: 0 auto;display: table;">
+       <div class="row" style="margin: 0 auto;display: table;">
             <div class="span5">
                 <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationByEmailForm" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(inputEmail, inputPassword)" >
-					<legend> Developer Authentication</legend>
-                    <div class="control-group">
-                        <label class="control-label" for="inputEmail" data-toggle="popover" data-placement="bottom" data-content="<p>developer's email<br/> used for registration.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Enter developper email </a></label>
-                        <div class="controls">
-                            <input id="inputEmail" name="inputEmail" ng-model="inputEmail" ng-model-instant data-val="true" type="email" data-val-required="Email is required." required placeholder="Member's login" />
-                            <span class="field-validation-valid" data-valmsg-for="inputEmail" data-valmsg-replace="true"></span>
+                    <fieldset>
+                        <legend> Developer Authentication</legend>
+                        <div class="control-group">
+                            <label class="control-label" for="inputEmail" data-toggle="popover" data-placement="bottom" data-content="<p>Developer's email used for registration</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Enter developer's email </a></label>
+                            <div class="controls">
+                                <input id="inputEmail" name="inputEmail" ng-model="inputEmail" ng-model-instant data-val="true" type="email" data-val-required="Email is required." required placeholder="Developer's login" />
+                                <span class="field-validation-valid" data-valmsg-for="inputEmail" data-valmsg-replace="true"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="inputPassword" data-toggle="popover" data-placement="bottom" data-content="<p>the password you received when registering</p>" data-html="true" data-original-title="<strong>Where can I get the password?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  password </a></label>
-                        <div class="controls">
-                            <input id="inputPassword" name="inputPassword" ng-model="inputPassword" type="password"  required  password-required="Password is required."  placeholder="Member's password" />
-                            <span class="field-validation-valid" data-valmsg-for="inputPassword" data-valmsg-replace="true"></span>
+                        <div class="control-group">
+                            <label class="control-label" for="inputPassword" data-toggle="popover" data-placement="bottom" data-content="<p>Received password after registration</p>" data-html="true" data-original-title="<strong>Where can I get the password?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  and password </a></label>
+                            <div class="controls">
+                                <input id="inputPassword" name="inputPassword" ng-model="inputPassword" type="password"  required  password-required="Password is required."  placeholder="Developer's password" />
+                                <span class="field-validation-valid" data-valmsg-for="inputPassword" data-valmsg-replace="true"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="controls">
-                            <button type="submit" class="btn btn-success btn-large">Then get to dashoard</button>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-success btn-large">Then get to dashoard</button>
+                            </div>
                         </div>
-                    </div>
+                    </fieldset>
                 </form>
             </div>
         </div>
+
+        <div class="row" style="margin: 0 auto;display: table;">
+            <div class="span6">
+                <h3><i class="icon-large icon-warning-sign"></i></h3>  If you don't have account, please create one here : <a href="/register.html" class="btn btn-primary"><i class="icon-white icon-user"></i> Create an account</a>
+            </div>
+        </div>
+
     </div>
     <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl">
-    	<h3> <i class="icon-dashboard"> </i> <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak>Logout</button></span></h3>
-  		<tabset>
-    		<tab heading="Applications" select="loadApplications()">
-    			<table ng-table="tableApps" class="table">
-    				<tr ng-repeat="appli in appsList" ng-click="showAppliDetails(appli, $index)">
-    					<td data-title="ID" sortable="id">
-    					{{"{{appli.id"}}}}
-    					</td>
-    					<td data-title="NAME" sortable="name">
-    					{{"{{appli.name"}}}}
-    					</td>
-    					<td data-title="DESCRIPTION" >
-    					{{"{{appli.description"}}}}
-    					</td>
-    					<td data-title="CREATED" sortable="created">
-    					{{"{{appli.created"}}}}
-    					</td>
-    					<td data-title="&nbsp;">
-    						<button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger">Delete</button>
-    					</td>
-				    </tr>
-    			</table>
-    			<button class="btn" ng-click="showAppliDetails({})">Add</button>
-				<div class="appModal modal hide fade">
-					<div class="modal-header">
-						<h3>Application : {{"{{appli.name"}}}}</h3>
-					</div>
-					<div class="modal-body">
-  		<tabset>
-    		<tab heading="Details">
-						<label>Name*</label>
-						<input type="text" ng-model="appli.name" ng-model-instant data-val="true"data-val-required="Name is required." required/>
-						<label>callbackurl*</label>
-						<input type="text" ng-model="appli.callbackurl" ng-model-instant data-val="true"data-val-required="callbackurl is required." required/>
-						<label>description</label>
-						<input type="text" ng-model="appli.description" />
-						<label ng:show="appli.id != undefined">created</label>
-						<input type="text" ng-model="appli.created" readonly="true" ng:show="appli.id != undefined"/>
-						<label ng:show="appli.id != undefined">key</label>
-						<input type="text" ng-model="appli.key" readonly="true" ng:show="appli.id != undefined"/>
-						<label ng:show="appli.id != undefined">secret</label>
-						<input type="text" ng-model="appli.secret" readonly="true" ng:show="appli.id != undefined"/>
-			</tab>
-			<tab heading="Modules" >
-				   <div id="ModulesList">
-				   		<h3>Attached : {{"{{appli.modules.length"}}}}</h3>
-				   		<ul>
-				   			<li class="alert alert-info nomargin" ng-repeat="item in appli.modules">{{"{{item.serial"}}}}-<button ng-click="toggleDetach(item,$index)">Detach</button></li>
-            			</ul>
-				   		<h3>Availables : {{"{{appli.availablesModules.length"}}}}</h3>
-				   		<ul>
-				   			<li class="alert alert-error nomargin" ng-repeat="item in appli.availablesModules">{{"{{item.serial"}}}}-<button ng-click="toggleAttach(item,$index)">Attach</button></li>
-				   		</ul>
-			    </div>
-			</tab>
-		</tabset>
-					</div>
-					<div class="modal-footer">
-						<button class="btn" ng-click="saveAppli()">Save</button>
-						<button class="btn" ng-click="cancelAppli()">Cancel</button>
-					</div>
-				</div>
-    		</tab>
-    		<tab heading="Registered Modules" select="loadDevices()">
-    			<table ng-table="tableDevices" class="table">
-    				<tr ng-repeat="device in devicesList">
-    					<td data-title="ID" sortable="id">
-    					{{"{{device.id"}}}}
-						</td>
-    					<td data-title="SERIAL" sortable="serial">
-    					{{"{{device.serial"}}}}
-    					</td>
-				    </tr>
-    			</table>
-    			<button class="btn" ng-click="showDeviceDetails({})">Add</button>
-				<div class="deviceModal modal hide fade">
-					<div class="modal-header">
-						<h3>Module</h3>
-					</div>
-					<div class="modal-body">
-						<label>serial *</label>
-						<input type="text" ng-model="device.serial" ng-model-instant data-val="true"data-val-required="Name is required." required/>
-						<label>key *</label>
-						<input type="text" ng-model="device.key" ng-model-instant data-val="true"data-val-required="Name is required." required/>
-					</div>
-					<div class="modal-footer">
-						<button class="btn" ng-click="saveDevice()">Save</button>
-						<button class="btn" ng-click="cancelDevice()">Cancel</button>
-					</div>
-				</div>
-    		</tab>
-  		</tabset>
-	</div>
+        <h3> <i class="icon-dashboard"> </i> <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak>Logout</button></span></h3>
+        <tabset>
+            <tab heading="Applications" select="loadApplications()">
+                <table ng-table="tableApps" class="table">
+                    <tr ng-repeat="appli in appsList" ng-click="showAppliDetails(appli, $index)">
+                        <td data-title="ID" sortable="id">
+                        {{"{{appli.id"}}}}
+                        </td>
+                        <td data-title="NAME" sortable="name">
+                        {{"{{appli.name"}}}}
+                        </td>
+                        <td data-title="DESCRIPTION" >
+                        {{"{{appli.description"}}}}
+                        </td>
+                        <td data-title="CREATED" sortable="created">
+                        {{"{{appli.created"}}}}
+                        </td>
+                        <td data-title="&nbsp;">
+                            <button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn" ng-click="showAppliDetails({})">Add</button>
+                <div class="appModal modal hide fade">
+                    <div class="modal-header">
+                        <h3>Application : {{"{{appli.name"}}}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <tabset>
+                            <tab heading="Details">
+                                        <label>Name*</label>
+                                        <input type="text" ng-model="appli.name" ng-model-instant data-val="true"data-val-required="Name is required." required/>
+                                        <label>callbackurl*</label>
+                                        <input type="text" ng-model="appli.callbackurl" ng-model-instant data-val="true"data-val-required="callbackurl is required." required/>
+                                        <label>description</label>
+                                        <input type="text" ng-model="appli.description" />
+                                        <label ng:show="appli.id != undefined">created</label>
+                                        <input type="text" ng-model="appli.created" readonly="true" ng:show="appli.id != undefined"/>
+                                        <label ng:show="appli.id != undefined">key</label>
+                                        <input type="text" ng-model="appli.key" readonly="true" ng:show="appli.id != undefined"/>
+                                        <label ng:show="appli.id != undefined">secret</label>
+                                        <input type="text" ng-model="appli.secret" readonly="true" ng:show="appli.id != undefined"/>
+                            </tab>
+                            <tab heading="Modules" >
+                                   <div id="ModulesList">
+                                        <h3>Attached : {{"{{appli.modules.length"}}}}</h3>
+                                        <ul>
+                                            <li class="alert alert-info nomargin" ng-repeat="item in appli.modules">{{"{{item.serial"}}}}-<button ng-click="toggleDetach(item,$index)">Detach</button></li>
+                                        </ul>
+                                        <h3>Availables : {{"{{appli.availablesModules.length"}}}}</h3>
+                                        <ul>
+                                            <li class="alert alert-error nomargin" ng-repeat="item in appli.availablesModules">{{"{{item.serial"}}}}-<button ng-click="toggleAttach(item,$index)">Attach</button></li>
+                                        </ul>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" ng-click="saveAppli()">Save</button>
+                        <button class="btn" ng-click="cancelAppli()">Cancel</button>
+                    </div>
+                </div>
+            </tab>
+
+            <tab heading="Registered Modules" select="loadDevices()">
+                <table ng-table="tableDevices" class="table">
+                    <tr ng-repeat="device in devicesList">
+                        <td data-title="ID" sortable="id">
+                        {{"{{device.id"}}}}
+                        </td>
+                        <td data-title="SERIAL" sortable="serial">
+                        {{"{{device.serial"}}}}
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn" ng-click="showDeviceDetails({})">Add</button>
+                <div class="deviceModal modal hide fade">
+                    <div class="modal-header">
+                        <h3>Module</h3>
+                    </div>
+                    <div class="modal-body">
+                        <label>serial *</label>
+                        <input type="text" ng-model="device.serial" ng-model-instant data-val="true"data-val-required="Name is required." required/>
+                        <label>key *</label>
+                        <input type="text" ng-model="device.key" ng-model-instant data-val="true"data-val-required="Name is required." required/>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" ng-click="saveDevice()">Save</button>
+                        <button class="btn" ng-click="cancelDevice()">Cancel</button>
+                    </div>
+                </div>
+            </tab>
+
+            <tab heading="IOT Simulator" select="loadSimulator()">
+
+                <div id="simulator">
+    
+                    <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="iotSimulator" name="iotSimulatorForm">
+            
+                        <div class="control-group">
+                            <label class="control-label" for="url">Callback url</label>
+                            <div class="controls">
+                                <input id="url" name="simulation.url" ng-model="simulation.url" ng-model-instant data-val="true" type="url" data-val-required="Callback url is required." required placeholder="Url" />
+                                <span class="field-validation-valid" data-valmsg-for="url" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+        
+                        <div class="control-group">
+                            <label class="control-label" for="frequency">Frequency</label>
+                            <div class="controls">
+                                <input id="frequency" name="simulation.frequency" ng-model="simulation.frequency" ng-model-instant data-val="true" type="number" min="1" data-val-required="Frequency is required." required placeholder="Frequency in seconds"/>
+                                <span class="field-validation-valid" data-valmsg-for="frequency" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+        
+                        <div class="control-group">
+                            <label class="control-label" for="type">Message Type</label>
+                            <div class="controls">
+                                <select id="type" name="simulation.type" ng-model="simulation.type" ng-model-instant data-val="true" data-val-required="Message type is required." required ng-options="option.value as option.name for option in typeMessagesSelect"></select>
+                                <span class="field-validation-valid" data-valmsg-for="type" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+    
+                        <div class="control-group">
+                            <label class="control-label" for="deviceserial">Device serial</label>
+                            <div class="controls">
+                                <input id="deviceserial" name="simulation.deviceserial" ng-model="simulation.deviceserial" ng-model-instant data-val="true" type="text" data-val-required="Device serial is required." required placeholder="Device serial"/>
+                                <span class="field-validation-valid" data-valmsg-for="deviceserial" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+    
+                        <div class="control-group">
+                            <label class="control-label" for="longitude">Longitude</label>
+                            <div class="controls">
+                                <input id="longitude" name="simulation.longitude" ng-model="simulation.longitude" ng-model-instant data-val="true" type="text" placeholder="Longitude if known"/>
+                            </div>
+                        </div>
+    
+                        <div class="control-group">
+                            <label class="control-label" for="latitude">Latitude</label>
+                            <div class="controls">
+                                <input id="latitude" name="simulation.latitude" ng-model="simulation.latitude" ng-model-instant data-val="true" type="text" placeholder="Latitude if known"/>
+                            </div>
+                        </div>
+    
+                        <div class="form-actions">
+                            <button type="button" class="generatebt btn btn-primary" class-toggle="btn-danger" data-toggle="button" ng-click="startStopSimulation()">Start / Stop</button>
+                            <input id="hits" class= "span1" name="simulation.hits" ng-model="simulation.hits" ng-model-instant data-val="true" type="text" readonly="readonly" size="5"/>
+                            <button type="button" class="btn btn-secondary" class-toggle="btn-warning" data-toggle="button" ng-click="resetMessages()">Reset</button>
+                        </div>
+    
+                    </form>
+    
+                    <div>
+                        <div class="span12">
+                            <h3>Callback Messages</h3>
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Result</th>
+                                    <th>Url</th>
+                                    <th>Serial</th>
+                                    <th>Lng</th>
+                                    <th>Lat</th>
+                                    <th>Id</th>
+                                    <th>Type</th>
+                                    <th>Raw</th>
+                                </thead>
+                                <tbody ng-switch>
+                                    <div ng:show="generatedmessages.length > 0" ng:cloak>
+                                        <tr ng-repeat="generatedmessage in generatedmessages">
+                                            <td>{{"{{generatedmessage.status"}}}}</td>
+                                            <td>{{"{{generatedmessage.time"}}}}</td>
+                                            <td><span title="{{"{{generatedmessage.detail"}}}}">{{"{{generatedmessage.summary"}}}}</span></td>
+                                            <td>{{"{{generatedmessage.url"}}}}</td>
+                                            <td>{{"{{generatedmessage.message.emitter.serial"}}}}</td>
+                                            <td>{{"{{generatedmessage.message.msg.lng"}}}}</td>
+                                            <td>{{"{{generatedmessage.message.msg.lat"}}}}</td>
+                                            <td>{{"{{generatedmessage.message.id"}}}}</td>
+                                            <td>{{"{{generatedmessage.message.type"}}}}</td>
+                                            <td>{{"{{generatedmessage.message.msg.specific.hr"}}}}</td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </tab>
+
+        </tabset>
+    </div>
 </div>

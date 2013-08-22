@@ -42,6 +42,7 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
 
                     Context.setSerial(undefined);
                     Context.setDashBoardVisibilty(true);
+
                 })
                 .error(function(data, status) {
                     $log.error('authentication KO : Failed request status = ' + status);
@@ -57,95 +58,9 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
 
 
 // iotSimulator controller
-function iotSimulatorCtrl($scope, $http, $log, $cookieStore, CONSTANTS, DevicesServices, Context, Notif) {
+function iotSimulatorCtrl($scope, $http, $log, $cookieStore, DevicesServices, Context, Notif) {
 
-    $scope.generatedmessages = [];
 
-    $scope.typeMessagesSelect = [
-        { name: 'Random', value: 'RANDOM' }, 
-        { name: 'Battery low', value: 'BATTERY_LOW' }, 
-        { name: 'Battery ok', value: 'BATTERY_OK' },
-        { name: 'Connection lost', value: 'CONNECTION_LOST' },
-        { name: 'Connection ok', value: 'CONNECTION_OK' },
-        { name: 'Opening Detector close', value: 'OPENINGDETECTOR_CLOSE' },
-        { name: 'Opening Detector open', value: 'OPENINGDETECTOR_OPEN' },
-        { name: 'Button off', value: 'BUTTON_OFF' },
-        { name: 'Button on', value: 'BUTTON_ON' },
-        { name: 'Activity changing', value: 'ACTIVITY_CHANGING' },
-        { name: 'Temperature changing', value: 'TEMPERATURE_CHANGING' },
-        { name: 'Pressure changing', value: 'PRESSURE_CHANGING' },
-        { name: 'Location changing', value: 'LOCATION_CHANGING' },
-        { name: 'Battery changing', value: 'BATTERY_CHANGING' },
-        { name: 'Emergency call', value: 'EMERGENCY_CALL' },
-        { name: 'Beacon detection lost', value: 'BEACONDETECTION_LOST' },
-        { name: 'Beacon detection ok', value: 'BEACONDETECTION_OK' },
-        { name: 'Inductive carrier charger low', value: 'INDUCTIVECARRIERCHARGER_LOW' },
-        { name: 'Inductive carrier charger ok', value: 'INDUCTIVECARRIERCHARGER_OK' },
-        { name: 'Device disable', value: 'DEVICE_DISABLE' },
-        { name: 'Device enable', value: 'DEVICE_ENABLE' }
-    ];
-
-    $scope.simulation = {
-        url : 'http://',
-        deviceserial : '9999',
-
-        type : $scope.typeMessagesSelect[0].value,
-        frequency : 5,
-        hits : 0
-    };
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            $scope.$apply(function(){
-                $scope.simulation.longitude = position.coords.longitude;
-                $scope.simulation.latitude = position.coords.latitude;
-            });
-        });
-    }
-
-    var check = null;
-
-    // reset button
-    $scope.resetMessages = function() {
-        $scope.generatedmessages = [];
-        $scope.simulation.hits = 0;
-    };
-
-    // startStopSimulation button
-    $scope.startStopSimulation = function() {
-        if (! $('.generatebt').hasClass('active')) {
-            if (check == null) {
-                var cnt = 0;
-
-                check = setInterval(function () {
-                    DevicesServices.iotSimulation($scope.simulation)
-                        .success(function(data, status){
-                            $log.info("iotSimulation success & data => " + JSON.stringify(data));
-                            $scope.generatedmessages.splice(0, 0, data);
-                        })
-                        .error(function(data, status){
-                            $log.info("iotSimulation error & data => " + JSON.stringify(data) + " & status = " + status);
-                        });
-                    cnt++;
-                    $scope.$apply(function(){
-                        $scope.simulation.hits = cnt;
-                    });
-                }, $scope.simulation.frequency * 1000);
-            }
-            $('.generatebt').addClass($('.generatebt').attr('class-toggle'));
-        } else {
-            clearInterval(check);
-            check = null;
-            $scope.simulation.hits = '0';
-            $('.generatebt').removeClass($('.generatebt').attr('class-toggle'));
-        }
-    };
-
-    // Event handleDisplaySimulator
-    $scope.$on('SimulatorEvent', function() {
-        $log.info('waking up on simulator event');
-        $scope.displaySimulator = Context.simulator.visible;
-    });
 }
 
 
@@ -361,7 +276,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 
     // Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
-		$log.info('waking up on dashoard event');
+		$log.info('waking up on dashoard event in DashboardCtrl');
         $scope._displayDashboard = Context.dashboard.visible;
         
 		if (true == $scope._displayDashboard) {
@@ -412,7 +327,7 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 	
 	// Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
-		$log.info('waking up on dashoard event');
+		$log.info('waking up on dashoard event in LogOutCtrl');
         $scope._display = Context.dashboard.visible;
         $scope._serial = Context.serial;
     });
@@ -421,7 +336,6 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 
 // Dashboard controller
 function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $timeout, $cookieStore, Context, Notif,$filter, ngTableParams) {
-
 
 	$scope.navType = 'pills';
     $scope._messages = [];
@@ -456,6 +370,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 	 		$log.info("nb apps loaded",$scope.tableDevices.total);
 	 	});
 	}
+
 	//load Applications	
 	$scope.loadApplications = function() {
 		$log.info('loadApplications');
@@ -469,6 +384,93 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 	 	});
 	}
 	
+    //load simulator
+    $scope.loadSimulator = function() {
+        $log.info('loadSimulator');
+
+        $scope.generatedmessages = [];
+    
+        $scope.typeMessagesSelect = [
+            { name: 'Random', value: 'RANDOM' }, 
+            { name: 'Battery low', value: 'BATTERY_LOW' }, 
+            { name: 'Battery ok', value: 'BATTERY_OK' },
+            { name: 'Connection lost', value: 'CONNECTION_LOST' },
+            { name: 'Connection ok', value: 'CONNECTION_OK' },
+            { name: 'Opening Detector close', value: 'OPENINGDETECTOR_CLOSE' },
+            { name: 'Opening Detector open', value: 'OPENINGDETECTOR_OPEN' },
+            { name: 'Button off', value: 'BUTTON_OFF' },
+            { name: 'Button on', value: 'BUTTON_ON' },
+            { name: 'Activity changing', value: 'ACTIVITY_CHANGING' },
+            { name: 'Temperature changing', value: 'TEMPERATURE_CHANGING' },
+            { name: 'Pressure changing', value: 'PRESSURE_CHANGING' },
+            { name: 'Location changing', value: 'LOCATION_CHANGING' },
+            { name: 'Battery changing', value: 'BATTERY_CHANGING' },
+            { name: 'Emergency call', value: 'EMERGENCY_CALL' },
+            { name: 'Beacon detection lost', value: 'BEACONDETECTION_LOST' },
+            { name: 'Beacon detection ok', value: 'BEACONDETECTION_OK' },
+            { name: 'Inductive carrier charger low', value: 'INDUCTIVECARRIERCHARGER_LOW' },
+            { name: 'Inductive carrier charger ok', value: 'INDUCTIVECARRIERCHARGER_OK' },
+            { name: 'Device disable', value: 'DEVICE_DISABLE' },
+            { name: 'Device enable', value: 'DEVICE_ENABLE' }
+        ];
+
+        $scope.simulation = {
+            url : 'http://',
+            deviceserial : '9999',    
+            type : $scope.typeMessagesSelect[0].value,
+            frequency : 5,
+            hits : 0
+        };
+    
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                $scope.$apply(function(){
+                    $scope.simulation.longitude = position.coords.longitude;
+                    $scope.simulation.latitude = position.coords.latitude;
+                });
+            });
+        }
+
+    }
+
+    var check = null;
+
+    // reset button
+    $scope.resetMessages = function() {
+        $scope.generatedmessages = [];
+        $scope.simulation.hits = 0;
+    }
+
+    // startStopSimulation button
+    $scope.startStopSimulation = function() {
+        if (! $('.generatebt').hasClass('active')) {
+            if (check == null) {
+                var cnt = 0;
+
+                check = setInterval(function () {
+                    DevelopersServices.iotSimulation($scope.simulation)
+                        .success(function(data, status){
+                            $log.info("iotSimulation success & data => " + JSON.stringify(data));
+                            $scope.generatedmessages.splice(0, 0, data);
+                        })
+                        .error(function(data, status){
+                            $log.info("iotSimulation error & data => " + JSON.stringify(data) + " & status = " + status);
+                        });
+                    cnt++;
+                    $scope.$apply(function(){
+                        $scope.simulation.hits = cnt;
+                    });
+                }, $scope.simulation.frequency * 1000);
+            }
+            $('.generatebt').addClass($('.generatebt').attr('class-toggle'));
+        } else {
+            clearInterval(check);
+            check = null;
+            $scope.simulation.hits = '0';
+            $('.generatebt').removeClass($('.generatebt').attr('class-toggle'));
+        }
+    }
+
 	$scope.showDeviceDetails=function(device) {
 		$log.info('showDeviceDetails', device);
 		$scope.device=device;
@@ -595,7 +597,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 
     // Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
-		$log.info('waking up on dashoard event');
+		$log.info('waking up on dashoard event in DeveloperDashboardCtrl');
         $scope._displayDashboard = Context.dashboard.visible;
         if($scope._displayDashboard == true) {
 			$scope.loadApplications();

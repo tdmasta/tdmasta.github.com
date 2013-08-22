@@ -50,28 +50,11 @@ angular.module('NotificationModule', [], function($provide) {
 // Module : DevicesModule
 //
 // Services : 
-//      iotSimulation
 //      getMessagesBefore
 //      getMessagesAfter
 angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', function($http, $log, $cookieStore, CONSTANTS) {
 
-
         return {
-            // iotSimulation method
-            iotSimulation: function(params) {
-                var url = CONSTANTS.remote + '/iot/developers/simulator.json';
-                var utoken = $cookieStore.get('utoken');
-                $log.info('URL built up : ' + url + ' & params : ' + JSON.stringify(params));
-				var promise = $http({
-                    method : 'POST',
-                    url : url,
-                    data : params,
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    }
-                });
-				return promise;
-            },
 
             // getMessagesBefore method
             getMessagesBefore: function(sn, before, amount) {
@@ -140,6 +123,7 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
 //      authentication
 //      deleteAccount
 angular.module('SecurityModule', []).factory('SecurityServices', function($http, $log, $cookieStore, CONSTANTS) {
+
     return {
             // checkCRC method
             checkCRC : function(inputSerial, inputKey) {
@@ -196,12 +180,30 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
 // Module : DeveloperModule
 //
 // Services : 
+//      iotSimulation
 //      loadDevices
 //      registration
 //      authentication
 //      deleteAccount
 angular.module('DevelopersModule', []).factory('DevelopersServices', function($http, $log, $cookieStore, CONSTANTS) {
     return {
+
+            // iotSimulation method
+            iotSimulation: function(params) {
+                var url = CONSTANTS.remote + '/iot/developers/simulator.json';
+                var utoken = $cookieStore.get('utoken');
+                $log.info('URL built up : ' + url + ' & params : ' + JSON.stringify(params));
+                var promise = $http({
+                    method : 'POST',
+                    url : url,
+                    data : params,
+                    headers : {
+                        Authorization : 'Basic ' + utoken
+                    }
+                });
+                return promise;
+            },
+
             // loadDevices method
             loadDevices : function() {
             	var utoken = $cookieStore.get('utoken');
@@ -323,18 +325,10 @@ angular.module('Context', []).factory('Context', function($rootScope, $cookieSto
 
     var state = {
 		serial : undefined,
-        simulator : {
-            visible: false
-        },
 		dashboard : {
 			visible: false
 		}
 	}
-
-    state.setSimulatorVisibility = function(flag) {
-        this.simulator.visible = flag;
-        this.notify('SimulatorEvent');
-    };
 
     state.setDashBoardVisibilty = function(flag) {
 		this.dashboard.visible = flag;
@@ -347,7 +341,7 @@ angular.module('Context', []).factory('Context', function($rootScope, $cookieSto
     };
 
     state.notify = function(event) {
-		$log.info("triggering event", event);
+		$log.info("triggering event ", event);
         $rootScope.$broadcast(event);
     };
 	
