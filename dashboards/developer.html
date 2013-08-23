@@ -60,6 +60,29 @@ scripts:
     <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl">
         <h3> <i class="icon-dashboard"> </i> <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak>Logout</button></span></h3>
         <tabset>
+            <tab heading="Informations" >
+		        <tabset>
+		            <tab heading="Me" >
+		            	<div class="span9" ng-controller="RegistrationCtrl" ng-app="evbApp">
+		            		<button type="button" class="btn btn-warning" ng-click="deleteClick()">Delete my account</button>
+		            	</div>
+		            </tab>
+		            <tab heading="GitHub" >
+    					<div class="span9" ng-controller="RegistrationCtrl" ng-app="evbApp">
+        					<form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="registration" name="registrationForm" ng-submit="registrationSubmit(account)">
+								<div class="control-group">
+                					<label class="control-label" for="gitid" data-toggle="popover" data-placement="bottom" data-content="<p>to register you in ours GitHub repository.</p>" data-html="true" data-original-title="<strong>Why ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i></a>  Git alias </label>
+                					<div class="controls">
+                    					<input id="gitid" name="gitid" ng-model="account.gitid" ng-model-instant data-val="true" type="txt"  />
+                    					<span class="field-validation-valid" data-valmsg-for="gitid" data-valmsg-replace="true"></span>
+                    					<button type="button" class="btn btn-success" ng-click="updateGit()">Register my GitHub account</button>
+                					</div>
+            					</div>
+							</form>
+						</div>
+		            </tab>
+		        </tabset>
+            </tab>
             <tab heading="Applications" select="loadApplications()">
                 <table ng-table="tableApps" class="table">
                     <tr ng-repeat="appli in appsList" ng-click="showAppliDetails(appli, $index)">

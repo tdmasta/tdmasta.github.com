@@ -172,6 +172,21 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
                         Authorization : 'Basic ' + utoken
                     }
                 });
+            },
+            // update git information
+            updateGit: function(login, gitAlias) {
+                var utoken = $cookieStore.get('utoken');
+                return $http({
+                    method : 'POST',
+                    url : CONSTANTS.remote + '/iot/developers/registerGit.json',
+                    data : {
+                        email : login,
+                        gitAlias : gitAlias
+                    },
+                    headers : {
+                        Authorization : 'Basic ' + utoken
+                    }
+                });
             }
         }
 });

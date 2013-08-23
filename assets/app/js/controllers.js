@@ -39,7 +39,7 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
                 .success(function(data, status) {
                     $log.info('authentication OK : data = ' + data);
                     $cookieStore.put('utoken', data);
-
+					$cookieStore.put('login', email);
                     Context.setSerial(undefined);
                     Context.setDashBoardVisibilty(true);
 
@@ -48,6 +48,7 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
                     $log.error('authentication KO : Failed request status = ' + status);
                     $cookieStore.remove('dtoken');
                     $cookieStore.remove('utoken');
+					$cookieStore.remove('login');
 
                     Context.setSerial(undefined);
                     Context.setDashBoardVisibilty(false);
@@ -65,7 +66,7 @@ function iotSimulatorCtrl($scope, $http, $log, $cookieStore, DevicesServices, Co
 
 
 // Registration controller
-function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices, Notif) {
+function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices,Context, Notif) {
     // Registration button
     $scope.registrationSubmit = function() {
         var hosturl = CONSTANTS.remote;
@@ -74,8 +75,9 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
         SecurityServices.registration($scope.account)
             .success(function(data, status) {
                 $cookieStore.put('utoken', data);
+                $cookieStore.put('login', $scope.account.email);
                 $log.info('Registration OK : utoken = ' + data);
-				// Notif.success('A confirmation email has been sent to the registered email adress, checkout your mbox');
+				Notif.success('A confirmation email has been sent to the registered email adress, checkout your mbox');
             }).error(function(data, status) {
                 $cookieStore.remove('utoken');
                 $log.error('Registration KO : Failed request status = ' + status + ' & data = ' + data);
@@ -85,13 +87,21 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 
     // Delete button
     $scope.deleteClick = function() {
-        if ($scope.account && $scope.account.email) {
+        if ($cookieStore.get('login')) {
             var utoken = $cookieStore.get('utoken');
             if (utoken) {
                 // delete account service
-                SecurityServices.deleteAccount($scope.account.email)
+                SecurityServices.deleteAccount($cookieStore.get('login'))
                     .success(function(data, status) {
-                        $log.info('Delete OK : data = ' + data);
+								$log.info('logout event');
+								$cookieStore.remove('dtoken');
+								$cookieStore.remove('utoken');
+								$cookieStore.remove('login');
+								//desactivation du polling
+								$scope._stopPolling = true;
+								Context.setSerial(undefined);
+						        Context.setDashBoardVisibilty(false);
+		                        $log.info('Delete OK : data = ' + data);
                     }).error(function(data, status) {
                         $log.error('Delete KO : Failed request status = ' + status + ' & data = ' + data);
                     });
@@ -104,6 +114,16 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
             $log.error('Email is required');
         }
     };
+    $scope.updateGit = function() {
+    	$log.info('register git ('+$scope.account.gitid+') for '+$cookieStore.get('login'));
+    	SecurityServices.updateGit($cookieStore.get('login'),$scope.account.gitid).success(function(data, status) {
+                $log.info('git OK : data = ' + data);
+                Notif.success('GitHub registration done');
+            }).error(function(data, status) {
+                $log.error('git KO : Failed request status = ' + status + ' & data = ' + data);
+                Notif.error('Error during GitHub registration : '+data);
+            });
+    }
 }
 
 
