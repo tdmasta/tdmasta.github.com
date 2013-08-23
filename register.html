@@ -10,6 +10,11 @@ scripts:
 - {name: controller, type: remote, url: "assets/app/js/controllers.js"}
 - {name: service, type: remote, url: "assets/app/js/services.js"}
 - {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
+- {name: modernizr, type: remote, url: "/assets/app/js/mdz.js"}
+- {name: pines, type: remote, url: "/assets/app/lib/jquery.pnotify.min.js"}
+- {name: bootrap, type: remote, url: "http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.4.0.js"}
+- {name: ngTable, type: remote, url: "http://esvit.github.io/ng-table/js/ng-table.js"}
+- {name: popover, type: inline, content: "$(function(){$('[data-toggle=\"popover\"]').popover({trigger:'hover'});$('[data-toggle=\"tooltip\"]').tooltip({placement:'bottom'});})"}
 - name: custom
   type: inline
   content: "$(function() {$('#registration').validate();})"
@@ -83,10 +88,16 @@ scripts:
                         <span class="field-validation-valid" data-valmsg-for="country" data-valmsg-replace="true"></span>
                     </div>
                 </div>
+                <!-- <div class="control-group">
+                    <label class="control-label" for="gitid" data-toggle="popover" data-placement="bottom" data-content="<p>to register you in ours GitHub repository.</p>" data-html="true" data-original-title="<strong>Why ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i></a>  Git alias </label>
+                    <div class="controls">
+                        <input id="gitid" name="gitid" ng-model="account.gitid" ng-model-instant data-val="true" type="txt"  />
+                        <span class="field-validation-valid" data-valmsg-for="gitid" data-valmsg-replace="true"></span>
+                    </div>
+                </div> -->
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Create an account</button>
-                    <button type="reset" class="btn">Cancel</button>
-                    <button type="button" class="btn btn-warning" ng-click="deleteClick()">Delete an account</button>
+                    <button type="reset" class="btn">Clear</button>
                 </div>
             </fieldset>
         </form>
