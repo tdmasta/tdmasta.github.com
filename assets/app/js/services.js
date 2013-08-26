@@ -219,6 +219,18 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                 return promise;
             },
 
+            // loadInformations method
+            loadInformations : function() {
+                var utoken = $cookieStore.get('utoken');
+                return $http({
+                    method : 'GET',
+                    url : CONSTANTS.remote + '/iot/developers.json',
+                    headers : {
+                        Authorization : 'Basic ' + utoken
+                    },
+                });
+            },
+
             // loadDevices method
             loadDevices : function() {
             	var utoken = $cookieStore.get('utoken');
@@ -230,6 +242,7 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                     },
                 });
             },
+
             // loadApplications method
             loadApplications : function() {
             	var utoken = $cookieStore.get('utoken');
@@ -241,6 +254,7 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                     },
                 });
             },
+
             //Create a new application
             createApplication : function(application) {
             	var utoken = $cookieStore.get('utoken');
@@ -253,6 +267,7 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                    	data : application,
                 });
             },
+
             //Update an application
             updateApplication : function(application) {
             	var utoken = $cookieStore.get('utoken');
@@ -265,6 +280,7 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                    	data : application,
                 });
             },
+
             //delete an application
             deleteApplication : function(application) {
             	var utoken = $cookieStore.get('utoken');
@@ -277,6 +293,7 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                    	params : {id : application.id},
                 });
             },
+
             //Attach a module to an application
             attachModule : function(device, application) {
             	var utoken = $cookieStore.get('utoken');
@@ -289,6 +306,7 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                    	data : device,
                 });
             },
+
             //detach a module from an application
             detachModule : function(device, application) {
             	var utoken = $cookieStore.get('utoken');
@@ -301,6 +319,7 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                    	data : device,
                 });
             },
+
             //register a module
             registerModule : function(device) {
             	var utoken = $cookieStore.get('utoken');
@@ -313,6 +332,7 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                    	data : new Array(device),
                 });
             },
+
             //List modules of application
             findModules : function(appli) {
             	var utoken = $cookieStore.get('utoken');

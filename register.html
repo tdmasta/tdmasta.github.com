@@ -6,106 +6,105 @@ description: Registration form
 scripts:
 - {name: validation, type: remote, url: "https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"}
 - {name: validation.nonobs, type: remote, url: "https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"}
-- {name: app, type: remote, url: "assets/app/js/app.js"}
-- {name: controller, type: remote, url: "assets/app/js/controllers.js"}
-- {name: service, type: remote, url: "assets/app/js/services.js"}
-- {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
-- {name: modernizr, type: remote, url: "/assets/app/js/mdz.js"}
+- {name: app, type: remote, url: "/assets/app/js/app.js"}
+- {name: controller, type: remote, url: "/assets/app/js/controllers.js"}
+- {name: service, type: remote, url: "/assets/app/js/services.js"}
 - {name: pines, type: remote, url: "/assets/app/lib/jquery.pnotify.min.js"}
-- {name: bootrap, type: remote, url: "http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.4.0.js"}
-- {name: ngTable, type: remote, url: "http://esvit.github.io/ng-table/js/ng-table.js"}
+- {name: modernizr, type: remote, url: "/assets/app/js/mdz.js"}
+- {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
+- {name: bootrap, type: remote, url: "/assets/app/lib/ui-bootstrap-tpls-0.4.0.js"}
+- {name: ngTable, type: remote, url: "/assets/app/lib/ng-table.js"}
 - {name: popover, type: inline, content: "$(function(){$('[data-toggle=\"popover\"]').popover({trigger:'hover'});$('[data-toggle=\"tooltip\"]').tooltip({placement:'bottom'});})"}
-- name: custom
-  type: inline
-  content: "$(function() {$('#registration').validate();})"
 ---
 
 {% include JB/setup %}
 
 <div class="row-fluid">
+
     <div class="span12" ng-controller="RegistrationCtrl" ng-app="evbApp">
+
         <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="registration" name="registrationForm" ng-submit="registrationSubmit(account)">
 
             <fieldset>
+
                 <div class="control-group">
-                    <label class="control-label" for="email">Your email</label>
+                    <label class="control-label" for="email">Email</label>
                     <div class="controls">
-                        <input id="email" name="account.email" ng-model="account.email" ng-model-instant data-val="true" type="email" data-val-required="Email address is required." required />
-                        <span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
+                        <input id="email" name="account.email" type="email" ng-model="account.email" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required class="required" />
+                        <span class="field-validation-valid" data-valmsg-for="account.email" data-valmsg-replace="true"></span>
                     </div>
                 </div>
 
                 <div class="control-group">
                     <label class="control-label" for="firstname">First name</label>
                     <div class="controls">
-                        <input id="firstname" name="account.firstname" ng-model="account.firstname" ng-model-instant data-val="true" type="text" data-val-required="First name is required." required />
-                        <span class="field-validation-valid" data-valmsg-for="firstname" data-valmsg-replace="true"></span>
+                        <input id="firstname" name="account.firstname" ng-model="account.firstname" ng-model-instant data-val="true" type="text" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required class="required" />
+                        <span class="field-validation-valid" data-valmsg-for="account.firstname" data-valmsg-replace="true"></span>
                     </div>
                 </div>
 
                 <div class="control-group">
                     <label class="control-label" for="lastname">Last name</label>
                     <div class="controls">
-                        <input id="lastname" name="account.lastname" ng-model="account.lastname" ng-model-instant data-val="true" type="text" data-val-required="Last name is required." required />
-                        <span class="field-validation-valid" data-valmsg-for="lastname" data-valmsg-replace="true"></span>
+                        <input id="lastname" name="account.lastname" ng-model="account.lastname" ng-model-instant data-val="true" type="text" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required class="required" />
+                        <span class="field-validation-valid" data-valmsg-for="account.lastname" data-valmsg-replace="true"></span>
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="addressLine1">Address (line 1)</label>
-                    <div class="controls">
-                        <input id="addressLine1" name="account.address.line1" ng-model="account.address.line1" ng-model-instant type="text" data-val="true" data-val-required="Address is required." required />
-                        <span class="field-validation-valid" data-valmsg-for="addressLine1" data-valmsg-replace="true"></span>
+                <!--
+                    <div class="control-group">
+                        <label class="control-label" for="addressLine1">Address (line 1)</label>
+                        <div class="controls">
+                            <input id="addressLine1" name="account.address.line1" ng-model="account.address.line1" ng-model-instant type="text" />
+                        </div>
                     </div>
-                </div>
+    
+                    <div class="control-group">
+                        <label class="control-label" for="addressLine2">Address (line 2)</label>
+                        <div class="controls">
+                            <input id="addressLine2" name="account.address.line2" ng-model="account.address.line2" ng-model-instant type="text" />
+                        </div>
+                    </div>
+    
+                    <div class="control-group">
+                        <label class="control-label" for="zipCode">Zip code</label>
+                        <div class="controls">
+                            <input id="zipCode" name="account.address.zipCode" ng-model="account.address.zipCode" ng-model-instant type="number" min="1" data-val="true" />
+                            <span class="field-validation-valid" data-valmsg-for="account.address.zipCode" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+    
+                    <div class="control-group">
+                        <label class="control-label" for="city">City</label>
+                        <div class="controls">
+                            <input id="city" name="account.address.city" ng-model="account.address.city" ng-model-instant type="text" />
+                        </div>
+                    </div>
+    
+                    <div class="control-group">
+                        <label  class="control-label" for="country">Country</label>
+                        <div class="controls">
+                            <input id="country" name="account.address.country" ng-model="account.address.country" ng-model-instant type="text" />
+                        </div>
+                    </div>
+                -->
 
-                <div class="control-group">
-                    <label class="control-label" for="addressLine2">Address (line 2)</label>
-                    <div class="controls">
-                        <input id="addressLine2" name="account.address.line2" ng-model="account.address.line2" ng-model-instant data-val="false"  type="text" />
-                    </div>
-                </div>
 
-                <div class="control-group">
-                    <label class="control-label" for="zipCode">Zip code</label>
-                    <div class="controls">
-                        <input id="zipCode" name="account.address.zipCode" ng-model="account.address.zipCode" ng-model-instant type="text" min="0" data-val="true" data-val-required="Zipcode is required." required />
-                        <span class="field-validation-valid" data-valmsg-for="zipCode" data-valmsg-replace="true"></span>
+                <!--
+                    <div class="control-group">
+                        <label class="control-label" for="gitid" data-toggle="popover" data-placement="bottom" data-content="<p>To access our GitHub repositories</p>" data-html="true" data-original-title="<strong>Why ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i></a>  Git alias </label>
+                        <div class="controls">
+                            <input id="gitid" name="account.gitid" ng-model="account.gitid" ng-model-instant data-val="true" type="text" />
+                            <span class="field-validation-valid" data-valmsg-for="account.gitid" data-valmsg-replace="true"></span>
+                        </div>
                     </div>
-                </div>
+                -->
 
-                <div class="control-group">
-                    <label class="control-label" for="city">City</label>
-                    <div class="controls">
-                        <input id="city" name="account.address.city" ng-model="account.address.city" ng-model-instant type="text" data-val="true" data-val-required="City is required." required />
-                        <span class="field-validation-valid" data-valmsg-for="city" data-valmsg-replace="true"></span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label  class="control-label" for="country">Country</label>
-                    <div class="controls">
-                        <input id="country" name="account.address.country" ng-model="account.address.country" ng-model-instant type="text" data-val="true" data-val-required="Country is required." required />
-                        <span class="field-validation-valid" data-valmsg-for="country" data-valmsg-replace="true"></span>
-                    </div>
-                </div>
-                <!-- <div class="control-group">
-                    <label class="control-label" for="gitid" data-toggle="popover" data-placement="bottom" data-content="<p>to register you in ours GitHub repository.</p>" data-html="true" data-original-title="<strong>Why ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i></a>  Git alias </label>
-                    <div class="controls">
-                        <input id="gitid" name="gitid" ng-model="account.gitid" ng-model-instant data-val="true" type="txt"  />
-                        <span class="field-validation-valid" data-valmsg-for="gitid" data-valmsg-replace="true"></span>
-                    </div>
-                </div> -->
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Create an account</button>
+                    <button type="submit" class="btn btn-primary" data-ng-disabled="registrationForm.$invalid">Create an account</button>
                     <button type="reset" class="btn">Clear</button>
                 </div>
             </fieldset>
         </form>
     </div>
 </div>
-
-<style type="text/css" media="screen">
-    .field-validation-error {
-        color: #B94A48;
-    }
-</style>

@@ -59,3 +59,13 @@ a.indicator i {
 label {
 	white-space: nowrap;
 }
+
+input.required[type="text"], input.required[type="email"] {
+    background-image: url("/images/required-input.png");
+    background-position: right 5px;
+    background-repeat: no-repeat;
+}
+
+.field-validation-error {
+    color: #B94A48;
+}

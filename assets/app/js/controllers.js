@@ -6,7 +6,9 @@
 
 // Authentication controller
 function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, Context, Notif) {
+
 	$http.defaults.useXDomain = true;
+
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
 
@@ -58,15 +60,10 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
 }
 
 
-// iotSimulator controller
-function iotSimulatorCtrl($scope, $http, $log, $cookieStore, DevicesServices, Context, Notif) {
-
-
-}
-
 
 // Registration controller
 function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices,Context, Notif) {
+
     // Registration button
     $scope.registrationSubmit = function() {
         var hosturl = CONSTANTS.remote;
@@ -114,6 +111,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
             $log.error('Email is required');
         }
     };
+
     $scope.updateGit = function() {
     	$log.info('register git ('+$scope.account.gitid+') for '+$cookieStore.get('login'));
     	SecurityServices.updateGit($cookieStore.get('login'),$scope.account.gitid).success(function(data, status) {
@@ -138,7 +136,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	$scope._errors = [];
 	$scope._devicesMap = {};
 	$scope._devices =0;
-	
+
 	$scope._eventTitle = {
 		'event' : 'Nouvel Evènement',
 		'service' : 'Demande de service',
@@ -148,7 +146,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		'keepalive' : 'KeepAlive',
 		'undefined' : 'Inconnu'
 	};
-	
+
 	$scope._eventDetail = {
 		'batterylow' : 'Batterie Faible',
 		'batteryok' : 'Batterie OK',
@@ -167,14 +165,13 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		'tempok' : 'Température OK',
 		'undefined' : ''
 	};
-	
 
 	$scope.mySorter = function() {
 		return function(object) {
 			return object.value.idx;
 		}
 	}
-	
+
     // loadMore    
     $scope.loadMore = function() {
         var oldest = $scope._messages.length != 0 ? $scope._messages[$scope._messages.length - 1].when : null;
@@ -202,7 +199,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 				}
 			});
     }
-	
+
 	$scope.merge = function(obj1, obj2) {
 	    var obj3 = {};
 	    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
@@ -303,7 +300,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 			
 			$scope.init().then(function(response) {
 				$scope._devices=0;
-				angular.forEach(response.data,function(device) {
+				angular.forEach(response.data, function(device) {
 					$log.info("handling device ", device);
 					$scope._devicesMap[device.id] = device;
 					$scope._devices = $scope._devices + 1;
@@ -338,6 +335,8 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 		$log.info('logout event');
 		$cookieStore.remove('dtoken');
 		$cookieStore.remove('utoken');
+		$cookieStore.remove('login');
+
 		//desactivation du polling
 		$scope._stopPolling = true;
 		Context.setSerial(undefined);
@@ -369,6 +368,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			name: 'asc' // initial sorting
 		}
 	});
+
 	$scope.tableDevices = new ngTableParams({
 		page: 1, // show first page
 		total: 5, // length of data
@@ -377,6 +377,20 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			id: 'asc' // initial sorting
 		}
 	});
+
+    //load Informations
+    $scope.loadInformations = function() {
+        $log.info('loadInformations');
+        DevelopersServices.loadInformations().then(function(response) {
+            $log.info("informations loaded", response.data);
+            $scope.account = {
+                email : response.data.customer.email,
+                firstname : response.data.customer.firstname,
+                lastname : response.data.customer.lastname,
+                gitid : response.data.customer.gitAlias
+            };
+        });
+    }
 
 	//load Devices	
 	$scope.loadDevices = function() {
@@ -435,13 +449,15 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
         ];
 
         $scope.simulation = {
-            url : 'http://',
+            url : 'http://mysysteminformation:port',
             deviceserial : '9999',    
             type : $scope.typeMessagesSelect[0].value,
             frequency : 5,
             hits : 0
         };
-    
+
+        document.getElementById('frequencyvalue').value = $scope.simulation.frequency + ' sec';
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 $scope.$apply(function(){
@@ -450,7 +466,6 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
                 });
             });
         }
-
     }
 
     var check = null;
@@ -496,10 +511,12 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		$scope.device=device;
 		$('.deviceModal').modal('show');
 	}
+
 	$scope.cancelDevice=function() {
 		$log.info('cancelDevice', $scope.device);
 		$('.deviceModal').modal('hide');
 	}
+
 	$scope.saveDevice=function() {
 		$log.info('saveDevice', $scope.device);
 		
@@ -526,6 +543,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			Notif.error("Mandatory field forgotten");
 		}
 	}
+
 	//Application Gestion
 	$scope.deleteAppli=function(appli, $index, $event) {
 		$event.stopPropagation();
@@ -537,6 +555,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			});
 		}
 	}
+
 	$scope.showAppliDetails=function(appli, $index) {
 		$log.info('showAppliDetails', appli);
 		$scope.appli=JSON.parse(JSON.stringify(appli));
@@ -562,7 +581,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		}
 		$('.appModal').modal('show');
 	}
-	
+
 	$scope.saveAppli=function() {
 		if($scope.appli.name != undefined && $scope.appli.callbackurl != undefined) {
 			if($scope.appli.id != undefined) {
@@ -583,7 +602,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			Notif.error("Apllication detail is incomplete");
 		}
 	}
-	
+
 	$scope.attach = function(appli) {
 		$log.info('attach',appli);
 		var modules = new Object();
@@ -605,7 +624,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		$log.info('detachModules',modules);
 		DevelopersServices.detachModule(modules, appli);
 	}
-	
+
 	$scope.cancelAppli=function() {
 		$log.info('cancelAppli', $scope.appli);
 		$('.appModal').modal('hide');
@@ -624,7 +643,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			$scope.loadDevices();
 		}
     });
-    
+
     // watch for changes of parameters
 	$scope.$watch('tableApps', function(params) {
 		if($scope._displayDashboard == true) {
@@ -634,14 +653,12 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			$scope.appsList = orderedData.slice( (params.page - 1) * params.count, params.page * params.count );
 		}
 	}, true);
+
     // watch for changes of parameters
 	$scope.$watch('tableDevices', function(params) {
 		if($scope._displayDashboard == true) {
 			$log.info("watch tableDevices");
-			 $scope.devicesList = $scope.devicesList.slice(
-			(params.page - 1) * params.count,
-			params.page * params.count
-			);
+			$scope.devicesList = $scope.devicesList.slice( (params.page - 1) * params.count, params.page * params.count );
 		}
 	}, true);
 
@@ -654,6 +671,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
         $scope.appli.availablesModules.push(item);
         $scope.appli.modules.splice(index, 1);
     };
+
     $scope.toggleAttach = function (item, index) {
     	$log.info("toggleAttach",item);
     	if(item.detach==true) {
