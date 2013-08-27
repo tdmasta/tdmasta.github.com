@@ -125,6 +125,7 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
 angular.module('SecurityModule', []).factory('SecurityServices', function($http, $log, $cookieStore, CONSTANTS) {
 
     return {
+
             // checkCRC method
             checkCRC : function(inputSerial, inputKey) {
                 return $http({
@@ -173,6 +174,7 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
                     }
                 });
             },
+
             // update git information
             updateGit: function(login, gitAlias) {
                 var utoken = $cookieStore.get('utoken');
@@ -195,13 +197,25 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
 // Module : DeveloperModule
 //
 // Services : 
-//      iotSimulation
 //      loadDevices
 //      registration
 //      authentication
 //      deleteAccount
 angular.module('DevelopersModule', []).factory('DevelopersServices', function($http, $log, $cookieStore, CONSTANTS) {
+
     return {
+
+            // loadInformations method
+            loadInformations : function() {
+                var utoken = $cookieStore.get('utoken');
+                return $http({
+                    method : 'GET',
+                    url : CONSTANTS.remote + '/iot/developers.json',
+                    headers : {
+                        Authorization : 'Basic ' + utoken
+                    }
+                });
+            },
 
             // iotSimulation method
             iotSimulation: function(params) {
@@ -217,18 +231,6 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                     }
                 });
                 return promise;
-            },
-
-            // loadInformations method
-            loadInformations : function() {
-                var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'GET',
-                    url : CONSTANTS.remote + '/iot/developers.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                });
             },
 
             // loadDevices method
@@ -376,9 +378,10 @@ angular.module('Context', []).factory('Context', function($rootScope, $cookieSto
     };
 
     state.notify = function(event) {
-		$log.info("triggering event ", event);
+		$log.info("triggering event", event);
         $rootScope.$broadcast(event);
     };
 	
     return state;
+
 });

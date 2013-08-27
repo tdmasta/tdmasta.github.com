@@ -6,9 +6,7 @@
 
 // Authentication controller
 function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, Context, Notif) {
-
 	$http.defaults.useXDomain = true;
-
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
 
@@ -41,16 +39,16 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
                 .success(function(data, status) {
                     $log.info('authentication OK : data = ' + data);
                     $cookieStore.put('utoken', data);
-					$cookieStore.put('login', email);
+                    $cookieStore.put('login', email);
+
                     Context.setSerial(undefined);
                     Context.setDashBoardVisibilty(true);
-
                 })
                 .error(function(data, status) {
                     $log.error('authentication KO : Failed request status = ' + status);
                     $cookieStore.remove('dtoken');
                     $cookieStore.remove('utoken');
-					$cookieStore.remove('login');
+                    $cookieStore.remove('login'); 
 
                     Context.setSerial(undefined);
                     Context.setDashBoardVisibilty(false);
@@ -60,9 +58,8 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
 }
 
 
-
 // Registration controller
-function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices,Context, Notif) {
+function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices, Context, Notif) {
 
     // Registration button
     $scope.registrationSubmit = function() {
@@ -90,15 +87,15 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
                 // delete account service
                 SecurityServices.deleteAccount($cookieStore.get('login'))
                     .success(function(data, status) {
-								$log.info('logout event');
-								$cookieStore.remove('dtoken');
-								$cookieStore.remove('utoken');
-								$cookieStore.remove('login');
-								//desactivation du polling
-								$scope._stopPolling = true;
-								Context.setSerial(undefined);
-						        Context.setDashBoardVisibilty(false);
-		                        $log.info('Delete OK : data = ' + data);
+                        $log.info('Delete OK : data = ' + data);
+                        $log.info('logout event');
+                        $cookieStore.remove('dtoken');
+                        $cookieStore.remove('utoken');
+                        $cookieStore.remove('login');
+                        //desactivation du polling
+                        $scope._stopPolling = true; 
+                        Context.setSerial(undefined);
+                        Context.setDashBoardVisibilty(false);
                     }).error(function(data, status) {
                         $log.error('Delete KO : Failed request status = ' + status + ' & data = ' + data);
                     });
@@ -112,16 +109,20 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
         }
     };
 
+    // Update git
     $scope.updateGit = function() {
-    	$log.info('register git ('+$scope.account.gitid+') for '+$cookieStore.get('login'));
-    	SecurityServices.updateGit($cookieStore.get('login'),$scope.account.gitid).success(function(data, status) {
+        $log.info('register git ('+$scope.account.gitid+') for '+$cookieStore.get('login'));
+        SecurityServices.updateGit($cookieStore.get('login'),$scope.account.gitid)
+            .success(function(data, status) {
                 $log.info('git OK : data = ' + data);
                 Notif.success('GitHub registration done');
-            }).error(function(data, status) {
+            })
+            .error(function(data, status) {
                 $log.error('git KO : Failed request status = ' + status + ' & data = ' + data);
-                Notif.error('Error during GitHub registration : '+data);
+                Notif.error('Error during GitHub registration : ' + data);
             });
-    }
+    };
+
 }
 
 
@@ -136,7 +137,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	$scope._errors = [];
 	$scope._devicesMap = {};
 	$scope._devices =0;
-
+	
 	$scope._eventTitle = {
 		'event' : 'Nouvel Evènement',
 		'service' : 'Demande de service',
@@ -146,7 +147,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		'keepalive' : 'KeepAlive',
 		'undefined' : 'Inconnu'
 	};
-
+	
 	$scope._eventDetail = {
 		'batterylow' : 'Batterie Faible',
 		'batteryok' : 'Batterie OK',
@@ -165,13 +166,14 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		'tempok' : 'Température OK',
 		'undefined' : ''
 	};
+	
 
-	$scope.mySorter = function() {
+	$scope.mySorter = function()  {
 		return function(object) {
 			return object.value.idx;
 		}
 	}
-
+	
     // loadMore    
     $scope.loadMore = function() {
         var oldest = $scope._messages.length != 0 ? $scope._messages[$scope._messages.length - 1].when : null;
@@ -199,7 +201,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 				}
 			});
     }
-
+	
 	$scope.merge = function(obj1, obj2) {
 	    var obj3 = {};
 	    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
@@ -293,14 +295,14 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 
     // Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
-		$log.info('waking up on dashoard event in DashboardCtrl');
+		$log.info('waking up on dashoard event');
         $scope._displayDashboard = Context.dashboard.visible;
         
 		if (true == $scope._displayDashboard) {
 			
-			$scope.init().then(function(response) {
+			$scope.init().then(function(response) {
 				$scope._devices=0;
-				angular.forEach(response.data, function(device) {
+				angular.forEach(response.data,function(device) {
 					$log.info("handling device ", device);
 					$scope._devicesMap[device.id] = device;
 					$scope._devices = $scope._devices + 1;
@@ -335,8 +337,6 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 		$log.info('logout event');
 		$cookieStore.remove('dtoken');
 		$cookieStore.remove('utoken');
-		$cookieStore.remove('login');
-
 		//desactivation du polling
 		$scope._stopPolling = true;
 		Context.setSerial(undefined);
@@ -346,7 +346,7 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 	
 	// Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
-		$log.info('waking up on dashoard event in LogOutCtrl');
+		$log.info('waking up on dashoard event');
         $scope._display = Context.dashboard.visible;
         $scope._serial = Context.serial;
     });
@@ -354,7 +354,7 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 }
 
 // Dashboard controller
-function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $timeout, $cookieStore, Context, Notif,$filter, ngTableParams) {
+function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $timeout, $cookieStore, Context, Notif, $filter, ngTableParams) {
 
 	$scope.navType = 'pills';
     $scope._messages = [];
@@ -368,7 +368,6 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			name: 'asc' // initial sorting
 		}
 	});
-
 	$scope.tableDevices = new ngTableParams({
 		page: 1, // show first page
 		total: 5, // length of data
@@ -378,94 +377,52 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		}
 	});
 
-    //load Informations
-    $scope.loadInformations = function() {
-        $log.info('loadInformations');
-        DevelopersServices.loadInformations().then(function(response) {
-            $log.info("informations loaded", response.data);
-            $scope.account = {
-                email : response.data.customer.email,
-                firstname : response.data.customer.firstname,
-                lastname : response.data.customer.lastname,
-                gitid : response.data.customer.gitAlias
-            };
-        });
+    $scope.generatedmessages = [];
+
+    $scope.typeMessagesSelect = [
+        { name: 'Random', value: 'RANDOM' }, 
+        { name: 'Battery low', value: 'BATTERY_LOW' }, 
+        { name: 'Battery ok', value: 'BATTERY_OK' },
+        { name: 'Connection lost', value: 'CONNECTION_LOST' },
+        { name: 'Connection ok', value: 'CONNECTION_OK' },
+        { name: 'Opening Detector close', value: 'OPENINGDETECTOR_CLOSE' },
+        { name: 'Opening Detector open', value: 'OPENINGDETECTOR_OPEN' },
+        { name: 'Button off', value: 'BUTTON_OFF' },
+        { name: 'Button on', value: 'BUTTON_ON' },
+        { name: 'Activity changing', value: 'ACTIVITY_CHANGING' },
+        { name: 'Temperature changing', value: 'TEMPERATURE_CHANGING' },
+        { name: 'Pressure changing', value: 'PRESSURE_CHANGING' },
+        { name: 'Location changing', value: 'LOCATION_CHANGING' },
+        { name: 'Battery changing', value: 'BATTERY_CHANGING' },
+        { name: 'Emergency call', value: 'EMERGENCY_CALL' },
+        { name: 'Beacon detection lost', value: 'BEACONDETECTION_LOST' },
+        { name: 'Beacon detection ok', value: 'BEACONDETECTION_OK' },
+        { name: 'Inductive carrier charger low', value: 'INDUCTIVECARRIERCHARGER_LOW' },
+        { name: 'Inductive carrier charger ok', value: 'INDUCTIVECARRIERCHARGER_OK' },
+        { name: 'Device disable', value: 'DEVICE_DISABLE' },
+        { name: 'Device enable', value: 'DEVICE_ENABLE' }
+    ];
+
+    $scope.simulation = {
+        url : 'http://mysysteminformation:port',
+        deviceserial : '9999',
+
+        type : $scope.typeMessagesSelect[0].value,
+        frequency : 5,
+        hits : 0
+    };
+
+    if (document.getElementById('frequencyvalue')) {
+        document.getElementById('frequencyvalue').value = $scope.simulation.frequency + ' sec';
     }
 
-	//load Devices	
-	$scope.loadDevices = function() {
-		$log.info('loadDevices');
-		DevelopersServices.loadDevices().then(function(response) {
-			// set new data
-			$scope.devicesList = response.data;
-	 		$log.info("devices loaded",$scope.devicesList);
-			// update table params
-			$scope.tableDevices.total = $scope.devicesList.length;
-	 		$log.info("nb apps loaded",$scope.tableDevices.total);
-	 	});
-	}
-
-	//load Applications	
-	$scope.loadApplications = function() {
-		$log.info('loadApplications');
-		DevelopersServices.loadApplications().then(function(response) {
-			// set new data
-			$scope.appsList = response.data;
-	 		$log.info("apps loaded",$scope.appsList);
-			// update table params
-			$scope.tableApps.total = $scope.appsList.length;
-	 		$log.info("nb apps loaded",$scope.tableApps.total);
-	 	});
-	}
-	
-    //load simulator
-    $scope.loadSimulator = function() {
-        $log.info('loadSimulator');
-
-        $scope.generatedmessages = [];
-    
-        $scope.typeMessagesSelect = [
-            { name: 'Random', value: 'RANDOM' }, 
-            { name: 'Battery low', value: 'BATTERY_LOW' }, 
-            { name: 'Battery ok', value: 'BATTERY_OK' },
-            { name: 'Connection lost', value: 'CONNECTION_LOST' },
-            { name: 'Connection ok', value: 'CONNECTION_OK' },
-            { name: 'Opening Detector close', value: 'OPENINGDETECTOR_CLOSE' },
-            { name: 'Opening Detector open', value: 'OPENINGDETECTOR_OPEN' },
-            { name: 'Button off', value: 'BUTTON_OFF' },
-            { name: 'Button on', value: 'BUTTON_ON' },
-            { name: 'Activity changing', value: 'ACTIVITY_CHANGING' },
-            { name: 'Temperature changing', value: 'TEMPERATURE_CHANGING' },
-            { name: 'Pressure changing', value: 'PRESSURE_CHANGING' },
-            { name: 'Location changing', value: 'LOCATION_CHANGING' },
-            { name: 'Battery changing', value: 'BATTERY_CHANGING' },
-            { name: 'Emergency call', value: 'EMERGENCY_CALL' },
-            { name: 'Beacon detection lost', value: 'BEACONDETECTION_LOST' },
-            { name: 'Beacon detection ok', value: 'BEACONDETECTION_OK' },
-            { name: 'Inductive carrier charger low', value: 'INDUCTIVECARRIERCHARGER_LOW' },
-            { name: 'Inductive carrier charger ok', value: 'INDUCTIVECARRIERCHARGER_OK' },
-            { name: 'Device disable', value: 'DEVICE_DISABLE' },
-            { name: 'Device enable', value: 'DEVICE_ENABLE' }
-        ];
-
-        $scope.simulation = {
-            url : 'http://mysysteminformation:port',
-            deviceserial : '9999',    
-            type : $scope.typeMessagesSelect[0].value,
-            frequency : 5,
-            hits : 0
-        };
-
-        document.getElementById('frequencyvalue').value = $scope.simulation.frequency + ' sec';
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                $scope.$apply(function(){
-                    $scope.simulation.longitude = position.coords.longitude;
-                    $scope.simulation.latitude = position.coords.latitude;
-                });
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            $scope.$apply(function(){
+                $scope.simulation.longitude = position.coords.longitude;
+                $scope.simulation.latitude = position.coords.latitude;
             });
-        }
+        });
     }
 
     var check = null;
@@ -474,7 +431,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
     $scope.resetMessages = function() {
         $scope.generatedmessages = [];
         $scope.simulation.hits = 0;
-    }
+    };
 
     // startStopSimulation button
     $scope.startStopSimulation = function() {
@@ -504,25 +461,64 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
             $scope.simulation.hits = '0';
             $('.generatebt').removeClass($('.generatebt').attr('class-toggle'));
         }
-    }
+    };
 
+    //load Informations
+    $scope.loadInformations = function() {
+        $log.info('loadInformations');
+        DevelopersServices.loadInformations().then(function(response) {
+            $log.info("informations loaded", response.data);
+            $scope.account = {
+                email : response.data.customer.email,
+                firstname : response.data.customer.firstname,
+                lastname : response.data.customer.lastname,
+                gitid : response.data.customer.gitAlias
+            };
+        });
+    };
+            
+        
+	//load Devices	
+	$scope.loadDevices = function() {
+		$log.info('loadDevices');
+		DevelopersServices.loadDevices().then(function(response) {
+			// set new data
+			$scope.devicesList = response.data;
+	 		$log.info("devices loaded",$scope.devicesList);
+			// update table params
+			$scope.tableDevices.total = $scope.devicesList.length;
+	 		$log.info("nb apps loaded",$scope.tableDevices.total);
+	 	});
+	}
+
+	//load Applications	
+	$scope.loadApplications = function() {
+		$log.info('loadApplications');
+		DevelopersServices.loadApplications().then(function(response) {
+			// set new data
+			$scope.appsList = response.data;
+	 		$log.info("apps loaded",$scope.appsList);
+			// update table params
+			$scope.tableApps.total = $scope.appsList.length;
+	 		$log.info("nb apps loaded",$scope.tableApps.total);
+	 	});
+	}
+	
 	$scope.showDeviceDetails=function(device) {
 		$log.info('showDeviceDetails', device);
 		$scope.device=device;
 		$('.deviceModal').modal('show');
 	}
-
 	$scope.cancelDevice=function() {
 		$log.info('cancelDevice', $scope.device);
 		$('.deviceModal').modal('hide');
 	}
-
 	$scope.saveDevice=function() {
 		$log.info('saveDevice', $scope.device);
 		
 		if($scope.device.serial!=undefined && $scope.device.key!=undefined) {
 			$log.info('saveDevice => call server');
-			DevelopersServices.registerModule($scope.device).then(function(response) {
+			DevelopersServices.registerModule($scope.device).then(function(response) {
 				var result = response.data;
 				$log.info('saveDevice', result);
 				if(result.registered.length != 0) {
@@ -543,19 +539,17 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			Notif.error("Mandatory field forgotten");
 		}
 	}
-
 	//Application Gestion
 	$scope.deleteAppli=function(appli, $index, $event) {
 		$event.stopPropagation();
 		$log.info('deleteAppli', appli);
 		var result = confirm("Want to delete the application named '"+appli.name+"'?");
 		if (result==true) {	
-			DevelopersServices.deleteApplication(appli).then(function(response) {
+			DevelopersServices.deleteApplication(appli).then(function(response) {
 				$scope.appsList.splice($index, 1);
 			});
 		}
 	}
-
 	$scope.showAppliDetails=function(appli, $index) {
 		$log.info('showAppliDetails', appli);
 		$scope.appli=JSON.parse(JSON.stringify(appli));
@@ -581,18 +575,18 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		}
 		$('.appModal').modal('show');
 	}
-
+	
 	$scope.saveAppli=function() {
 		if($scope.appli.name != undefined && $scope.appli.callbackurl != undefined) {
 			if($scope.appli.id != undefined) {
 				$log.info('updateAppli', $scope.appli);
-				DevelopersServices.updateApplication($scope.appli).then(function(response) {
+				DevelopersServices.updateApplication($scope.appli).then(function(response) {
 					$scope.appsList.splice($scope.appli.$index, 1,$scope.appli);
 					$scope.attach($scope.appli);
 			 	});
 			} else {
 				$log.info('createAppli', $scope.appli);
-				DevelopersServices.createApplication($scope.appli).then(function(response) {
+				DevelopersServices.createApplication($scope.appli).then(function(response) {
 					$scope.appsList.push(response.data);
 					$scope.attach(response.data);
 			 	});
@@ -602,7 +596,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			Notif.error("Apllication detail is incomplete");
 		}
 	}
-
+	
 	$scope.attach = function(appli) {
 		$log.info('attach',appli);
 		var modules = new Object();
@@ -624,7 +618,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		$log.info('detachModules',modules);
 		DevelopersServices.detachModule(modules, appli);
 	}
-
+	
 	$scope.cancelAppli=function() {
 		$log.info('cancelAppli', $scope.appli);
 		$('.appModal').modal('hide');
@@ -636,14 +630,14 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 
     // Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
-		$log.info('waking up on dashoard event in DeveloperDashboardCtrl');
+		$log.info('waking up on dashoard event');
         $scope._displayDashboard = Context.dashboard.visible;
         if($scope._displayDashboard == true) {
 			$scope.loadApplications();
 			$scope.loadDevices();
 		}
     });
-
+    
     // watch for changes of parameters
 	$scope.$watch('tableApps', function(params) {
 		if($scope._displayDashboard == true) {
@@ -671,7 +665,6 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
         $scope.appli.availablesModules.push(item);
         $scope.appli.modules.splice(index, 1);
     };
-
     $scope.toggleAttach = function (item, index) {
     	$log.info("toggleAttach",item);
     	if(item.detach==true) {

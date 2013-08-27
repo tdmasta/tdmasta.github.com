@@ -20,18 +20,15 @@ scripts:
 {% include JB/setup %}
 
 <div class="row-fluid">
-
     <div class="span12" ng-controller="RegistrationCtrl" ng-app="evbApp">
-
         <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="registration" name="registrationForm" ng-submit="registrationSubmit(account)">
 
             <fieldset>
-
                 <div class="control-group">
                     <label class="control-label" for="email">Email</label>
                     <div class="controls">
                         <input id="email" name="account.email" type="email" ng-model="account.email" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required class="required" />
-                        <span class="field-validation-valid" data-valmsg-for="account.email" data-valmsg-replace="true"></span>
+                        <span class="field-validation-valid" data-valmsg-for="account.email" data-valmsg-replace="true"></span> 
                     </div>
                 </div>
 
@@ -39,7 +36,7 @@ scripts:
                     <label class="control-label" for="firstname">First name</label>
                     <div class="controls">
                         <input id="firstname" name="account.firstname" ng-model="account.firstname" ng-model-instant data-val="true" type="text" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required class="required" />
-                        <span class="field-validation-valid" data-valmsg-for="account.firstname" data-valmsg-replace="true"></span>
+                        <span class="field-validation-valid" data-valmsg-for="account.firstname" data-valmsg-replace="true"></span> 
                     </div>
                 </div>
 
@@ -47,7 +44,7 @@ scripts:
                     <label class="control-label" for="lastname">Last name</label>
                     <div class="controls">
                         <input id="lastname" name="account.lastname" ng-model="account.lastname" ng-model-instant data-val="true" type="text" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required class="required" />
-                        <span class="field-validation-valid" data-valmsg-for="account.lastname" data-valmsg-replace="true"></span>
+                        <span class="field-validation-valid" data-valmsg-for="account.lastname" data-valmsg-replace="true"></span> 
                     </div>
                 </div>
 
@@ -64,7 +61,7 @@ scripts:
                         <div class="controls">
                             <input id="addressLine2" name="account.address.line2" ng-model="account.address.line2" ng-model-instant type="text" />
                         </div>
-                    </div>
+                    </div> 
     
                     <div class="control-group">
                         <label class="control-label" for="zipCode">Zip code</label>
@@ -72,23 +69,22 @@ scripts:
                             <input id="zipCode" name="account.address.zipCode" ng-model="account.address.zipCode" ng-model-instant type="number" min="1" data-val="true" />
                             <span class="field-validation-valid" data-valmsg-for="account.address.zipCode" data-valmsg-replace="true"></span>
                         </div>
-                    </div>
+                    </div> 
     
                     <div class="control-group">
                         <label class="control-label" for="city">City</label>
                         <div class="controls">
                             <input id="city" name="account.address.city" ng-model="account.address.city" ng-model-instant type="text" />
                         </div>
-                    </div>
+                    </div> 
     
                     <div class="control-group">
                         <label  class="control-label" for="country">Country</label>
                         <div class="controls">
                             <input id="country" name="account.address.country" ng-model="account.address.country" ng-model-instant type="text" />
                         </div>
-                    </div>
+                    </div> 
                 -->
-
 
                 <!--
                     <div class="control-group">
@@ -97,7 +93,7 @@ scripts:
                             <input id="gitid" name="account.gitid" ng-model="account.gitid" ng-model-instant data-val="true" type="text" />
                             <span class="field-validation-valid" data-valmsg-for="account.gitid" data-valmsg-replace="true"></span>
                         </div>
-                    </div>
+                    </div> 
                 -->
 
                 <div class="form-actions">

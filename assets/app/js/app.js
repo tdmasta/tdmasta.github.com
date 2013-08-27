@@ -41,9 +41,9 @@ var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'Securit
 	        }
 
 	    }];
-	
+
 	    $httpProvider.responseInterceptors.push(interceptor);
-	
+
     }).directive('whenScrolled', function() {
         return function(scope, elm, attr) {
             var raw = elm[0];
@@ -53,25 +53,22 @@ var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'Securit
                 }
             });
         };
-});
+    }
+);
 
 // printvalue used to see rangevalue
 function printRangeValue(sliderid, textbox, suffix) {
     var x = document.getElementById(textbox);
     var y = document.getElementById(sliderid);
-    x.value = y.value + ' sec';
+    x.value = y.value + ' ' + suffix;
 }
 
 app.run(function($log, $cookieStore, Context, $timeout) {
-
 	$log.info("config step");
-
 	var dtoken = $cookieStore.get('dtoken');
 	var utoken = $cookieStore.get('utoken');
-
 	$log.info("dtoken information", dtoken);
 	$log.info("utoken information", utoken);
-
     $timeout(function() {
     	if (undefined != dtoken) {
     		// decode token to get the serial
@@ -84,13 +81,13 @@ app.run(function($log, $cookieStore, Context, $timeout) {
     		$log.info("settings Device ok");
     	} if (undefined != utoken) {
     		// decode token to get the serial
-            Context.setSerial(undefined);
+    		Context.setSerial(undefined);
     		Context.setDashBoardVisibilty(true);
     		$log.info("settings Developer ok");
     	} else {
     		$log.info("no token found => clearing information");
     		Context.setSerial(undefined);
-    		Context.setDashBoardVisibilty(false);	
+    		Context.setDashBoardVisibilty(false);
     	}
     });
 });
