@@ -61,6 +61,10 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
 // Registration controller
 function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, SecurityServices, Context, Notif) {
 
+    $scope.$on('event:serverError', function(event){
+        Notif.error(status);
+    });
+
     // Registration button
     $scope.registrationSubmit = function() {
         var hosturl = CONSTANTS.remote;
@@ -74,8 +78,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 				Notif.success('A confirmation email has been sent to the registered email adress, checkout your mbox');
             }).error(function(data, status) {
                 $cookieStore.remove('utoken');
-                $log.error('Registration KO : Failed request status = ' + status + ' & data = ' + data);
-				Notif.error(data);
+                $log.error('Registration KO : Failed request status = ' + status + ' et data = ' + data);
             });
     };
 
@@ -112,7 +115,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
     // Update git
     $scope.updateGit = function() {
         $log.info('register git ('+$scope.account.gitid+') for '+$cookieStore.get('login'));
-        SecurityServices.updateGit($cookieStore.get('login'),$scope.account.gitid)
+        SecurityServices.updateGit($cookieStore.get('login'), $scope.account.gitid)
             .success(function(data, status) {
                 $log.info('git OK : data = ' + data);
                 Notif.success('GitHub registration done');
