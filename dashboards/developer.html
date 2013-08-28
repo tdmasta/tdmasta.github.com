@@ -83,6 +83,9 @@ scripts:
                             <button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
+                    <tr ng:show="!appsList.length">
+                        <td colspan="5"><center><i class="icon-white icon-thumbs-down"></i> No application found</center></td>
+                    </tr>
                 </table>
 
                 <button class="btn" ng-click="showAppliDetails({})">Add</button>
@@ -94,29 +97,29 @@ scripts:
                     <div class="modal-body">
                         <tabset>
                             <tab heading="Details">
-                                        <label>Name*</label>
-                                        <input type="text" ng-model="appli.name" ng-model-instant data-val="true"data-val-required="Name is required." required/>
-                                        <label>callbackurl*</label>
-                                        <input type="text" ng-model="appli.callbackurl" ng-model-instant data-val="true"data-val-required="callbackurl is required." required/>
-                                        <label>description</label>
-                                        <input type="text" ng-model="appli.description" />
-                                        <label ng:show="appli.id != undefined">created</label>
-                                        <input type="text" ng-model="appli.created" readonly="true" ng:show="appli.id != undefined"/>
-                                        <label ng:show="appli.id != undefined">key</label>
-                                        <input type="text" ng-model="appli.key" readonly="true" ng:show="appli.id != undefined"/>
-                                        <label ng:show="appli.id != undefined">secret</label>
-                                        <input type="text" ng-model="appli.secret" readonly="true" ng:show="appli.id != undefined"/>
+                                <label>Name*</label>
+                                <input type="text" ng-model="appli.name" ng-model-instant data-val="true"data-val-required="Name is required." required/>
+                                <label>callbackurl*</label>
+                                <input type="text" ng-model="appli.callbackurl" ng-model-instant data-val="true"data-val-required="callbackurl is required." required/>
+                                <label>description</label>
+                                <input type="text" ng-model="appli.description" />
+                                <label ng:show="appli.id != undefined">created</label>
+                                <input type="text" ng-model="appli.created" readonly="true" ng:show="appli.id != undefined"/>
+                                <label ng:show="appli.id != undefined">key</label>
+                                <input type="text" ng-model="appli.key" readonly="true" ng:show="appli.id != undefined"/>
+                                <label ng:show="appli.id != undefined">secret</label>
+                                <input type="text" ng-model="appli.secret" readonly="true" ng:show="appli.id != undefined"/>
                             </tab>
                             <tab heading="Modules" >
-                                   <div id="ModulesList">
-                                        <h3>Attached : {{"{{appli.modules.length"}}}}</h3>
-                                        <ul>
-                                            <li class="alert alert-info nomargin" ng-repeat="item in appli.modules">{{"{{item.serial"}}}}-<button ng-click="toggleDetach(item,$index)">Detach</button></li>
-                                        </ul>
-                                        <h3>Availables : {{"{{appli.availablesModules.length"}}}}</h3>
-                                        <ul>
-                                            <li class="alert alert-error nomargin" ng-repeat="item in appli.availablesModules">{{"{{item.serial"}}}}-<button ng-click="toggleAttach(item,$index)">Attach</button></li>
-                                        </ul>
+                                <div id="ModulesList">
+                                    <h3>Attached : {{"{{appli.modules.length"}}}}</h3>
+                                    <ul>
+                                        <li class="alert alert-info nomargin" ng-repeat="item in appli.modules">{{"{{item.serial"}}}}-<button ng-click="toggleDetach(item,$index)">Detach</button></li>
+                                    </ul>
+                                    <h3>Availables : {{"{{appli.availablesModules.length"}}}}</h3>
+                                    <ul>
+                                        <li class="alert alert-error nomargin" ng-repeat="item in appli.availablesModules">{{"{{item.serial"}}}}-<button ng-click="toggleAttach(item,$index)">Attach</button></li>
+                                    </ul>
                                 </div>
                             </tab>
                         </tabset>
@@ -139,6 +142,9 @@ scripts:
                         <td data-title="SERIAL" sortable="serial">
                         {{"{{device.serial"}}}}
                         </td>
+                    </tr>
+                    <tr ng:show="!devicesList.length">
+                        <td colspan="2"><center><i class="icon-white icon-thumbs-down"></i> No registered modules found</center></td>
                     </tr>
                 </table>
 
