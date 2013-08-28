@@ -72,7 +72,7 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
         // registration service
         SecurityServices.registration($scope.account)
             .success(function(data, status) {
-                $cookieStore.put('utoken', data);
+                //$cookieStore.put('utoken', data);
                 $cookieStore.put('login', $scope.account.email);
                 $log.info('Registration OK : utoken = ' + data);
 				Notif.success('A confirmation email has been sent to the registered email adress, checkout your mbox');
