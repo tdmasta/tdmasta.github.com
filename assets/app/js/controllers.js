@@ -406,7 +406,8 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
     $scope.simulation = {
         url : 'http://mysysteminformation:port',
         deviceserial : '9999',
-
+        longitude : -0.6564933,
+        latitude : 44.7824736,
         type : $scope.typeMessagesSelect[0].value,
         frequency : 5,
         hits : 0
@@ -414,15 +415,6 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 
     if (document.getElementById('frequencyvalue')) {
         document.getElementById('frequencyvalue').value = $scope.simulation.frequency + ' sec';
-    }
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            $scope.$apply(function(){
-                $scope.simulation.longitude = position.coords.longitude;
-                $scope.simulation.latitude = position.coords.latitude;
-            });
-        });
     }
 
     var check = null;

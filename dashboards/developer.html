@@ -249,7 +249,8 @@ scripts:
                                             <td>{{"{{generatedmessage.message.msg.ctx.position.longitude"}}}}</td>
                                             <td>{{"{{generatedmessage.message.msg.ctx.position.latitude"}}}}</td>
                                             <td>{{"{{generatedmessage.message.id"}}}}</td>
-                                            <td>{{"{{generatedmessage.message.msg.type"}}}}</td>
+                                            <td ng:show="generatedmessage.type == 'RANDOM' ">{{"{{generatedmessage.message.msg.type"}}}}</td>
+                                            <td ng:hide="generatedmessage.type == 'RANDOM' ">{{"{{generatedmessage.type"}}}}</td>
                                             <td>{{"{{generatedmessage.message.msg.payload"}}}}</td>
                                             </tr>
                                         </div>
@@ -263,9 +264,9 @@ scripts:
 
             </tab>
 
-            <tab heading="Informations" select="loadInformations()" >
+            <tab heading="My Account" select="loadInformations()" >
                 <tabset>
-                    <tab heading="Me" >
+                    <tab heading="General" >
                         <div class="control-group">
                            <label class="control-label" for="email">Email</label>
                            <div class="controls">
