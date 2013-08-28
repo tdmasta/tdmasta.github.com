@@ -353,6 +353,15 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 	
 }
 
+// printvalue used to see rangevalue
+function printRangeValue(sliderid, textbox, suffix) {
+    var x = document.getElementById(textbox);
+    var y = document.getElementById(sliderid);
+    if (null != x && null != y) {
+        x.value = y.value + ' ' + suffix;
+    }
+}
+
 // Dashboard controller
 function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $timeout, $cookieStore, Context, Notif, $filter, ngTableParams) {
 
@@ -412,10 +421,6 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
         frequency : 5,
         hits : 0
     };
-
-    if (document.getElementById('frequencyvalue')) {
-        document.getElementById('frequencyvalue').value = $scope.simulation.frequency + ' sec';
-    }
 
     var check = null;
 
@@ -498,7 +503,12 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
     	 	});
         }
 	}
-	
+
+    //load Simulator 
+    $scope.loadSimulator = function() {
+        printRangeValue('frequency','frequencyvalue', ' sec');
+    }
+
 	$scope.showDeviceDetails=function(device) {
 		$log.info('showDeviceDetails', device);
 		$scope.device=device;

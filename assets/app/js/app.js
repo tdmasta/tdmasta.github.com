@@ -56,13 +56,6 @@ var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'Securit
     }
 );
 
-// printvalue used to see rangevalue
-function printRangeValue(sliderid, textbox, suffix) {
-    var x = document.getElementById(textbox);
-    var y = document.getElementById(sliderid);
-    x.value = y.value + ' ' + suffix;
-}
-
 app.run(function($log, $cookieStore, Context, $timeout) {
 	$log.info("config step");
 	var dtoken = $cookieStore.get('dtoken');

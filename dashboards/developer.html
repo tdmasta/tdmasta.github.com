@@ -47,14 +47,14 @@ scripts:
                     </div>
                 </form>
             </div>
-
-            <div class="row" style="margin: 0 auto;display: table;">
-                <div class="span6">
-                    <h3><i class="icon-large icon-warning-sign"></i></h3>  If you don't have account, please create one here : <a href="/register.html" class="btn btn-primary"><i class="icon-white icon-user"></i> Create an account</a>
-                </div>
-            </div>
-
         </div>
+
+        <div class="row" style="margin: 0 auto;display: table;">
+            <div class="span6">
+                <h3><i class="icon-large icon-warning-sign"></i></h3>  If you don't have account, please create one here : <a href="/register.html" class="btn btn-primary"><i class="icon-white icon-user"></i> Create an account</a>
+            </div>
+        </div>
+
     </div>
 
     <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl">
@@ -67,28 +67,18 @@ scripts:
 
                 <table ng-table="tableApps" class="table">
                     <tr ng-repeat="appli in appsList" ng-click="showAppliDetails(appli, $index)">
-                        <td data-title="ID" sortable="id">
-                        {{"{{appli.id"}}}}
-                        </td>
-                        <td data-title="NAME" sortable="name">
-                        {{"{{appli.name"}}}}
-                        </td>
-                        <td data-title="DESCRIPTION" >
-                        {{"{{appli.description"}}}}
-                        </td>
-                        <td data-title="CREATED" sortable="created">
-                        {{"{{appli.created"}}}}
-                        </td>
-                        <td data-title="&nbsp;">
-                            <button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger">Delete</button>
-                        </td>
+                        <td data-title="ID" sortable="id">{{"{{appli.id"}}}}</td>
+                        <td data-title="NAME" sortable="name">{{"{{appli.name"}}}}</td>
+                        <td data-title="DESCRIPTION" >{{"{{appli.description"}}}}</td>
+                        <td data-title="CREATED" sortable="created">{{"{{appli.created"}}}}</td>
+                        <td data-title="&nbsp;"> <button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger">Delete</button> </td>
                     </tr>
                     <tr ng:show="!appsList.length">
                         <td colspan="5"><center><i class="icon-white icon-thumbs-down"></i> No application found</center></td>
                     </tr>
                 </table>
 
-                <button class="btn" ng-click="showAppliDetails({})">Add</button>
+                <button class="btn btn-primary" ng-click="showAppliDetails({})">Add</button>
 
                 <div class="appModal modal hide fade">
                     <div class="modal-header">
@@ -125,7 +115,7 @@ scripts:
                         </tabset>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn" ng-click="saveAppli()">Save</button>
+                        <button class="btn btn-primary" ng-click="saveAppli()">Save</button>
                         <button class="btn" ng-click="cancelAppli()">Cancel</button>
                     </div>
                 </div>
@@ -148,7 +138,7 @@ scripts:
                     </tr>
                 </table>
 
-                <button class="btn" ng-click="showDeviceDetails({})">Add</button>
+                <button class="btn btn-primary" ng-click="showDeviceDetails({})">Add</button>
 
                 <div class="deviceModal modal hide fade">
                     <div class="modal-header">
@@ -161,7 +151,7 @@ scripts:
                         <input type="text" ng-model="device.key" ng-model-instant data-val="true"data-val-required="Name is required." required/>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn" ng-click="saveDevice()">Save</button>
+                        <button class="btn btn-primary" ng-click="saveDevice()">Save</button>
                         <button class="btn" ng-click="cancelDevice()">Cancel</button>
                     </div>
                 </div>
