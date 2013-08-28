@@ -486,14 +486,17 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 	//load Applications	
 	$scope.loadApplications = function() {
 		$log.info('loadApplications');
-		DevelopersServices.loadApplications().then(function(response) {
-			// set new data
-			$scope.appsList = response.data;
-	 		$log.info("apps loaded",$scope.appsList);
-			// update table params
-			$scope.tableApps.total = $scope.appsList.length;
-	 		$log.info("nb apps loaded",$scope.tableApps.total);
-	 	});
+        var utoken = $cookieStore.get('utoken');
+        if (undefined != utoken) {
+    		DevelopersServices.loadApplications().then(function(response) {
+    			// set new data
+    			$scope.appsList = response.data;
+    	 		$log.info("apps loaded", $scope.appsList);
+    			// update table params
+    			$scope.tableApps.total = $scope.appsList.length;
+    	 		$log.info("nb apps loaded", $scope.tableApps.total);
+    	 	});
+        }
 	}
 	
 	$scope.showDeviceDetails=function(device) {
