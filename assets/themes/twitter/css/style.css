@@ -5,6 +5,9 @@ body {
 	padding-top: 40px;
   background-color:#b0c4de;
 }
+#container2{
+  background-color:red;
+}
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: museo-slab, "Helvetica Neue", Helvetica, Arial, sans-serif;
