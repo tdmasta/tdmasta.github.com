@@ -1,4 +1,8 @@
 
+.container > body {
+ background-color:#ff0020;
+}
+
 
 body {
 	position: relative;
@@ -76,12 +80,12 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 
-/*.container > footer {
+.container > footer {
   margin-top: 20px;
 }
 .container > footer p {
   text-align: center; 
-}*/
+}
 
 /* Page header tweaks */
 .page-header {
