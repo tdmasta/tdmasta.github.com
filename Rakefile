@@ -97,7 +97,7 @@ end # task :page
 
 desc "Launch preview environment"
 task :preview do
-  system "jekyll --auto --server"
+  system "jekyll serve --watch"
 end # task :preview
 
 # Public: Alias - Maintains backwards compatability for theme switching.
@@ -315,17 +315,17 @@ end
 
 desc "Build site using Jekyll"
 task :build do
-  jekyll
+  jekyll "build"
 end
 
 desc "Serve on Localhost with port 4000"
 task :default do
-  jekyll "--server --auto"
+  jekyll "serve --watch"
 end
 
 desc "Serve on Localhost with port 4000 using development version"
 task :unstable do
-  jekyll "--server --auto", "../jekyll/bin/"
+  jekyll "serve --watch", "../jekyll/bin/"
 end
 
 desc "Deploy to Dev"
