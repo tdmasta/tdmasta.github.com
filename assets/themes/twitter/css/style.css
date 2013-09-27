@@ -5,7 +5,9 @@ body {
   background-color:#f1f4f3;
 
 }
-
+ .navbar-inverse {
+    background-color:#1c1c1c;
+ }
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: museo-slab, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -69,11 +71,21 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+div .navbar .navbar-inverse .navbar-fixed-top{
+  height: 50px;
+  
+}
+
 @media (max-width: 480px) {
   /* Remove any padding from the body */
 	body {
 		padding-top: 0;	
 	}
+}
+
+.container > body {
+  margin-top: 50px;
+
 }
 
 .container > footer {
