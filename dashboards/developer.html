@@ -15,7 +15,7 @@ scripts:
 - {name: controller, type: remote, url: "/assets/app/js/controllers.js"}
 - {name: ngTable, type: remote, url: "/assets/app/lib/ng-table.js"}
 - {name: popover, type: inline, content: "$(function(){$('[data-toggle=\"popover\"]').popover({trigger:'hover'});$('[data-toggle=\"tooltip\"]').tooltip({placement:'bottom'});})"}
-- {name: ngbootstrap, type: inline, content: "$(function(){try {angular.bootstrap(document,['evbApp'])} catch(Err){};$('.app').fadeIn()})"}
+- {name: ngbootstrap, type: inline, content: "$(function(){$('.app').fadeIn()})"}
 ---
 
 {% include JB/setup %}
@@ -43,7 +43,7 @@ scripts:
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-success btn-large">Then get to dashoard</button>
+                            <button type="submit" class="btn btn-success btn-large" tabindex="3">Then get to dashoard</button>
                         </div>
                     </div>
                 </form>
