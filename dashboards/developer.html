@@ -295,9 +295,9 @@ scripts:
                                 <div class="control-group">
                                     <label class="control-label" for="gitid" data-toggle="popover" data-placement="bottom" data-content="<p>To access our GitHub repositories.</p>" data-html="true" data-original-title="<strong>Why ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i></a>  Git alias </label>
                                     <div class="controls">
-                                       <input id="gitid" name="gitid" ng-model="account.gitid" ng-model-instant data-val="true" type="text" />
+                                       <input id="gitid" name="gitid" ng-model="account.gitid" ng-model-instant data-val="true" type="text" required class="required" data-val-required="''"/>
                                         <span class="field-validation-valid" data-valmsg-for="gitid" data-valmsg-replace="true"></span>
-                                        <button type="button" class="btn btn-success" ng-click="updateGit()">Register my GitHub account</button>
+                                        <button type="button" class="btn btn-success" ng-click="updateGit()" data-ng-disabled="registrationForm.$invalid" >Register my GitHub account</button>
                                     </div>
                                 </div>
                             </form>
