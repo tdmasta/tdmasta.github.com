@@ -6,20 +6,21 @@ description: Dashboard with transmitted datas
 scripts:
 - {name: validation, type: remote, url: "https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"}
 - {name: validation.nonobs, type: remote, url: "https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"}
-- {name: app, type: remote, url: "/assets/app/js/app.js"}
-- {name: controller, type: remote, url: "/assets/app/js/controllers.js"}
-- {name: service, type: remote, url: "/assets/app/js/services.js"}
-- {name: pines, type: remote, url: "/assets/app/lib/jquery.pnotify.min.js"}
 - {name: modernizr, type: remote, url: "/assets/app/js/mdz.js"}
 - {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
+- {name: pines, type: remote, url: "/assets/app/lib/jquery.pnotify.min.js"}
+- {name: service, type: remote, url: "/assets/app/js/services.js"}
+- {name: controller, type: remote, url: "/assets/app/js/controllers.js"}
 - {name: bootrap, type: remote, url: "/assets/app/lib/ui-bootstrap-tpls-0.4.0.js"}
 - {name: ngTable, type: remote, url: "/assets/app/lib/ng-table.js"}
+- {name: app, type: remote, url: "/assets/app/js/app.js"}
 - {name: popover, type: inline, content: "$(function(){$('[data-toggle=\"popover\"]').popover({trigger:'hover'});$('[data-toggle=\"tooltip\"]').tooltip({placement:'bottom'});})"}
+- {name: ngbootstrap, type: inline, content: "$(function(){$('.app').fadeIn()})"}
 ---
 
 {% include JB/setup %}
 
-<div ng-app="evbApp" ng-controller="DashboardCtrl">
+<div ng-app="evbApp" ng-controller="DashboardCtrl" class="app hide">
 
     <div ng:show="_displayDashboard != true" ng:cloak>
 	   <div class="row" style="margin: 0 auto;display: table;">
@@ -29,20 +30,20 @@ scripts:
                     <div class="control-group">
                         <label class="control-label" for="inputSerial" data-toggle="popover" data-placement="bottom" data-content="<p>Module id appears either on product parcel sticker<br/> either by perfoming AT&V command within a terminal session.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Enter module id </a></label>
                         <div class="controls">
-                            <input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required placeholder="e.g XXXX, case insentitive, with no 0 padding" />
+                            <input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required placeholder="e.g XXXX, case insentitive, with no 0 padding" tabindex="1"/>
                             <span class="field-validation-valid" data-valmsg-for="inputSerial" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="inputKey" data-toggle="popover" data-placement="bottom" data-content="<p>Key information appears next to Module Id information on product parcel sticker</p>" data-html="true" data-original-title="<strong>Where can I get the Key info?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  its key </a></label>
                         <div class="controls">
-                            <input id="inputKey" name="account.inputKey" ng-model="account.inputKey" ng-model-instant data-val="true" type="text" data-val-required="Key is required." required placeholder="8 hexa chars, case insentitive" />
+                            <input id="inputKey" name="account.inputKey" ng-model="account.inputKey" ng-model-instant data-val="true" type="text" data-val-required="Key is required." required placeholder="8 hexa chars, case insentitive"  tabindex="2"/>
                             <span class="field-validation-valid" data-valmsg-for="inputKey" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-success btn-large">Then get to dashoard</button>
+                            <button type="submit" class="btn btn-success btn-large" tabindex="3">Then get to dashoard</button>
                         </div>
                     </div>
                 </form>

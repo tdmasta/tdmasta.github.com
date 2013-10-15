@@ -4,22 +4,23 @@ title: Developer dashboard
 tagline: Applications management
 description: Dashboard with transmitted datas
 scripts:
+- {name: app, type: remote, url: "/assets/app/js/app.js"}
+- {name: bootrap, type: remote, url: "/assets/app/lib/ui-bootstrap-tpls-0.4.0.js"}
 - {name: validation, type: remote, url: "https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"}
 - {name: validation.nonobs, type: remote, url: "https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"}
-- {name: app, type: remote, url: "/assets/app/js/app.js"}
-- {name: controller, type: remote, url: "/assets/app/js/controllers.js"}
-- {name: service, type: remote, url: "/assets/app/js/services.js"}
+- {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
 - {name: pines, type: remote, url: "/assets/app/lib/jquery.pnotify.min.js"}
 - {name: modernizr, type: remote, url: "/assets/app/js/mdz.js"}
-- {name: base64, type: remote, url: "https://stringencoders.googlecode.com/svn-history/r230/trunk/javascript/base64.js"}
-- {name: bootrap, type: remote, url: "/assets/app/lib/ui-bootstrap-tpls-0.4.0.js"}
+- {name: service, type: remote, url: "/assets/app/js/services.js"}
+- {name: controller, type: remote, url: "/assets/app/js/controllers.js"}
 - {name: ngTable, type: remote, url: "/assets/app/lib/ng-table.js"}
 - {name: popover, type: inline, content: "$(function(){$('[data-toggle=\"popover\"]').popover({trigger:'hover'});$('[data-toggle=\"tooltip\"]').tooltip({placement:'bottom'});})"}
+- {name: ngbootstrap, type: inline, content: "$(function(){$('.app').fadeIn()})"}
 ---
 
 {% include JB/setup %}
 
-<div ng-app="evbApp" ng-controller="DeveloperDashboardCtrl">
+<div ng-app="evbApp" ng-controller="DeveloperDashboardCtrl" class="app hide">
 
     <div ng:show="_displayDashboard != true" ng:cloak>
        <div class="row" style="margin: 0 auto;display: table;">
@@ -29,20 +30,20 @@ scripts:
                     <div class="control-group">
                         <label class="control-label" for="inputEmail" data-toggle="popover" data-placement="bottom" data-content="<p>developer's email used for registration.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Enter developer's email </a></label>
                         <div class="controls">
-                            <input id="inputEmail" name="inputEmail" type="email" ng-model="inputEmail" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required placeholder="Developer's login" />
+                            <input id="inputEmail" name="inputEmail" type="email" ng-model="inputEmail" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required placeholder="Developer's login"  tabindex="1"/>
                             <span class="field-validation-valid" data-valmsg-for="inputEmail" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="inputPassword" data-toggle="popover" data-placement="bottom" data-content="<p>Received password after registration</p>" data-html="true" data-original-title="<strong>Where can I get the password?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  and password </a></label>
                         <div class="controls">
-                            <input id="inputPassword" name="inputPassword" type="password" ng-model="inputPassword" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required placeholder="Developer's password" />
+                            <input id="inputPassword" name="inputPassword" type="password" ng-model="inputPassword" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required placeholder="Developer's password" tabindex="2"/>
                             <span class="field-validation-valid" data-valmsg-for="inputPassword" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-success btn-large">Then get to dashoard</button>
+                            <button type="submit" class="btn btn-success btn-large" tabindex="3">Then get to dashoard</button>
                         </div>
                     </div>
                 </form>

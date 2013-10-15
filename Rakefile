@@ -315,7 +315,7 @@ end
 
 desc "Build site using Jekyll"
 task :build do
-  jekyll "build"
+  jekyll ""
 end
 
 desc "Serve on Localhost with port 4000"
