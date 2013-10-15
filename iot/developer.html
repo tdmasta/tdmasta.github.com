@@ -14,6 +14,8 @@ scripts:
 	<ul class="nav nav-list bs-docs-sidenav affix">
          <li><a href="#overview"><i class="icon-chevron-right"></i> Overview </a></li>
          <li><a href="#authentication"><i class="icon-chevron-right"></i> Authentication </a></li>
+         <li class="nav-header"> Developer Informations </li>
+         <li><a href="#git_alias"><i class="icon-chevron-right"></i> Update Git Alias </a></li>
 		 <li class="nav-header"> Handling Apps</li>
          <li><a href="#list_apps"><i class="icon-chevron-right"></i> List Iot Apps </a></li>
          <li><a href="#create_app"><i class="icon-chevron-right"></i> Create Iot App </a></li>
@@ -119,7 +121,54 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
          </table>
 	</section>
 	
-	
+    <section id="git_alias">
+        <div class="page-header">
+            <h2>Update Git alias</h2>
+        </div>
+     <p>
+     <br/><br/>
+     <h4><a name="DevGitAlias">POST /iot/developers/registerGit.json</a></h4>
+     <br/>
+     <table class="table">
+             <tbody>
+                 <tr>
+                     <td><h6>Description</h6></td>
+                     <td> Update developer's git alias to access our GitHub repositories </td>
+                 </tr>
+                 <tr>
+                     <td><h6>Url</h6></td>
+                     <td><code>https://sensor.insgroup.fr/iot/developers/registerGit.json</code></td>
+                 </tr>
+                 <tr>
+                     <td><h6>Method</h6></td>
+                     <td>POST</td>
+                 </tr>
+                 <tr>
+                     <td><h6>Parameters</h6></td>
+                     <td>
+                         <ol>
+                             <li><code>email</code> <i>required</i> Developer account login</li>
+                             <li><code>gitAlias</code> <i>required</i> Developer git alias</li>
+                         </ol>
+                     </td>
+                 </tr>
+                 <tr>
+                      <td><h6>Returns</h6></td>
+                      <td> void</td>
+                 </tr>
+                 <tr>
+                     <td><h6>Errors</h6></td>
+                     <td>
+                         <ul class="unstyled">
+                             <li><code>404</code> - The developer account was not found </li>
+                             <li><code>401</code> - The authentication information are missing or invalid </li>
+                         </ul>
+                     </td>
+                 </tr>
+             </tbody>
+         </table>
+    </section>
+
 	<section id="list_apps">
 		<div class="page-header">
      		<h2>Iot Applications listing</h2>
