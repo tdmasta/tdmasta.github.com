@@ -365,6 +365,25 @@ function printRangeValue(sliderid, textbox, suffix) {
     }
 }
 
+// url validation
+function isValidUrl(urlSource){
+
+    if (urlSource === undefined || urlSource === null || urlSource === '') {
+        return false;
+    }
+
+    urlSource = urlSource.toLowerCase();
+
+    if (urlSource === "http://" || urlSource === "https://"){
+        return false;
+    }
+
+    // Source : https://gist.github.com/dperini/729294
+    var regexp = /^(?:(?:https?):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/
+
+    return regexp.test(urlSource);
+} 
+
 // Dashboard controller
 function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $timeout, $cookieStore, Context, Notif, $filter, ngTableParams) {
 
@@ -585,7 +604,8 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 	}
 	
 	$scope.saveAppli=function() {
-		if($scope.appli.name != undefined && $scope.appli.callbackurl != undefined) {
+	    var isvalidurl = isValidUrl($scope.appli.callbackurl);
+		if($scope.appli.name != undefined && $scope.appli.callbackurl != undefined && isvalidurl) {
 			if($scope.appli.id != undefined) {
 				$log.info('updateAppli', $scope.appli);
 				DevelopersServices.updateApplication($scope.appli).then(function(response) {
@@ -601,7 +621,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			}
 			$('.appModal').modal('hide');
 		} else {
-			Notif.error("Apllication detail is incomplete");
+			Notif.error("Application detail is incorrect");
 		}
 	}
 	

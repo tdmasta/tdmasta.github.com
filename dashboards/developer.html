@@ -69,13 +69,14 @@ scripts:
                 <table ng-table="tableApps" class="table">
                     <tr ng-repeat="appli in appsList" ng-click="showAppliDetails(appli, $index)">
                         <td data-title="ID" sortable="id">{{"{{appli.id"}}}}</td>
+                        <td data-title="KEY" sortable="key">{{"{{appli.key"}}}}</td>
                         <td data-title="NAME" sortable="name">{{"{{appli.name"}}}}</td>
                         <td data-title="DESCRIPTION" >{{"{{appli.description"}}}}</td>
                         <td data-title="CREATED" sortable="created">{{"{{appli.created"}}}}</td>
                         <td data-title="&nbsp;"> <button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger">Delete</button> </td>
                     </tr>
                     <tr ng:show="!appsList.length">
-                        <td colspan="5"><center><i class="icon-white icon-thumbs-down"></i> No application found</center></td>
+                        <td colspan="6"><center><i class="icon-white icon-thumbs-down"></i> No application found</center></td>
                     </tr>
                 </table>
 
