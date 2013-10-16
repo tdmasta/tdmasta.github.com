@@ -329,6 +329,25 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     $scope.$on('newSerialEvent', function() {
         $scope._serial = Context.serial;
     });
+
+    // is geoloc payload
+    $scope.isgeoloc = function (messagetype, messagepayload) {
+
+        if (messagetype === undefined || messagetype === null || messagetype === '' || messagetype !== 'data:geoloc') {
+            return false;
+        }
+
+        if (messagepayload === undefined || messagepayload === null || messagepayload === '') {
+            return false;
+        }
+    
+        var fields = messagepayload.split(" ");
+        if (fields.length > 2 && fields[0].split(".").length == 2 && fields[1].split(".").length == 2) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
 function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
@@ -356,6 +375,7 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 	
 }
 
+
 // printvalue used to see rangevalue
 function printRangeValue(sliderid, textbox, suffix) {
     var x = document.getElementById(textbox);
@@ -364,6 +384,7 @@ function printRangeValue(sliderid, textbox, suffix) {
         x.value = y.value + ' ' + suffix;
     }
 }
+
 
 // url validation
 function isValidUrl(urlSource){
@@ -382,7 +403,30 @@ function isValidUrl(urlSource){
     var regexp = /^(?:(?:https?):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/
 
     return regexp.test(urlSource);
-} 
+}
+
+
+// is geoloc payload
+function extractlatlng(messagepayload) {
+
+    if (messagepayload === undefined || messagepayload === null || messagepayload === '') {
+        return '';
+    }
+
+    var fields = messagepayload.split(" ");
+    if (fields.length > 2 && fields[0].split(".").length == 2 && fields[1].split(".").length == 2) {
+        return fields[0]+','+fields[1];
+    }
+
+    return '';        
+}
+
+
+// Open a google map on latlng point
+function openmap(latlng) {
+    window.open("https://maps.google.fr/maps?hl=fr&q="+latlng+"&z=15&output=embed","Position : " + latlng,"menubar=no, status=no, scrollbars=no, menubar=no, width=500, height=400");
+}
+
 
 // Dashboard controller
 function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $timeout, $cookieStore, Context, Notif, $filter, ngTableParams) {

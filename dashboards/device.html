@@ -103,6 +103,7 @@ scripts:
 				<h3> <i class="icon-time"> </i> History </h3>
 			</div>
 			<div class="modal-body">
+				<div id="map-canvas"></div>
 				<div when-scrolled="loadMore();" ng:cloak id="fixed">
 		            	<div ng:show="_messages.length == 0">
 		                    <table class="table table-striped table-condensed table-hover">
@@ -137,7 +138,10 @@ scripts:
 		                                <td>{{"{{message.when | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
 										<td>{{"{{message.ctxt.index"}}}}</td>
 										<td>{{"{{message.type"}}}}</td>
-										<td>{{"{{message.payload"}}}}</td>
+
+			                            <td ng:show="isgeoloc(message.type, message.payload)">{{"{{message.payload"}}}} <a href="javascript:openmap(extractlatlng('{{'{{message.payload'}}}}'));" class="btn btn-success btn-mini"> <i class="icon-white icon-eye-open"></i> VIEW </a> </td>
+                                        <td ng:hide="isgeoloc(message.type, message.payload)">{{"{{message.payload"}}}} </td>
+
 			                            <td>{{"{{message.lvl"}}}}</td>
 		                            </tr>
 									<tr>

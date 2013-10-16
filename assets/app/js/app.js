@@ -56,6 +56,10 @@ var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'Securit
     }
 );
 
+app.config(function($compileProvider){
+    $compileProvider.urlSanitizationWhitelist(/^\s*(https?|javascript):/);
+});
+
 app.run(function($log, $cookieStore, Context, $timeout) {
 	$log.info("config step");
 	var dtoken = $cookieStore.get('dtoken');
