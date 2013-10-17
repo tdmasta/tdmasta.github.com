@@ -705,6 +705,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
     $scope.$on('DashBoardEvent', function() {
 		$log.info('waking up on dashoard event');
         $scope._displayDashboard = Context.dashboard.visible;
+        $scope.login = $cookieStore.get('login');
         if($scope._displayDashboard == true) {
 			$scope.loadApplications();
 			$scope.loadDevices();
