@@ -432,6 +432,7 @@ function openmap(latlng) {
 function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $timeout, $cookieStore, Context, Notif, $filter, ngTableParams) {
 
 	$scope.navType = 'pills';
+	$scope.login = $cookieStore.get('login');
     $scope._messages = [];
     $scope._lastUpdate = new Date().getTime();
 	$scope._errors = [];

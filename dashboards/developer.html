@@ -60,7 +60,7 @@ scripts:
 
     <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl">
 
-        <h3> <i class="icon-dashboard"> </i> <span class="pull-right"><button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak>Logout</button></span></h3>
+        <h3> <i class="icon-dashboard"> </i> <span class="pull-right" style="font-size: 15px"> logged as {{"{{login"}}}}<button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak>Logout</button></span></h3>
 
         <tabset>
 
