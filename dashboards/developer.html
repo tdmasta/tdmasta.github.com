@@ -15,13 +15,12 @@ scripts:
 - {name: controller, type: remote, url: "/assets/app/js/controllers.js"}
 - {name: ngTable, type: remote, url: "/assets/app/lib/ng-table.js"}
 - {name: popover, type: inline, content: "$(function(){$('[data-toggle=\"popover\"]').popover({trigger:'hover'});$('[data-toggle=\"tooltip\"]').tooltip({placement:'bottom'});})"}
-- {name: ngbootstrap, type: inline, content: "$(function(){$('.app').fadeIn()})"}
+- {name: angularbootstrapapp, type: inline, content: "angular.bootstrap(document, ['evbApp']);"}
 ---
 
 {% include JB/setup %}
 
-<div ng-app="evbApp" ng-controller="DeveloperDashboardCtrl" class="app hide">
-
+<div ng-controller="DeveloperDashboardCtrl">
     <div ng:show="_displayDashboard != true" ng:cloak>
        <div class="row" style="margin: 0 auto;display: table;">
             <div class="span5">

@@ -174,8 +174,8 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	$scope.mySorter = function()  {
 		return function(object) {
 			return object.value.idx;
-		}
-	}
+		};
+	};
 	
     // loadMore    
     $scope.loadMore = function() {
@@ -194,7 +194,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 							var device = $scope._messages[0].ctxt;
 							var delta = $scope._messages[0].contrib;
 							$scope._devicesMap[device.id] = $scope.merge(device,delta);
-						}
+						};
 					break;
 					case 404 :
 						Notif.error("Resource not found, please check with tech support team.");
@@ -203,14 +203,14 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 						Notif.error("Unexpexcted Error");
 				}
 			});
-    }
+    };
 	
 	$scope.merge = function(obj1, obj2) {
 	    var obj3 = {};
 	    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
 	    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
 	    return obj3;
-	}
+	};
 
     // checkForNewMsg
     $scope.checkForNewMsg = function() {
@@ -225,7 +225,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 							if (typeof response.data != "undefined") {
 								
 				                angular.forEach(response.data.reverse(), function(item, value) {
-									var infos = item.type.split(':')
+									var infos = item.type.split(':');
 									
 									var ititle = function() {
 										return $scope._eventTitle[infos[0] || 'undefined'];
@@ -260,28 +260,28 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 							break;
 					}
 	            });
-    }
+    };
 
     $scope.poll = function() {
 		if (undefined == Context.serial) {
 			$log.info('Stopping polling');
 			clearInterval($scope._timer);
 		} else {
-	        $scope.checkForNewMsg()
+	        $scope.checkForNewMsg();
 			$scope._timer = $timeout($scope.poll, 5000);
 		}
-    }
+   };
 
 	$scope.init = function() {
 		return DevicesServices.getChildren(Context.serial);
-	}
+	};
 
 	$scope.$on('event:loginRequired', function(event){
 		$scope._stopPolling = true;
 		
 		if ($scope._errors.length == 0) {
 			Notif.error("Authentication failure => leaving");
-			$scope._errors.push()
+			$scope._errors.push();
 		} else {
 			$scope._errors.pop();
 		}
@@ -347,7 +347,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
         }
 
         return false;
-    }
+    };
 }
 
 function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
@@ -364,7 +364,7 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
 		Context.setSerial(undefined);
         Context.setDashBoardVisibilty(false);
 		Notif.info('See you Soon');
-	}
+	};
 	
 	// Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
@@ -553,7 +553,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			$scope.tableDevices.total = $scope.devicesList.length;
 	 		$log.info("nb apps loaded",$scope.tableDevices.total);
 	 	});
-	}
+	};
 
 	//load Applications	
 	$scope.loadApplications = function() {
@@ -569,22 +569,22 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
     	 		$log.info("nb apps loaded", $scope.tableApps.total);
     	 	});
         }
-	}
+	};
 
     //load Simulator 
     $scope.loadSimulator = function() {
         printRangeValue('frequency','frequencyvalue', ' sec');
-    }
+    };
 
 	$scope.showDeviceDetails=function(device) {
 		$log.info('showDeviceDetails', device);
 		$scope.device=device;
 		$('.deviceModal').modal('show');
-	}
+	};
 	$scope.cancelDevice=function() {
 		$log.info('cancelDevice', $scope.device);
 		$('.deviceModal').modal('hide');
-	}
+	};
 	$scope.saveDevice=function() {
 		$log.info('saveDevice', $scope.device);
 		
@@ -610,7 +610,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		} else {
 			Notif.error("Mandatory field forgotten");
 		}
-	}
+	};
 	//Application Gestion
 	$scope.deleteAppli=function(appli, $index, $event) {
 		$event.stopPropagation();
@@ -621,7 +621,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 				$scope.appsList.splice($index, 1);
 			});
 		}
-	}
+	};
 	$scope.showAppliDetails=function(appli, $index) {
 		$log.info('showAppliDetails', appli);
 		$scope.appli=JSON.parse(JSON.stringify(appli));
@@ -646,7 +646,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			$scope.appli.availablesModules=new Array().concat($scope.devicesList);
 		}
 		$('.appModal').modal('show');
-	}
+	};
 	
 	$scope.saveAppli=function() {
 	    var isvalidurl = isValidUrl($scope.appli.callbackurl);
@@ -668,7 +668,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		} else {
 			Notif.error("Application detail is incorrect");
 		}
-	}
+	};
 	
 	$scope.attach = function(appli) {
 		$log.info('attach',appli);
@@ -690,12 +690,12 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		};
 		$log.info('detachModules',modules);
 		DevelopersServices.detachModule(modules, appli);
-	}
+	};
 	
 	$scope.cancelAppli=function() {
 		$log.info('cancelAppli', $scope.appli);
 		$('.appModal').modal('hide');
-	}
+	};
 	
 	$scope.$on('event:serverError', function(event){
 		Notif.error(data);
