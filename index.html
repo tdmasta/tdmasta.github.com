@@ -2,45 +2,87 @@
 layout: page
 title: Pragmatic M2M
 tagline: Developer zone
+scripts:
+- {name: carouselloading, type: inline, content: "$(function(){ $('.carousel').carousel();} )"}
 ---
 {% include JB/setup %}
 
 <section class="container">
-	<div class="jumbotron hero-unit span10 offset1">
+	<div class="jumbotron hero-unit span10 offset1" style="padding-bottom: 60px; height: 240px;">
 		<h1>Connecting devices	<small>Monitoring does matter</small></h1>
 		
-		<div class="hero-content">
+		<div class="hero-content" style="height: 50px;">
 			<h2>
-				TD1208 : Monitoring made simple, smart and fun
+				Monitoring made simple, smart and fun
 			</h2>
-			<div class="actions">
-				<a href="/cloud-on-chip/td1208/" target="_blank" class="btn btn-large"><i class="icon-large icon-search"></i> About TD1208 <span class="label label-success">New</span> </a>
-				<a href="/cloud-on-chip/td1208/evb.html#quickstart" target="_blank" class="btn btn-success btn-large"><i class="icon-large icon-download"></i> QuickStart EVB</a>
-				<a href="/cloud-on-chip/td1208/sdk.html" target="_blank" class="btn btn-info btn-large"><i class="icon-large icon-dashboard"></i> QuickStart SDK <span class="label label-success">New</span> </a>
-			</div>
-		</div>
-	</div>
-</div>
+            
+        </div>
+    </div>
+</section>
+
 <section class="container">
-		<div class="span4">
-			<h3><i class="icon-thumbs-up icon-large"></i> A brand new era</h3>
-			<p>
-				Fed up with GPRS ? No wifi environment ? Low power consumption constraints ? checkout our latest Wireless Module : TD1208. <br />
-			</p>
-		</div>
-		<div class="span4">
-			<h3><i class="icon-gift icon-large"></i> M2M for dummies</h3>
-			<p>
-				Check out our TD1208 Evaluation board and get into the game ! </br>
-				Effortless integration, affordable vertical solution for M2M Business.
-			</p>
-		</div>
-		<div class="span4">
-			<h3><i class="icon-trophy icon-large"></i> One for All</h3>
-			<p>	
-				Don't waste money / power / time integrating network interops, TD1208 copes with any range !
-			</p>
-		</div>
+    <div id="myCarousel" class="carousel slide span9 offset1">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="../images/carousel-td1208.png" alt="">
+                <div class="carousel-caption">
+                    <h4>TD1208</h4>
+                    <p>
+                         TD1208 : The next step after TD1202.
+                    </p>
+                    <div class="actions text-center">
+                        <a href="/cloud-on-chip/td1208/index.html"  class="btn btn-large"><i class="icon-large icon-search"></i> Features </a>
+                        <a href="/cloud-on-chip/td1208/evb.html"    class="btn btn-success btn-large"><i class="icon-large icon-eye-open"></i> Evaluation Board </a>
+                        <a href="/cloud-on-chip/td1208/sdk.html"    class="btn btn btn-primary btn-large"><i class="icon-large icon-road"></i> SDK </a>
+                        <a href="/cloud-on-chip/td1208/download.html"    class="btn btn-warning btn-large"><i class="icon-large icon-download"></i> Resources </a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="../images/carousel-td1204.jpg" alt="">
+                <div class="carousel-caption">
+                    <h4>TD1204</h4>
+                    <p>
+                        TD1204 is the very first SIGFOX™ Gateway Module that integrates a GPS chip and an accelerometer.
+                    </p>
+                    <div class="actions text-center">
+                        <a href="/cloud-on-chip/td1204/index.html"  class="btn btn-large"><i class="icon-large icon-search"></i> Features <span class="label label-success">New</span> </a>
+                        <a href="/cloud-on-chip/td1204/evb.html"    class="btn btn-success btn-large"><i class="icon-large icon-eye-open"></i> Evaluation Board <span class="label label-success">New</span> </a>
+                        <a href="/cloud-on-chip/td1204/sdk.html"    class="btn btn btn-primary btn-large" onclick="return false"><i class="icon-large icon-road"></i> SDK <span class="label label-warning">WIP</span> </a>
+                        <a href="/cloud-on-chip/td1204/download.html"    class="btn btn-warning btn-large"><i class="icon-large icon-download"></i> Resources <span class="label label-success">New</span> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+</section>
+
+<section class="container">
+	<div class="span4">
+		<h3><i class="icon-thumbs-up icon-large"></i> A brand new era</h3>
+		<p>
+			Fed up with GPRS ? No wifi environment ? Low power consumption constraints ? checkout our latest Wireless Module ! <br />
+		</p>
+	</div>
+	<div class="span4">
+		<h3><i class="icon-gift icon-large"></i> M2M for dummies</h3>
+		<p>
+			Check out our new Evaluation board and get into the game ! </br>
+			Effortless integration, affordable vertical solution for M2M Business.
+		</p>
+	</div>
+	<div class="span4">
+		<h3><i class="icon-trophy icon-large"></i> One for All</h3>
+		<p>	
+			Don't waste money / power / time integrating network interops, new module copes with any range !
+		</p>
+	</div>
 </section>
 
 <hr/>
