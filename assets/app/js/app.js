@@ -53,8 +53,7 @@ var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'Securit
                 }
             });
         };
-    }
-);
+    });
 
 app.config(function($compileProvider){
     $compileProvider.urlSanitizationWhitelist(/^\s*(https?|javascript):/);

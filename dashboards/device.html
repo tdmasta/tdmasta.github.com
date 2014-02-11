@@ -45,7 +45,7 @@ scripts:
 					<div class="control-group">
 						<div class="controls">
 							<button type="submit" class="btn btn-success btn-large" tabindex="3">
-								Then get to dashoard
+								<i class="icon-dashboard"> </i> Then get to dashoard
 							</button>
 						</div>
 					</div>
@@ -69,8 +69,11 @@ scripts:
 		<div class="row">
 			<div class="span12">
 				<h3><i class="icon-dashboard"> </i> Module {{"{{_serial"}}}} status <span class="pull-right">
+                    <button type="button" class="btn btn-success" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="getPacsFromId()" ng:show="(_display == true) && (undefined != _serial)" ng:cloak>
+                        <i class="icon-white icon-download"></i> Download PAC
+                    </button>
 					<button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_display == true) && (undefined != _serial)" ng:cloak>
-						Switch from {{"{{_serial"}}}}
+						<i class="icon-white icon-eject"></i> Switch from {{"{{_serial"}}}}
 					</button>
 					<button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(display == true) && (undefined == _serial)" ng:cloak>
 						Logout
@@ -118,7 +121,7 @@ scripts:
 
 		<div class="row">
 			<div class="span2 pull-right">
-				<a href="#history" data-toggle="modal" >Show details</a>
+				<a href="#history" class="btn btn-info" data-toggle="modal" > <i class="icon-white icon-list-alt"></i> Show details</a>
 			</div>
 		</div>
 

@@ -176,7 +176,8 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 			return object.value.idx;
 		};
 	};
-	
+
+
     // loadMore    
     $scope.loadMore = function() {
         var oldest = $scope._messages.length != 0 ? $scope._messages[$scope._messages.length - 1].when : null;
@@ -350,11 +351,11 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     };
 }
 
-function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
+function LogOutCtrl($scope, $log, $cookieStore, Context, Notif, DevicesServices) {
 	
 	$scope._display = false;
 	$scope._serial = undefined;
-	
+
 	$scope.logOut = function() {
 		$log.info('logout event');
 		$cookieStore.remove('dtoken');
@@ -365,7 +366,42 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif) {
         Context.setDashBoardVisibilty(false);
 		Notif.info('See you Soon');
 	};
-	
+
+    // getPacsFromId
+    $scope.getPacsFromId = function() {
+        $log.info('getPacsFromId click');
+        var dtoken = $cookieStore.get('dtoken');
+        var utoken = $cookieStore.get('utoken');
+        if(undefined != dtoken) {
+            var sn = $scope._serial;
+            DevicesServices.getPacsFromIds(sn, dtoken, null)
+                .success(function(data, status) {
+                    $log.info('getPacsFromIds OK');
+                    window.location.href = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);
+                })
+                .error(function(data, status) {
+                    $log.error('getPacsFromIds KO');
+                });
+        } else {
+            if(undefined != utoken) {
+                var snTab = new Array();
+                for(var deviceCpt=0; deviceCpt<$scope.devicesList.length; deviceCpt++) {
+                    var deviceSn = $scope.devicesList[deviceCpt].serial;
+                    snTab.push(deviceSn);
+                }
+                var snz = snTab.join(",");
+                DevicesServices.getPacsFromIds(snz, null, utoken)
+                    .success(function(data, status) {
+                        $log.info('getPacsFromIds OK');
+                        window.location.href = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);
+                    })
+                    .error(function(data, status) {
+                        $log.error('getPacsFromIds KO');
+                    });
+            }
+        }
+    };
+
 	// Event handleDisplayDashboard
     $scope.$on('DashBoardEvent', function() {
 		$log.info('waking up on dashoard event');
@@ -548,10 +584,10 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		DevelopersServices.loadDevices().then(function(response) {
 			// set new data
 			$scope.devicesList = response.data;
-	 		$log.info("devices loaded",$scope.devicesList);
+	 		$log.info("devices loaded", $scope.devicesList);
 			// update table params
 			$scope.tableDevices.total = $scope.devicesList.length;
-	 		$log.info("nb apps loaded",$scope.tableDevices.total);
+	 		$log.info("nb devices loaded", $scope.tableDevices.total);
 	 	});
 	};
 

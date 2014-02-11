@@ -2,10 +2,11 @@
 
 
 angular.module('NotificationModule', [], function($provide) {
-	
+
 	$provide.factory('Notif', function() {
-		
+
 		return {
+
 			info: function(msg) {
 				jQuery.pnotify({
                     title: 'Info',
@@ -15,6 +16,7 @@ angular.module('NotificationModule', [], function($provide) {
                     styling: 'bootstrap'
                 });
 			},
+
 			error: function(msg) {
 				jQuery.pnotify({
                     title: 'Ooops',
@@ -24,6 +26,7 @@ angular.module('NotificationModule', [], function($provide) {
                     styling: 'bootstrap'
                 });
 			},
+
 			warn:  function(msg) {
 				jQuery.pnotify({
                     title: 'Attention please',
@@ -33,6 +36,7 @@ angular.module('NotificationModule', [], function($provide) {
                     styling: 'bootstrap'
                 });
 			},
+
 			success: function(msg) {
 				jQuery.pnotify({
                     title: 'Hurray !',
@@ -46,6 +50,7 @@ angular.module('NotificationModule', [], function($provide) {
 	})
 });
 
+
 //
 // Module : DevicesModule
 //
@@ -54,64 +59,96 @@ angular.module('NotificationModule', [], function($provide) {
 //      getMessagesAfter
 angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', function($http, $log, $cookieStore, CONSTANTS) {
 
-        return {
+    return {
 
-            // getMessagesBefore method
-            getMessagesBefore: function(sn, before, amount) {
-                var dtoken = $cookieStore.get('dtoken');
-                var url = CONSTANTS.remote + '/iot/devices/msgs/history.json';
-                $log.info('url built up', url);
-
-				return $http({
-                    method : 'GET',
-                    url : url,
+        // getPacsFromIds method
+        getPacsFromIds: function(sn, dtoken, utoken) {
+            if (null != dtoken) {
+                // Device Dashboard Access
+                return $http({
+                    method : 'POST',
+                    url : CONSTANTS.remote + '/iot/developers/pacs.csv',
                     params : {
-                        sn : sn,
-                        until : before,
-                        amount : amount
+                        serials : sn
                     },
+                    data : { },
                     headers : {
                         'x-snsr-device-key' : dtoken
                     }
                 });
-            },
-
-            // getMessagesAfter method
-			getMessagesAfter: function(sn, after, amount) {
-                var dtoken = $cookieStore.get('dtoken');
-                var url = CONSTANTS.remote + '/iot/devices/msgs/recents.json';
-
-				return $http({
-                    method : 'GET',
-                    url : url,
+            }
+            if (null != utoken) {
+                // Developer Dashboard Access
+                return $http({
+                    method : 'POST',
+                    url : CONSTANTS.remote + '/iot/developers/pacs.csv',
                     params : {
-                        sn : sn,
-                        after : after,
-                        amount : amount
+                        serials : sn
                     },
+                    data : { },
                     headers : {
-                        'x-snsr-device-key' : dtoken
+                        Authorization : 'Basic ' + utoken
                     }
                 });
-			},
-			
-			getChildren : function(sn) {
-                var dtoken = $cookieStore.get('dtoken');
-                var url = CONSTANTS.remote + '/iot/devices/children.json';
-				return $http({
-                    method : 'GET',
-                    url : url,
-                    params : {
-                        sn : sn
-                    },
-                    headers : {
-                        'x-snsr-device-key' : dtoken
-                    }
-                });
-			} 
-        }
-    });
+            }
+        },
 
+        // getMessagesBefore method
+        getMessagesBefore: function(sn, before, amount) {
+            var dtoken = $cookieStore.get('dtoken');
+            var url = CONSTANTS.remote + '/iot/devices/msgs/history.json';
+            $log.info('url built up', url);
+
+			return $http({
+                method : 'GET',
+                url : url,
+                params : {
+                    sn : sn,
+                    until : before,
+                    amount : amount
+                },
+                headers : {
+                    'x-snsr-device-key' : dtoken
+                }
+            });
+        },
+
+        // getMessagesAfter method
+		getMessagesAfter: function(sn, after, amount) {
+            var dtoken = $cookieStore.get('dtoken');
+            var url = CONSTANTS.remote + '/iot/devices/msgs/recents.json';
+
+			return $http({
+                method : 'GET',
+                url : url,
+                params : {
+                    sn : sn,
+                    after : after,
+                    amount : amount
+                },
+                headers : {
+                    'x-snsr-device-key' : dtoken
+                }
+            });
+		},
+
+        // getChildren method
+		getChildren : function(sn) {
+            var dtoken = $cookieStore.get('dtoken');
+            var url = CONSTANTS.remote + '/iot/devices/children.json';
+			return $http({
+                method : 'GET',
+                url : url,
+                params : {
+                    sn : sn
+                },
+                headers : {
+                    'x-snsr-device-key' : dtoken
+                }
+            });
+		} 
+    }
+});
 
 
 //
@@ -126,72 +163,73 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
 
     return {
 
-            // checkCRC method
-            checkCRC : function(inputSerial, inputKey) {
-                return $http({
-                    method : 'GET',
-                    url : CONSTANTS.remote + '/iot/devices/crc.json',
-                    params : {  
-                        sn : inputSerial,
-                        key : inputKey
-                    },
-                });
-            },
+        // checkCRC method
+        checkCRC : function(inputSerial, inputKey) {
+            return $http({
+                method : 'GET',
+                url : CONSTANTS.remote + '/iot/devices/crc.json',
+                params : {  
+                    sn : inputSerial,
+                    key : inputKey
+                },
+            });
+        },
 
-            // registration method
-            registration: function(account) {
-                return $http({
-                    method : 'POST',
-                    url : CONSTANTS.remote + '/iot/developers/register.json',
-                    data : account
-                });
-            },
+        // registration method
+        registration: function(account) {
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/developers/register.json',
+                data : account
+            });
+        },
 
-            // authentication method
-            authentication: function(email, password) {
-                $log.info('authentication : ' + email);
-                return $http({
-                    method : 'GET',
-                    url : CONSTANTS.remote + '/security/authentication',
-                    params : {
-                        login : email,
-                        pwd : password
-                    }
-                });
-            },
+        // authentication method
+        authentication: function(email, password) {
+            $log.info('authentication : ' + email);
+            return $http({
+                method : 'GET',
+                url : CONSTANTS.remote + '/security/authentication',
+                params : {
+                    login : email,
+                    pwd : password
+                }
+            });
+        },
 
-            // delete account method
-            deleteAccount: function(email) {
-                var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'DELETE',
-                    url : CONSTANTS.remote + '/iot/developers.json',
-                    params : {
-                        email : email
-                    },
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    }
-                });
-            },
+        // delete account method
+        deleteAccount: function(email) {
+            var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'DELETE',
+                url : CONSTANTS.remote + '/iot/developers.json',
+                params : {
+                    email : email
+                },
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                }
+            });
+        },
 
-            // update git information
-            updateGit: function(login, gitAlias) {
-                var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'POST',
-                    url : CONSTANTS.remote + '/iot/developers/registerGit.json',
-                    data : {
-                        email : login,
-                        gitAlias : gitAlias
-                    },
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    }
-                });
-            }
+        // update git information
+        updateGit: function(login, gitAlias) {
+            var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/developers/registerGit.json',
+                data : {
+                    email : login,
+                    gitAlias : gitAlias
+                },
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                }
+            });
         }
+    }
 });
+
 
 //
 // Module : DeveloperModule
@@ -205,149 +243,150 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
 
     return {
 
-            // loadInformations method
-            loadInformations : function() {
-                var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'GET',
-                    url : CONSTANTS.remote + '/iot/developers.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    }
-                });
-            },
+        // loadInformations method
+        loadInformations : function() {
+            var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'GET',
+                url : CONSTANTS.remote + '/iot/developers.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                }
+            });
+        },
 
-            // iotSimulation method
-            iotSimulation: function(params) {
-                var url = CONSTANTS.remote + '/iot/developers/simulator.json';
-                var utoken = $cookieStore.get('utoken');
-                $log.info('URL built up : ' + url + ' & params : ' + JSON.stringify(params));
-                var promise = $http({
-                    method : 'POST',
-                    url : url,
-                    data : params,
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    }
-                });
-                return promise;
-            },
+        // iotSimulation method
+        iotSimulation: function(params) {
+            var url = CONSTANTS.remote + '/iot/developers/simulator.json';
+            var utoken = $cookieStore.get('utoken');
+            $log.info('URL built up : ' + url + ' & params : ' + JSON.stringify(params));
+            var promise = $http({
+                method : 'POST',
+                url : url,
+                data : params,
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                }
+            });
+            return promise;
+        },
 
-            // loadDevices method
-            loadDevices : function() {
-            	var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'GET',
-                    url : CONSTANTS.remote + '/iot/developers/modules.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                });
-            },
+        // loadDevices method
+        loadDevices : function() {
+        	var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'GET',
+                url : CONSTANTS.remote + '/iot/developers/modules.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+            });
+        },
 
-            // loadApplications method
-            loadApplications : function() {
-            	var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'GET',
-                    url : CONSTANTS.remote + '/iot/developers/apps.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                });
-            },
+        // loadApplications method
+        loadApplications : function() {
+        	var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'GET',
+                url : CONSTANTS.remote + '/iot/developers/apps.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+            });
+        },
 
-            //Create a new application
-            createApplication : function(application) {
-            	var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'POST',
-                    url : CONSTANTS.remote + '/iot/developers/apps.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                   	data : application,
-                });
-            },
+        //Create a new application
+        createApplication : function(application) {
+        	var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/developers/apps.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+               	data : application,
+            });
+        },
 
-            //Update an application
-            updateApplication : function(application) {
-            	var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'POST',
-                    url : CONSTANTS.remote + '/iot/developers/apps.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                   	data : application,
-                });
-            },
+        //Update an application
+        updateApplication : function(application) {
+        	var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/developers/apps.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+               	data : application,
+            });
+        },
 
-            //delete an application
-            deleteApplication : function(application) {
-            	var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'DELETE',
-                    url : CONSTANTS.remote + '/iot/developers/apps.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                   	params : {id : application.id},
-                });
-            },
+        //delete an application
+        deleteApplication : function(application) {
+        	var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'DELETE',
+                url : CONSTANTS.remote + '/iot/developers/apps.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+               	params : {id : application.id},
+            });
+        },
 
-            //Attach a module to an application
-            attachModule : function(device, application) {
-            	var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'POST',
-                    url : CONSTANTS.remote + '/iot/developers/apps/'+application.id+'/modules/attach.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                   	data : device,
-                });
-            },
+        //Attach a module to an application
+        attachModule : function(device, application) {
+        	var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/developers/apps/'+application.id+'/modules/attach.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+               	data : device,
+            });
+        },
 
-            //detach a module from an application
-            detachModule : function(device, application) {
-            	var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'POST',
-                    url : CONSTANTS.remote + '/iot/developers/apps/'+application.id+'/modules/detach.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                   	data : device,
-                });
-            },
+        //detach a module from an application
+        detachModule : function(device, application) {
+        	var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/developers/apps/'+application.id+'/modules/detach.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+               	data : device,
+            });
+        },
 
-            //register a module
-            registerModule : function(device) {
-            	var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'POST',
-                    url : CONSTANTS.remote + '/iot/developers/modules.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                   	data : new Array(device),
-                });
-            },
+        //register a module
+        registerModule : function(device) {
+        	var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/developers/modules.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+               	data : new Array(device),
+            });
+        },
 
-            //List modules of application
-            findModules : function(appli) {
-            	var utoken = $cookieStore.get('utoken');
-                return $http({
-                    method : 'GET',
-                    url : CONSTANTS.remote + '/iot/developers/apps/'+appli.id+'/modules.json',
-                    headers : {
-                        Authorization : 'Basic ' + utoken
-                    },
-                });
-            }
-		}
-	});
+        //List modules of application
+        findModules : function(appli) {
+        	var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'GET',
+                url : CONSTANTS.remote + '/iot/developers/apps/'+appli.id+'/modules.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+            });
+        }
+	}
+});
+
 
 //
 // Module : ContextModule

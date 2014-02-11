@@ -42,7 +42,7 @@ scripts:
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-success btn-large" tabindex="3">Then get to dashoard</button>
+                            <button type="submit" class="btn btn-success btn-large" tabindex="3"> <i class="icon-dashboard"> </i> Then get to dashoard</button>
                         </div>
                     </div>
                 </form>
@@ -51,7 +51,7 @@ scripts:
 
         <div class="row" style="margin: 0 auto;display: table;">
             <div class="span6">
-                <h3><i class="icon-large icon-warning-sign"></i></h3>  If you don't have account, please create one here : <a href="/register.html" class="btn btn-primary"><i class="icon-white icon-user"></i> Create an account</a>
+                If you don't have account, please create one here : <a href="/register.html" class="btn btn-primary"><i class="icon-white icon-user"></i> Create an account</a>
             </div>
         </div>
 
@@ -59,7 +59,7 @@ scripts:
 
     <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl">
 
-        <h3> <i class="icon-dashboard"> </i> <span class="pull-right" style="font-size: 15px"> logged as {{"{{login"}}}}<button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak>Logout</button></span></h3>
+        <h3> <i class="icon-dashboard"> </i> <span class="pull-right" style="font-size: 15px"> logged as {{"{{login"}}}}&nbsp;<button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak> <i class="icon-white icon-eject"></i> Logout</button></span></h3>
 
         <tabset>
 
@@ -72,14 +72,14 @@ scripts:
                         <td data-title="NAME" sortable="name">{{"{{appli.name"}}}}</td>
                         <td data-title="DESCRIPTION" >{{"{{appli.description"}}}}</td>
                         <td data-title="CREATED" sortable="created">{{"{{appli.created"}}}}</td>
-                        <td data-title="&nbsp;"> <button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger">Delete</button> </td>
+                        <td data-title="&nbsp;"> <button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger"> <i class="icon-white icon-minus-sign"></i> Delete</button> </td>
                     </tr>
                     <tr ng:show="!appsList.length">
                         <td colspan="6"><center><i class="icon-white icon-thumbs-down"></i> No application found</center></td>
                     </tr>
                 </table>
 
-                <button class="btn btn-primary" ng-click="showAppliDetails({})">Add</button>
+                <button class="btn btn-primary" ng-click="showAppliDetails({})"> <i class="icon-white icon-plus-sign"></i> Add</button>
 
                 <div class="appModal modal hide fade">
                     <div class="modal-header">
@@ -139,7 +139,11 @@ scripts:
                     </tr>
                 </table>
 
-                <button class="btn btn-primary" ng-click="showDeviceDetails({})">Add</button>
+                <button class="btn btn-primary" ng-click="showDeviceDetails({})">  <i class="icon-white icon-plus-sign"></i> Add</button>
+
+                <button type="button" class="btn btn-success" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="getPacsFromId()">
+                    <i class="icon-white icon-download"></i> Download PAC
+                </button>
 
                 <div class="deviceModal modal hide fade">
                     <div class="modal-header">
@@ -286,7 +290,7 @@ scripts:
                         </div>
 
                         <div class="span9" ng-controller="RegistrationCtrl" ng-app="evbApp">
-                            <button type="button" class="btn btn-danger" ng-click="deleteClick()">Delete my account</button>
+                            <button type="button" class="btn btn-danger" ng-click="deleteClick()"> <i class="icon-white icon-remove-sign"></i> Delete my account</button>
                         </div>
                     </tab>
 
@@ -298,7 +302,7 @@ scripts:
                                     <div class="controls">
                                        <input id="gitid" name="gitid" ng-model="account.gitid" ng-model-instant data-val="true" type="text" required class="required" data-val-required="''"/>
                                         <span class="field-validation-valid" data-valmsg-for="gitid" data-valmsg-replace="true"></span>
-                                        <button type="button" class="btn btn-success" ng-click="updateGit()" data-ng-disabled="registrationForm.$invalid" >Register my GitHub account</button>
+                                        <button type="button" class="btn btn-success" ng-click="updateGit()" data-ng-disabled="registrationForm.$invalid" > <i class="icon-white icon-user"></i> Register my GitHub account</button>
                                     </div>
                                 </div>
                             </form>
