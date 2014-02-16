@@ -27,34 +27,29 @@ scripts:
                 <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationByEmailForm" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(inputEmail, inputPassword)" >
                     <legend> Developer Authentication</legend>
                     <div class="control-group">
-                        <label class="control-label" for="inputEmail" data-toggle="popover" data-placement="bottom" data-content="<p>developer's email used for registration.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Enter developer's email </a></label>
+                        <label class="control-label" for="inputEmail" data-toggle="popover" data-placement="bottom" data-content="<p>Developer's email used for registration.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Developer's email </a></label>
                         <div class="controls">
                             <input id="inputEmail" name="inputEmail" type="email" ng-model="inputEmail" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required placeholder="Developer's login"  tabindex="1"/>
                             <span class="field-validation-valid" data-valmsg-for="inputEmail" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="inputPassword" data-toggle="popover" data-placement="bottom" data-content="<p>Received password after registration</p>" data-html="true" data-original-title="<strong>Where can I get the password?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  and password </a></label>
+                        <label class="control-label" for="inputPassword" data-toggle="popover" data-placement="bottom" data-content="<p>Received password after registration</p>" data-html="true" data-original-title="<strong>Where can I get the password?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Password </a></label>
                         <div class="controls">
                             <input id="inputPassword" name="inputPassword" type="password" ng-model="inputPassword" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required placeholder="Developer's password" tabindex="2"/>
                             <span class="field-validation-valid" data-valmsg-for="inputPassword" data-valmsg-replace="true"></span>
                         </div>
                     </div>
-                    <div class="control-group">
-                        <div class="controls">
-                            <button type="submit" class="btn btn-success btn-large" tabindex="3"> <i class="icon-dashboard"> </i> Then get to dashoard</button>
+                    <div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-success" tabindex="3"> Sign In </button> - or - <a href="/register.html"> Sign Up</a>
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-
-        <div class="row" style="margin: 0 auto;display: table;">
-            <div class="span6">
-                If you don't have account, please create one here : <a href="/register.html" class="btn btn-primary"><i class="icon-white icon-user"></i> Create an account</a>
-            </div>
-        </div>
-
     </div>
 
     <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl">

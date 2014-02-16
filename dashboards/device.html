@@ -25,18 +25,24 @@ scripts:
 		<div class="row" style="margin: 0 auto;display: table;">
 			<div class="span5">
 				<form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account, displayDashboard)" >
+
+                    <div class="alert alert-info">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Info : </strong> If you're using TD1202 module with software version 1117, please upgrade your firmware to 1154 and read last updated documentation in <strong><a href="{{site.production_url}}/cloud-on-chip/td1202/download.html">download</a></strong> section.
+                    </div>
+
 					<legend>
 						Device Authentication
 					</legend>
 					<div class="control-group">
-						<label class="control-label" for="inputSerial" data-toggle="popover" data-placement="bottom" data-content="<p>Module id appears either on product parcel sticker<br/> either by perfoming AT&V command within a terminal session.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i> Enter module id </a></label>
+						<label class="control-label" for="inputSerial" data-toggle="popover" data-placement="bottom" data-content="<p>Module id appears either on product parcel sticker<br/> either by perfoming AT&V command within a terminal session.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i> Module id </a></label>
 						<div class="controls">
 							<input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required placeholder="e.g XXXX, case insentitive, with no 0 padding" tabindex="1"/>
 							<span class="field-validation-valid" data-valmsg-for="inputSerial" data-valmsg-replace="true"></span>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="inputKey" data-toggle="popover" data-placement="bottom" data-content="<p>Key information appears next to Module Id information on product parcel sticker</p>" data-html="true" data-original-title="<strong>Where can I get the Key info?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i> its key </a></label>
+						<label class="control-label" for="inputKey" data-toggle="popover" data-placement="bottom" data-content="<p>Key information appears next to Module Id information on product parcel sticker</p>" data-html="true" data-original-title="<strong>Where can I get the Key info?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i> Module key </a></label>
 						<div class="controls">
 							<input id="inputKey" name="account.inputKey" ng-model="account.inputKey" ng-model-instant data-val="true" type="text" data-val-required="Key is required." required placeholder="8 hexa chars, case insentitive"  tabindex="2"/>
 							<span class="field-validation-valid" data-valmsg-for="inputKey" data-valmsg-replace="true"></span>
@@ -44,17 +50,10 @@ scripts:
 					</div>
 					<div class="control-group">
 						<div class="controls">
-							<button type="submit" class="btn btn-success btn-large" tabindex="3">
-								<i class="icon-dashboard"> </i> Then get to dashoard
-							</button>
+                            <button type="submit" class="btn btn-success" tabindex="3"> Sign In </button>
 						</div>
 					</div>
 				</form>
-			</div>
-		</div>
-		<div class="row" style="margin: 0 auto;display: table;">
-			<div class="span5">
-				<h3><i class="icon-large icon-warning-sign"></i></h3> If you're using TD1202 module with software version 1117, please upgrade your firmware to 1154 and read last updated documentation in <a href="{{site.production_url}}/cloud-on-chip/td1202/download.html">download</a> section.
 			</div>
 		</div>
 	</div>
