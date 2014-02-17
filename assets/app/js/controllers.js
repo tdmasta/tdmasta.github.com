@@ -182,7 +182,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     $scope.loadMore = function() {
         var oldest = $scope._messages.length != 0 ? $scope._messages[$scope._messages.length - 1].when : null;
 
-        DevicesServices.getMessagesBefore(Context.serial, oldest, 50)
+        DevicesServices.getMessagesBefore(oldest, 50)
             .then(function(response) {
 				switch (response.status) {
 					case 200 :
@@ -218,7 +218,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
         var newest = $scope._messages.length != 0 ? $scope._messages[0].when : null;
         var dtoken = $cookieStore.get('dtoken');
 		if(undefined != dtoken)
-	        DevicesServices.getMessagesAfter(Context.serial, newest, 50)
+	        DevicesServices.getMessagesAfter(newest, 50)
 	            .then(function(response) {
 					$log.info('response', response.data);
 					switch (response.status) {
@@ -274,7 +274,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
    };
 
 	$scope.init = function() {
-		return DevicesServices.getChildren(Context.serial);
+		return DevicesServices.getChildren();
 	};
 
 	$scope.$on('event:loginRequired', function(event){
@@ -373,8 +373,7 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif, DevicesServices)
         var dtoken = $cookieStore.get('dtoken');
         var utoken = $cookieStore.get('utoken');
         if(undefined != dtoken) {
-            var sn = $scope._serial;
-            DevicesServices.getPacsFromIds(sn, dtoken, null)
+            DevicesServices.getPacsFromIds(dtoken, null)
                 .success(function(data, status) {
                     $log.info('getPacsFromIds OK');
                     window.location.href = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);
@@ -390,7 +389,8 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif, DevicesServices)
                     snTab.push(deviceSn);
                 }
                 var snz = snTab.join(",");
-                DevicesServices.getPacsFromIds(snz, null, utoken)
+                $log.info('snz : ' + snz);
+                DevicesServices.getPacsFromIds(null, utoken)
                     .success(function(data, status) {
                         $log.info('getPacsFromIds OK');
                         window.location.href = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);

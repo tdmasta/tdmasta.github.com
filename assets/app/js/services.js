@@ -62,15 +62,12 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
     return {
 
         // getPacsFromIds method
-        getPacsFromIds: function(sn, dtoken, utoken) {
+        getPacsFromIds: function(dtoken, utoken) {
             if (null != dtoken) {
                 // Device Dashboard Access
                 return $http({
                     method : 'POST',
-                    url : CONSTANTS.remote + '/iot/developers/pacs.csv',
-                    params : {
-                        serials : sn
-                    },
+                    url : CONSTANTS.remote + '/iot/devices/pacs.csv',
                     data : { },
                     headers : {
                         'x-snsr-device-key' : dtoken
@@ -82,9 +79,6 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
                 return $http({
                     method : 'POST',
                     url : CONSTANTS.remote + '/iot/developers/pacs.csv',
-                    params : {
-                        serials : sn
-                    },
                     data : { },
                     headers : {
                         Authorization : 'Basic ' + utoken
@@ -94,7 +88,7 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
         },
 
         // getMessagesBefore method
-        getMessagesBefore: function(sn, before, amount) {
+        getMessagesBefore: function(before, amount) {
             var dtoken = $cookieStore.get('dtoken');
             var url = CONSTANTS.remote + '/iot/devices/msgs/history.json';
             $log.info('url built up', url);
@@ -103,7 +97,6 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
                 method : 'GET',
                 url : url,
                 params : {
-                    sn : sn,
                     until : before,
                     amount : amount
                 },
@@ -114,7 +107,7 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
         },
 
         // getMessagesAfter method
-		getMessagesAfter: function(sn, after, amount) {
+		getMessagesAfter: function(after, amount) {
             var dtoken = $cookieStore.get('dtoken');
             var url = CONSTANTS.remote + '/iot/devices/msgs/recents.json';
 
@@ -122,7 +115,6 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
                 method : 'GET',
                 url : url,
                 params : {
-                    sn : sn,
                     after : after,
                     amount : amount
                 },
@@ -133,15 +125,12 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
 		},
 
         // getChildren method
-		getChildren : function(sn) {
+		getChildren : function() {
             var dtoken = $cookieStore.get('dtoken');
             var url = CONSTANTS.remote + '/iot/devices/children.json';
 			return $http({
                 method : 'GET',
                 url : url,
-                params : {
-                    sn : sn
-                },
                 headers : {
                     'x-snsr-device-key' : dtoken
                 }
