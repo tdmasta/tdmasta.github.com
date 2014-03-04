@@ -2,7 +2,7 @@
 layout: page
 title: "TD 1204 Evaluation Board"
 description: "Pragmatic M2M"
-tagline: "By DIY guys, for DIY guys"
+tagline: "By DIYers, for DIYers"
 ---
 {% include JB/setup %}
 
@@ -17,7 +17,7 @@ tagline: "By DIY guys, for DIY guys"
             </h2>
             <div class="actions">
                 <a href="#quickstart" class="btn btn-success btn-large"><i class="icon-large icon-star-empty"></i> Quickstart steps </a>
-                <a href="#"target="_blank" class="btn btn-info btn-large" onclick="return false" ><i class="icon-large icon-download"></i> Download EVB User Guide <span class="label label-warning">WIP</span> </a>
+                <a href="https://github.com/Telecom-Design/Documentation_TD_RF_Module/raw/master/TD1204%20EVB%20User's%20Guide%20rev1.0.pdf"target="_blank" class="btn btn-info btn-large"><i class="icon-large icon-download"></i> Download EVB User Guide</a>
             </div>
         </div>
     </div>
@@ -43,22 +43,58 @@ tagline: "By DIY guys, for DIY guys"
         <div class="span4">
             <h3> Board features </h3>
             <p>
-                TD1204 SIGFOX™ Gateway module in LGA25 package
-                <ul>
-                    <li>SIGFOX™ certified</li>
-                    <li> Frequency range = ISM 868 MHz </li>
-                    <li> Receiver sensitivity =-126 dBm </li>
-                    <li>  (G)FSK, 4(G)FSK, GMSK / OOK Modulation </li>
-                    <li> Max output power : +14 dBm</li>
-                    <li> Low active radio power consumption : 13/16 mA RX ,  37 mA TX @ +10 dBm </li>
-                    <li> Power supply = 2.3 to 3.3 V </li>
-                    <li> LGA25 (25.4×12.7×3.81mm) Land Grid Array package </li>
-                    <li> Up to 12 GPIOs pins </li>
-                    <li> I2C bus interface </li>
-                </ul>
+<u>SIGFOX™ certified Gateway and RF transceiver</u>
+<ul>
+ <li> Frequency range = ISM 868 MHz </li>
+ <li> Receive sensitivity =-126 dBm </li>
+ <li> Modulation : </li>
+ <ul>
+  <li> (G)FSK, 4(G)FSK, GMSK </li>
+  <li> OOK </li>
+ </ul>
+ <li> Max output power : +14 dBm </li>
+ <li> Low active radio power consumption : </li>
+ <ul>
+  <li> 22 µA RX (windowed mode) </li>
+  <li> 37 mA TX @ +10 dBm </li>
+ </ul>
+</ul>
+
+<u>Multi-GNSS GPS Receiver</u>
+<ul>
+ <li> Multi-GNSS support : </li>
+ <ul>
+  <li> GPS/GLONASS </li>
+  <li> SBAS augmentation services </li>
+ </ul>
+ <li> Ultra-low power consumption : </li>
+ <ul>
+  <li> 22 mA Acquisition </li>
+  <li> 15 µA Backup </li>
+ </ul>
+ <li> High Sensitivity : </li>
+ <ul>
+  <li> 56-channel engine </li>
+  <li> -162 dBm Tracking </li>
+  <li> -148 dBm Cold start </li>
+ </ul>
+</ul>
+
+<u>Ultra-low power 3D Accelerometer</u>
+<ul>
+ <li> Up to ±16g full scale </li>
+</ul>
+
+<u>Board characteristics</u>
+<ul>
+ <li> Power supply = 2.3 to 3.6 V </li>
+ <li> 2.5 µA idle state consumption </li>
+ <li> LGA41 (41.91×12.7×3.81mm) Land Grid Array package </li>
+ <li> Available in several conditioning methods </li>
+</ul>
             </p>
             <p>
-                <a class="btn btn-large btn-info" target="_blank" href="#" onclick="return false"><i class="icon-plus-sign"></i> Complete features list <span class="label label-warning">WIP</span> </a>
+                <a class="btn btn-large btn-info" target="_blank" href="https://github.com/Telecom-Design/Documentation_TD_RF_Module/raw/master/TD1204%20Datasheet%20rev1.0.pdf"><i class="icon-plus-sign"></i> Complete features list </a>
             </p>
         </div>
         
@@ -70,6 +106,7 @@ tagline: "By DIY guys, for DIY guys"
                     <li>A TTL-232R-3V3 FTDI USB to TTL Serial Cable (3.3V)-1.8m </li>
                     <li> The TD1204 EVB Evaluation Board itself </li>
                     <li>A 20 cm 868 MHz-Band Swivel Antenna</li>
+                    <li>Active GPS antenna with U.FL connector</li>
                 </ul>
             </p>
             <div class="span8 thumbnail offset1">
