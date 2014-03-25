@@ -15,6 +15,7 @@ scripts:
          <li><a href="#overview"><i class="icon-chevron-right"></i> Overview </a></li>
          <li><a href="#authentication"><i class="icon-chevron-right"></i> Authentication </a></li>
          <li class="nav-header"> Developer Informations </li>
+         <li><a href="#upd_password"><i class="icon-chevron-right"></i> Update Password </a></li>
          <li><a href="#git_alias"><i class="icon-chevron-right"></i> Update Git Alias </a></li>
 		 <li class="nav-header"> Handling Apps</li>
          <li><a href="#list_apps"><i class="icon-chevron-right"></i> List Iot Apps </a></li>
@@ -120,7 +121,57 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
              </tbody>
          </table>
 	</section>
-	
+
+    <section id="upd_password">
+        <div class="page-header">
+            <h2>Update Password</h2>
+        </div>
+     <p>
+     <br/><br/>
+     <h4><a name="DevUpdPwd">POST /iot/developers/updatePassword.json</a></h4>
+     <br/>
+     <table class="table">
+             <tbody>
+                 <tr>
+                     <td><h6>Description</h6></td>
+                     <td> Update developer's password : <b>it must contain at least 6 characters, including uppercase, lowercase letters and numbers.</b></td>
+                 </tr>
+                 <tr>
+                     <td><h6>Url</h6></td>
+                     <td><code>https://sensor.insgroup.fr/iot/developers/updatePassword.json</code></td>
+                 </tr>
+                 <tr>
+                     <td><h6>Method</h6></td>
+                     <td>POST</td>
+                 </tr>
+                 <tr>
+                     <td><h6>Parameters</h6></td>
+                     <td>
+                         <ol>
+                             <li><code>email</code> <i>required</i> Developer account login</li>
+                             <li><code>currentpwd</code> <i>required</i> Current password</li>
+                             <li><code>newpwd</code> <i>required</i> New password</li>
+                             <li><code>confirmpwd</code> <i>required</i> Confirm new password</li>
+                         </ol>
+                     </td>
+                 </tr>
+                 <tr>
+                      <td><h6>Returns</h6></td>
+                      <td> void</td>
+                 </tr>
+                 <tr>
+                     <td><h6>Errors</h6></td>
+                     <td>
+                         <ul class="unstyled">
+                             <li><code>404</code> - The developer account was not found </li>
+                             <li><code>401</code> - The authentication information are missing or invalid </li>
+                         </ul>
+                     </td>
+                 </tr>
+             </tbody>
+         </table>
+    </section>
+
     <section id="git_alias">
         <div class="page-header">
             <h2>Update Git alias</h2>

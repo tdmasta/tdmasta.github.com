@@ -112,6 +112,30 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
         }
     };
 
+    // Change password button
+    $scope.changePasswordClick = function() {
+        SecurityServices.updatePassword($cookieStore.get('login'), $scope.account.currentpassword, $scope.account.newpassword, $scope.account.confirmpassword)
+            .success(function(data, status) {
+                $log.info('updatePassword OK : data = ' + data);
+
+                // clean up
+                $scope._stopPolling = true;
+                $scope.account.currentpassword = '';
+                $scope.account.newpassword = '';
+                $scope.account.confirmpassword = '';
+                $cookieStore.remove('dtoken');
+                $cookieStore.remove('utoken');
+                $cookieStore.remove('login');
+                Context.setSerial(undefined);
+                Context.setDashBoardVisibilty(false);
+                Notif.success('Password changed ! Please reconnect.');
+            })
+            .error(function(data, status) {
+                $log.error('updatePassword KO : Failed request status = ' + status + ' & data = ' + data);
+                Notif.error('Error during Password changing : ' + data);
+            });
+    };
+    
     // Update git
     $scope.updateGit = function() {
         $log.info('register git ('+$scope.account.gitid+') for '+$cookieStore.get('login'));
@@ -461,6 +485,74 @@ function extractlatlng(messagepayload) {
 // Open a google map on latlng point
 function openmap(latlng) {
     window.open("https://maps.google.fr/maps?hl=fr&q="+latlng+"&z=15&output=embed","Position : " + latlng,"menubar=no, status=no, scrollbars=no, menubar=no, width=500, height=400");
+}
+
+
+// Validate a password : Passwords must contain at least six characters, including uppercase, lowercase letters and numbers.
+function validatePassword() {
+    var currentpassword = document.getElementById("currentpassword").value;
+    var newpassword = document.getElementById("newpassword").value;
+    var confirmpassword = document.getElementById("confirmpassword").value;
+
+    document.getElementById("currentpassword").setCustomValidity('');  //empty string means no validation error
+    document.getElementById("newpassword").setCustomValidity('');  //empty string means no validation error
+    document.getElementById("confirmpassword").setCustomValidity('');  //empty string means no validation error
+    document.getElementById("changeButtonId").removeAttribute("disabled");
+
+    if(newpassword != confirmpassword) {
+        document.getElementById("confirmpassword").setCustomValidity("Passwords Don't Match");
+        document.getElementById("changeButtonId").setAttribute("disabled", "disabled");
+        return;
+    }
+
+    if(isEmptyOrBlank(currentpassword)) {
+        document.getElementById("currentpassword").setCustomValidity("Current Password is null or empty");
+        document.getElementById("changeButtonId").setAttribute("disabled", "disabled");
+        return;
+    }
+
+    if(isEmptyOrBlank(newpassword)) {
+        document.getElementById("newpassword").setCustomValidity("New Password is null");
+        document.getElementById("confirmpassword").setCustomValidity("New Password is null");
+        document.getElementById("changeButtonId").setAttribute("disabled", "disabled");
+        return;
+    }
+
+    if (! passwordStrategy(newpassword)) {
+        document.getElementById("newpassword").setCustomValidity("Incorrect Password");
+        document.getElementById("confirmpassword").setCustomValidity("Incorrect Password");
+        document.getElementById("changeButtonId").setAttribute("disabled", "disabled");
+        return;
+    }
+
+    document.getElementById("currentpassword").setCustomValidity('');  //empty string means no validation error
+    document.getElementById("newpassword").setCustomValidity('');  //empty string means no validation error
+    document.getElementById("confirmpassword").setCustomValidity('');  //empty string means no validation error
+}
+
+
+function isEmptyOrBlank(str) {
+    return (!str || 0 === str.length || /^\s*$/.test(str));
+}
+
+
+function passwordStrategy(str) {
+     if (str.length < 6) {
+         return false;
+     }
+     var re = /[0-9]/;
+     if (!re.test(str)) {
+         return false;
+     }
+     re = /[a-z]/;
+     if (!re.test(str)) {
+         return false;
+     }
+     re = /[A-Z]/;
+     if (!re.test(str)) {
+         return false;
+     }
+     return true;
 }
 
 

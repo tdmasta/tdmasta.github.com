@@ -201,6 +201,24 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
             });
         },
 
+        // update password
+        updatePassword: function(login, currentpwd, newpwd, confirmpwd) {
+            var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/developers/updatePassword.json',
+                data : {
+                    email : login,
+                    currentpwd : currentpwd,
+                    newpwd : newpwd,
+                    confirmpwd : confirmpwd
+                },
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                }
+            });
+        },
+
         // update git information
         updateGit: function(login, gitAlias) {
             var utoken = $cookieStore.get('utoken');
