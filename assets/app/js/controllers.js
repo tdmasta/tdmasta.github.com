@@ -87,21 +87,24 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
         if ($cookieStore.get('login')) {
             var utoken = $cookieStore.get('utoken');
             if (utoken) {
-                // delete account service
-                SecurityServices.deleteAccount($cookieStore.get('login'))
-                    .success(function(data, status) {
-                        $log.info('Delete OK : data = ' + data);
-                        $log.info('logout event');
-                        $cookieStore.remove('dtoken');
-                        $cookieStore.remove('utoken');
-                        $cookieStore.remove('login');
-                        //desactivation du polling
-                        $scope._stopPolling = true; 
-                        Context.setSerial(undefined);
-                        Context.setDashBoardVisibilty(false);
-                    }).error(function(data, status) {
-                        $log.error('Delete KO : Failed request status = ' + status + ' & data = ' + data);
-                    });
+                var result = confirm("Do you really want to delete your account ?");
+                if (result == true) {
+                    // delete account service
+                    SecurityServices.deleteAccount($cookieStore.get('login'))
+                        .success(function(data, status) {
+                            $log.info('Delete OK : data = ' + data);
+                            $log.info('logout event');
+                            $cookieStore.remove('dtoken');
+                            $cookieStore.remove('utoken');
+                            $cookieStore.remove('login');
+                            //desactivation du polling
+                            $scope._stopPolling = true; 
+                            Context.setSerial(undefined);
+                            Context.setDashBoardVisibilty(false);
+                        }).error(function(data, status) {
+                            $log.error('Delete KO : Failed request status = ' + status + ' & data = ' + data);
+                        });
+                }
             } else {
 				Notif.error('User token missing, please check parameters');
                 $log.error('UToken is missing');
@@ -739,6 +742,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			Notif.error("Mandatory field forgotten");
 		}
 	};
+
 	//Application Gestion
 	$scope.deleteAppli=function(appli, $index, $event) {
 		$event.stopPropagation();
@@ -750,6 +754,7 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 			});
 		}
 	};
+
 	$scope.showAppliDetails=function(appli, $index) {
 		$log.info('showAppliDetails', appli);
 		$scope.appli=JSON.parse(JSON.stringify(appli));
