@@ -25,20 +25,21 @@ scripts:
 		<div class="row" style="margin: 0 auto;display: table;">
 			<div class="span5">
 				<form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account, displayDashboard)" >
+
 					<legend>
 						Device Authentication
 					</legend>
 					<div class="control-group">
-						<label class="control-label" for="inputSerial" data-toggle="popover" data-placement="bottom" data-content="<p>Module id appears either on product parcel sticker<br/> either by perfoming AT&V command within a terminal session.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i> Module id </a></label>
+						<label class="control-label" for="inputSerial" data-toggle="popover" data-placement="bottom" data-content="<p>Module Id appears either on product parcel sticker, either by perfoming AT&V command within a terminal session.<br/>e.g XXXX, case insentitive, with no 0 padding.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i> Module id </a></label>
 						<div class="controls">
-							<input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required placeholder="e.g XXXX, case insentitive, with no 0 padding" tabindex="1"/>
+							<input id="inputSerial" name="account.inputSerial" ng-model="account.inputSerial" ng-model-instant data-val="true" type="text" data-val-required="Serial is required." required tabindex="1" class="required" />
 							<span class="field-validation-valid" data-valmsg-for="inputSerial" data-valmsg-replace="true"></span>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="inputKey" data-toggle="popover" data-placement="bottom" data-content="<p>Key information appears next to Module Id information on product parcel sticker</p>" data-html="true" data-original-title="<strong>Where can I get the Key info?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i> Module key </a></label>
+						<label class="control-label" for="inputKey" data-toggle="popover" data-placement="bottom" data-content="<p>Key information appears either next to module Id information on product packaging sticker (8 hexa chars, case insentitive), either as a #PAC given by your module provider (16 hexa chars, case insentitive).<br/></p>" data-html="true" data-original-title="<strong>Where can I get the key info ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i> Module key </a></label>
 						<div class="controls">
-							<input id="inputKey" name="account.inputKey" ng-model="account.inputKey" ng-model-instant data-val="true" type="text" data-val-required="Key is required." required placeholder="8 hexa chars, case insentitive"  tabindex="2"/>
+							<input id="inputKey" name="account.inputKey" ng-model="account.inputKey" ng-model-instant data-val="true" type="text" data-val-required="Key is required." required tabindex="2" class="required" />
 							<span class="field-validation-valid" data-valmsg-for="inputKey" data-valmsg-replace="true"></span>
 						</div>
 					</div>

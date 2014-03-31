@@ -26,23 +26,18 @@ scripts:
             <div class="span5">
                 <form class="form-horizontal" accept-charset="utf-8" autocomplete="off" novalidate="novalidate" id="authenticationByEmailForm" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(inputEmail, inputPassword)" >
 
-                    <div class="alert alert-info">
-                        <a class="close" data-dismiss="alert">×</a>
-                        <strong>Update : </strong> March 25, 2014 : You can now change your generated password from your account details page. Please take a look at it.
-                    </div>
-
                     <legend> Developer Authentication</legend>
                     <div class="control-group">
-                        <label class="control-label" for="inputEmail" data-toggle="popover" data-placement="bottom" data-content="<p>Developer's email used for registration.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Developer's email </a></label>
+                        <label class="control-label" for="inputEmail" data-toggle="popover" data-placement="bottom" data-content="<p>Developer's email used for registration.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Email </a></label>
                         <div class="controls">
-                            <input id="inputEmail" name="inputEmail" type="email" ng-model="inputEmail" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required placeholder="Developer's login"  tabindex="1"/>
+                            <input id="inputEmail" name="inputEmail" type="email" ng-model="inputEmail" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required tabindex="1" class="required" />
                             <span class="field-validation-valid" data-valmsg-for="inputEmail" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="inputPassword" data-toggle="popover" data-placement="bottom" data-content="<p>Received password after registration</p>" data-html="true" data-original-title="<strong>Where can I get the password?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Password </a></label>
+                        <label class="control-label" for="inputPassword" data-toggle="popover" data-placement="bottom" data-content="<p>Received password after registration.</p>" data-html="true" data-original-title="<strong>Where can I get the password?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Password </a></label>
                         <div class="controls">
-                            <input id="inputPassword" name="inputPassword" type="password" ng-model="inputPassword" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required placeholder="Developer's password" tabindex="2"/>
+                            <input id="inputPassword" name="inputPassword" type="password" ng-model="inputPassword" ng-model-instant data-val="true" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" required tabindex="2" class="required" />
                             <span class="field-validation-valid" data-valmsg-for="inputPassword" data-valmsg-replace="true"></span>
                         </div>
                     </div>
@@ -89,18 +84,18 @@ scripts:
                     <div class="modal-body">
                         <tabset>
                             <tab heading="Details">
-                                <label>Name*</label>
-                                <input type="text" ng-model="appli.name" ng-model-instant data-val="true"data-val-required="Name is required." required/>
-                                <label>callbackurl*</label>
-                                <input type="text" ng-model="appli.callbackurl" ng-model-instant data-val="true"data-val-required="callbackurl is required." required/>
-                                <label>description</label>
-                                <input type="text" ng-model="appli.description" />
-                                <label ng:show="appli.id != undefined">created</label>
-                                <input type="text" ng-model="appli.created" readonly="true" ng:show="appli.id != undefined"/>
-                                <label ng:show="appli.id != undefined">key</label>
-                                <input type="text" ng-model="appli.key" readonly="true" ng:show="appli.id != undefined"/>
-                                <label ng:show="appli.id != undefined">secret</label>
-                                <input type="text" ng-model="appli.secret" readonly="true" ng:show="appli.id != undefined"/>
+                                <label for="createname">Name</label>
+                                <input id="createname" type="text" ng-model="appli.name" ng-model-instant data-val="true"data-val-required="Name is required." required class="required span4" />
+                                <label for="createurl">Callback Url</label>
+                                <input id="createurl" type="text" ng-model="appli.callbackurl" ng-model-instant data-val="true"data-val-required="callbackurl is required." required class="required span4" />
+                                <label for="createdesc">Description</label>
+                                <input id="createdesc" type="text" ng-model="appli.description" class="span4" />
+                                <label for="createcreated" ng:show="appli.id != undefined">Created</label>
+                                <input id="createcreated" type="text" ng-model="appli.created" readonly="true" ng:show="appli.id != undefined" class="span4" />
+                                <label for="createkey" ng:show="appli.id != undefined">Key</label>
+                                <input id="createkey" type="text" ng-model="appli.key" readonly="true" ng:show="appli.id != undefined" class="span4" />
+                                <label for="createsecret" ng:show="appli.id != undefined">Secret</label>
+                                <input id="createsecret" type="text" ng-model="appli.secret" readonly="true" ng:show="appli.id != undefined" class="span4" />
                             </tab>
                             <tab heading="Modules" >
                                 <div id="ModulesList">
@@ -151,11 +146,23 @@ scripts:
                         <h3>Module</h3>
                     </div>
                     <div class="modal-body">
-                        <label>serial *</label>
-                        <input type="text" ng-model="device.serial" ng-model-instant data-val="true"data-val-required="Name is required." required/>
-                        <label>key *</label>
-                        <input type="text" ng-model="device.key" ng-model-instant data-val="true"data-val-required="Name is required." required/>
+
+                        <div class="control-group">
+                            <label class="control-label span2" for="addsn">Serial</label>
+                            <div class="controls">
+                                <input id="addsn" type="text" ng-model="device.serial" ng-model-instant data-val="true" data-val-required="Name is required." required class="required" />
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label span2" for="addkey" data-toggle="popover" data-placement="top" data-content="<p>Key information appears either next to module Id information on product parcel sticker (8 hexa chars, case insentitive), either as a #PAC given by your module provider (16 hexa chars, case insentitive).<br/></p>" data-html="true" data-original-title="<strong>Where can I get the key info ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i></a>  Module key </label>
+                            <div class="controls">
+                                <input id="addkey" type="text" ng-model="device.key" ng-model-instant data-val="true" data-val-required="Key is required." required class="required" />
+                            </div>
+                        </div>
+
                     </div>
+
                     <div class="modal-footer">
                         <button class="btn btn-primary" ng-click="saveDevice()">Save</button>
                         <button class="btn" ng-click="cancelDevice()">Cancel</button>
@@ -168,7 +175,7 @@ scripts:
                 <div id="simulator">
 
                     <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="iotSimulator" name="iotSimulatorForm">
-            
+
                         <div class="control-group">
                             <label class="control-label" for="url">Callback url</label>
                             <div class="controls">
@@ -176,7 +183,7 @@ scripts:
                                 <span class="field-validation-valid" data-valmsg-for="url" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-        
+
                         <div class="control-group">
                             <label class="control-label" for="frequency">Frequency</label>
                             <div class="controls">
@@ -184,7 +191,7 @@ scripts:
                                 <input id="frequencyvalue" class= "span1" type="text" size="2" readonly="readonly" />
                             </div>
                         </div>
-        
+
                         <div class="control-group">
                             <label class="control-label" for="type">Message Type</label>
                             <div class="controls">
@@ -192,7 +199,7 @@ scripts:
                                 <span class="field-validation-valid" data-valmsg-for="type" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-    
+
                         <div class="control-group">
                             <label class="control-label" for="deviceserial">Device serial</label>
                             <div class="controls">
@@ -200,27 +207,27 @@ scripts:
                                 <span class="field-validation-valid" data-valmsg-for="deviceserial" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-    
+
                         <div class="control-group">
                             <label class="control-label" for="longitude">Longitude</label>
                             <div class="controls">
                                 <input id="longitude" name="simulation.longitude" ng-model="simulation.longitude" ng-model-instant data-val="true" type="text" placeholder="Longitude if known"/>
                             </div>
                         </div>
-    
+
                         <div class="control-group">
                             <label class="control-label" for="latitude">Latitude</label>
                             <div class="controls">
                                 <input id="latitude" name="simulation.latitude" ng-model="simulation.latitude" ng-model-instant data-val="true" type="text" placeholder="Latitude if known"/>
                             </div>
                         </div>
-    
+
                         <div class="form-actions">
                             <button type="button" class="generatebt btn btn-primary" class-toggle="btn-danger" data-toggle="button" ng-click="startStopSimulation()">Start / Stop</button>
                             <input id="hits" class= "span1" name="simulation.hits" ng-model="simulation.hits" ng-model-instant data-val="true" type="text" readonly="readonly" size="5"/>
                             <button type="button" class="btn btn-secondary" ng-click="resetMessages()">Clear Messages</button>
                         </div>
-    
+
                     </form>
 
                     <div>
@@ -306,21 +313,21 @@ scripts:
                                     <div class="control-group">
                                         <label class="control-label" for="currentpassword">Current password</label>
                                         <div class="controls">
-                                            <input id="currentpassword" name="currentpassword" ng-model="account.currentpassword" ng-model-instant type="password" onchange="validatePassword();" value="" />
+                                            <input id="currentpassword" name="currentpassword" ng-model="account.currentpassword" ng-model-instant type="password" onchange="validatePassword();" value="" class="required" />
                                         </div>
                                     </div>
 
                                     <div class="control-group">
                                         <label class="control-label" for="newpassword" data-toggle="popover" data-placement="top" data-content="<p>Password must contain at least six characters, including uppercase, lowercase letters and numbers.</p>" data-html="true" data-original-title="<strong>Password Policy</strong>"><a href="#"><i class="icon-question-sign icon-large"></i></a>  New password </label>
                                         <div class="controls">
-                                            <input id="newpassword" name="newpassword" ng-model="account.newpassword" ng-model-instant type="password" onchange="validatePassword();" value="" />
+                                            <input id="newpassword" name="newpassword" ng-model="account.newpassword" ng-model-instant type="password" onchange="validatePassword();" value="" class="required" />
                                         </div>
                                     </div>
 
                                     <div class="control-group">
                                         <label class="control-label" for="confirmpassword">Confirm password</label>
                                         <div class="controls">
-                                            <input id="confirmpassword" name="confirmpassword" ng-model="account.confirmpassword" ng-model-instant type="password" onchange="validatePassword();" value="" />
+                                            <input id="confirmpassword" name="confirmpassword" ng-model="account.confirmpassword" ng-model-instant type="password" onchange="validatePassword();" value="" class="required" />
                                         </div>
                                     </div>
 
