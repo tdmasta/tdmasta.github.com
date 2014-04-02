@@ -124,6 +124,21 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
             });
 		},
 
+        // clearDeviceMessages
+        clearDeviceMessages : function() {
+            var dtoken = $cookieStore.get('dtoken');
+            var url = CONSTANTS.remote + '/iot/devices/clear.json';
+
+            return $http({
+                method : 'POST',
+                url : url,
+                data : { },
+                headers : {
+                    'x-snsr-device-key' : dtoken
+                }
+            });
+        },
+
         // getChildren method
 		getChildren : function() {
             var dtoken = $cookieStore.get('dtoken');

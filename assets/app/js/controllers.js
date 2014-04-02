@@ -204,6 +204,26 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		};
 	};
 
+    //Clear device messages
+    $scope.clearDeviceMessages = function() {
+        $log.info('clearDeviceMessages');
+        var result = confirm("Want to clear ALL emitted messages from your device ?");
+        if (result==true) {
+            DevicesServices.clearDeviceMessages()
+                .then(function(response) {
+                    switch (response.status) {
+                        case 200 :
+                            $log.info("clearDeviceMessages ok");
+                            Context.setDashBoardVisibilty(true);
+                            $scope._messages = [];
+                            break;
+                        default :
+                            $log.error('Unexpexted error', response.status, response.body);
+                            Notif.error("Unexpexcted error, please check with tech support team.");
+                    }
+                });
+        }
+    };
 
     // loadMore    
     $scope.loadMore = function() {
@@ -318,8 +338,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 		Context.setSerial(undefined);
         Context.setDashBoardVisibilty(false);
 	});
-	
-	
+
 	$scope.$on('event:serverError', function(event){
 		Notif.error(data);
 	});
