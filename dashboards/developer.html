@@ -313,21 +313,21 @@ scripts:
                                     <div class="control-group">
                                         <label class="control-label" for="currentpassword">Current password</label>
                                         <div class="controls">
-                                            <input id="currentpassword" name="currentpassword" ng-model="account.currentpassword" ng-model-instant type="password" onchange="validatePassword();" value="" class="required" />
+                                            <input id="currentpassword" name="currentpassword" ng-model="account.currentpassword" ng-model-instant type="password" onKeyup="validatePassword();" value="" class="required" />
                                         </div>
                                     </div>
 
                                     <div class="control-group">
                                         <label class="control-label" for="newpassword" data-toggle="popover" data-placement="top" data-content="<p>Password must contain at least six characters, including uppercase, lowercase letters and numbers.</p>" data-html="true" data-original-title="<strong>Password Policy</strong>"><a href="#"><i class="icon-question-sign icon-large"></i></a>  New password </label>
                                         <div class="controls">
-                                            <input id="newpassword" name="newpassword" ng-model="account.newpassword" ng-model-instant type="password" onchange="validatePassword();" value="" class="required" />
+                                            <input id="newpassword" name="newpassword" ng-model="account.newpassword" ng-model-instant type="password" onKeyup="validatePassword();" value="" class="required" />
                                         </div>
                                     </div>
 
                                     <div class="control-group">
                                         <label class="control-label" for="confirmpassword">Confirm password</label>
                                         <div class="controls">
-                                            <input id="confirmpassword" name="confirmpassword" ng-model="account.confirmpassword" ng-model-instant type="password" onchange="validatePassword();" value="" class="required" />
+                                            <input id="confirmpassword" name="confirmpassword" ng-model="account.confirmpassword" ng-model-instant type="password" onKeyup="validatePassword();" value="" class="required" />
                                         </div>
                                     </div>
 
