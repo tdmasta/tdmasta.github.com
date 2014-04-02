@@ -10,9 +10,11 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
 	<ul class="nav nav-list bs-docs-sidenav affix">
          <li><a href="#overview"><i class="icon-chevron-right"></i> Overview </a></li>
          <li><a href="#authentication"><i class="icon-chevron-right"></i> Authentication</a></li>
+         <li><a href="#get_pacs"><i class="icon-chevron-right"></i> Get PAC serial number</a></li>
          <li><a href="#msgs_history"><i class="icon-chevron-right"></i> Fetching messages history</a></li>
          <li><a href="#recents_msgs"><i class="icon-chevron-right"></i> Fetching recents messages</a></li>
          <li><a href="#fetch_devices"><i class="icon-chevron-right"></i> Fetching devices</a></li>
+         <li><a href="#clear_messages"><i class="icon-chevron-right"></i> Clear messages</a></li>
          <li><a href="#change_status"><i class="icon-chevron-right"></i> Changing device status</a></li>
 		</ul>
 </div>
@@ -116,7 +118,51 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                      </tbody>
                  </table>
 	</section>
-	
+
+    <section id="get_pacs">
+        <div class="page-header">
+            <h2>Get PAC serial number</h2>
+        </div>
+        <h4><a>POST /iot/devices/pacs.csv</a></h4>
+        <br/>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><h6>Description</h6></td>
+                    <td>Get your module PAC serial number</td>
+                </tr>
+                <tr>
+                    <td><h6>Url</h6></td>
+                    <td><code>https://sensor.insgroup.fr/iot/devices/pacs.csv</code></td>
+                </tr>
+                <tr>
+                    <td><h6>Method</h6></td>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <td><h6>Returns</h6></td>
+                    <td>A text/plain stream with your device's PAC number.
+                        <p>
+                            <strong>Sample response :</strong>
+                        </p>
+                        <pre style="overflow:auto;">
+SERIAL; PAC
+1FA0; 5D467EB830D4C820
+                        </pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h6>Errors</h6></td>
+                    <td>
+                        <ul class="unstyled">
+                            <li><code>401</code> - The authentication token is invalid or missing </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
 	<section id="msgs_history">
 	<div class="page-header">
 		<h2>Fetching messages history</h2>
@@ -600,6 +646,42 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                      </table>
 	</section>
 
+    <section id="clear_messages">
+        <div class="page-header">
+            <h2>Clear your module's messages</h2>
+        </div>
+        <h4><a>POST /iot/devices/clear.json</a></h4>
+        <br/>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><h6>Description</h6></td>
+                    <td>Clear ALL your module's messages</td>
+                </tr>
+                <tr>
+                    <td><h6>Url</h6></td>
+                    <td><code>https://sensor.insgroup.fr/iot/devices/clear.json</code></td>
+                </tr>
+                <tr>
+                    <td><h6>Method</h6></td>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <td><h6>Returns</h6></td>
+                    <td>void</td>
+                </tr>
+                <tr>
+                    <td><h6>Errors</h6></td>
+                    <td>
+                        <ul class="unstyled">
+                            <li><code>401</code> - The authentication token is invalid or missing </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
 	<section id="change_status">
 		<div class="page-header">
 			<h2>Changing device status</h2>
@@ -644,6 +726,5 @@ QWxhZGRpbjpvcGVuIHNlc2FtZQ==
                               </tr>
                           </tbody>
                       </table>
-		</section>
-	</div>
+	</section>
 </div>
