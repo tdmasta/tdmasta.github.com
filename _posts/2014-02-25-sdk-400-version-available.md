@@ -27,7 +27,7 @@ How to get it ?
 
 <br/>
 
-1. Download the SDK (about 500 Megs) and <strong> unzip it in C:\ </strong> (that's mandatory) <a href="https://www.dropbox.com/s/fe5ip4iuzephbvk/TD_RF_Module_SDK_Tools-v4.0.0.zip" class="btn btn-info" target="_blank"> <i class="icon-download"> </i> HERE </a>
+1. Download the SDK (about 500 Megs) and <strong> unzip it in C:\ </strong> (that's mandatory) <a href="http://sdktools.s3.amazonaws.com/TD_RF_Module_SDK_Tools-v4.0.0.zip" class="btn btn-info" target="_blank"> <i class="icon-download"> </i> HERE </a>
 2. Get the samples code and the library on our github repo (registered used access) <a href="https://github.com/Telecom-Design/" class="btn btn-warning"> <i class="icon-lock"> </i> HERE </a>
 3. Get the complete documentations and support are available publicly <a href="https://github.com/Telecom-Design/Documentation_TD_RF_Module" target="_blank" class="btn btn-success"> <i class="icon-github"> </i> HERE </a> 
 
