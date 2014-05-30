@@ -24,6 +24,12 @@ scripts:
 	<div ng:show="_displayDashboard != true" ng:cloak>
 		<div class="row" style="margin: 0 auto;display: table;">
 			<div class="span5">
+
+                <h3> Dashboard Features <small>based on Device API</small></h3>
+                <p>
+                    It provides both module operations as well as stored data access through unified model.
+                </p>
+
 				<form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="authenticationBySerial" name="authenticationBySerialForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationBySerialSubmit(account, displayDashboard)" >
 
 					<legend>
@@ -50,6 +56,7 @@ scripts:
 					</div>
 				</form>
 			</div>
+
 		</div>
 	</div>
 	<div ng:show="_displayDashboard == true">

@@ -10,12 +10,17 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
 	<ul class="nav nav-list bs-docs-sidenav affix">
          <li><a href="#overview"><i class="icon-chevron-right"></i> Overview </a></li>
          <li><a href="#authentication"><i class="icon-chevron-right"></i> Authentication</a></li>
+         <li class="nav-header"> Device Informations </li>
          <li><a href="#get_pacs"><i class="icon-chevron-right"></i> Get PAC serial number</a></li>
+         <li class="nav-header"> Device Messages </li>
          <li><a href="#msgs_history"><i class="icon-chevron-right"></i> Fetching messages history</a></li>
          <li><a href="#recents_msgs"><i class="icon-chevron-right"></i> Fetching recents messages</a></li>
          <li><a href="#fetch_devices"><i class="icon-chevron-right"></i> Fetching devices</a></li>
          <li><a href="#clear_messages"><i class="icon-chevron-right"></i> Clear messages</a></li>
+         <li class="nav-header"> Device Operations </li>
          <li><a href="#change_status"><i class="icon-chevron-right"></i> Changing device status</a></li>
+         <li><a href="#toggle_active_flag"><i class="icon-chevron-right"></i> Toggle active flag</a></li>
+         <li><a href="#toggle_monitoring_flag"><i class="icon-chevron-right"></i> Toggle monitoring flag</a></li>
 		</ul>
 </div>
 
@@ -187,8 +192,8 @@ SERIAL; PAC
                                  <td><h6>Parameters</h6></td>
                                  <td>
                                      <ol>
-                                         <li><code>until</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
                                          <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved, default to 20 </li>
+                                         <li><code>until</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
                                      </ol>
                                  </td>
                              </tr>
@@ -342,8 +347,8 @@ SERIAL; PAC
                                  <td><h6>Parameters</h6></td>
                                  <td>
                                      <ol>
-                                         <li><code>after</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
                                          <li><code>amount</code> <i>optional</i> the amount of event instance to be retrieved, default to 20 </li>
+                                         <li><code>after</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
                                      </ol>
                                  </td>
                              </tr>
@@ -684,7 +689,7 @@ SERIAL; PAC
 
 	<section id="change_status">
 		<div class="page-header">
-			<h2>Changing device status</h2>
+			<h2>Changing device functional status</h2>
 		</div>
 		<h4><a>POST /iot/devices/status.json</a></h4>
               <br/>
@@ -692,7 +697,7 @@ SERIAL; PAC
                           <tbody>
                               <tr>
                                   <td><h6>Description</h6></td>
-                                  <td>Module devices Fetch Operation</td>
+                                  <td>Changing device functional status</td>
                               </tr>
                               <tr>
                                   <td><h6>Url</h6></td>
@@ -727,4 +732,96 @@ SERIAL; PAC
                           </tbody>
                       </table>
 	</section>
+
+    <section id="toggle_active_flag">
+        <div class="page-header">
+            <h2>Toggle device active flag</h2>
+        </div>
+        <h4><a>POST /iot/devices/active.json</a></h4>
+              <br/>
+              <table class="table">
+                          <tbody>
+                              <tr>
+                                  <td><h6>Description</h6></td>
+                                  <td>Toggle device active flag</td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Url</h6></td>
+                                  <td><code>https://sensor.insgroup.fr/iot/devices/active.json</code></td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Method</h6></td>
+                                  <td>POST</td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Parameters</h6></td>
+                                  <td>
+                                      <ol>
+                                          <li><code>id</code> <i>required</i> The device id</li>
+                                          <li><code>value</code> <i>required</i> The new active flag value</li>
+                                      </ol>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Returns</h6></td>
+                                  <td>void</td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Errors</h6></td>
+                                  <td>
+                                      <ul class="unstyled">
+                                          <li><code>404</code> - The serial number was not found </li>
+                                          <li><code>401</code> - The authentication token is invalid or missing </li>
+                                      </ul>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+    </section>
+
+    <section id="toggle_monitoring_flag">
+        <div class="page-header">
+            <h2>Toggle device monitoring flag</h2>
+        </div>
+        <h4><a>POST /iot/devices/watch.json</a></h4>
+              <br/>
+              <table class="table">
+                          <tbody>
+                              <tr>
+                                  <td><h6>Description</h6></td>
+                                  <td>Toggle device monitoring flag</td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Url</h6></td>
+                                  <td><code>https://sensor.insgroup.fr/iot/devices/watch.json</code></td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Method</h6></td>
+                                  <td>POST</td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Parameters</h6></td>
+                                  <td>
+                                      <ol>
+                                          <li><code>id</code> <i>required</i> The device id</li>
+                                          <li><code>value</code> <i>required</i> The new active flag value</li>
+                                      </ol>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Returns</h6></td>
+                                  <td>void</td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Errors</h6></td>
+                                  <td>
+                                      <ul class="unstyled">
+                                          <li><code>401</code> - The authentication token is invalid or missing </li>
+                                      </ul>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+    </section>
+
 </div>
