@@ -347,9 +347,11 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     $scope.$on('DashBoardEvent', function() {
 		$log.info('waking up on dashoard event');
         $scope._displayDashboard = Context.dashboard.visible;
-        
+
+        $cookieStore.remove('utoken');
+
 		if (true == $scope._displayDashboard) {
-			
+
 			$scope.init().then(function(response) {
 				$scope._devices=0;
 				angular.forEach(response.data,function(device) {
@@ -708,7 +710,11 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 	//load Applications	
 	$scope.loadApplications = function() {
 		$log.info('loadApplications');
-        var utoken = $cookieStore.get('utoken');
+
+        $cookieStore.remove('dtoken');
+
+        var utoken = $cookieStore.get('utoken');        
+
         if (undefined != utoken) {
     		DevelopersServices.loadApplications().then(function(response) {
     			// set new data

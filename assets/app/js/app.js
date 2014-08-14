@@ -60,23 +60,33 @@ app.config(function($compileProvider){
 });
 
 app.run(function($log, $cookieStore, Context, $timeout) {
-	$log.info("config step");
+	$log.info("app config step");
+
 	var dtoken = $cookieStore.get('dtoken');
 	var utoken = $cookieStore.get('utoken');
-	$log.info("dtoken information", dtoken);
-	$log.info("utoken information", utoken);
+    var currenturl = document.URL;
+
+    $log.info("currenturl : " + currenturl);
+	$log.info("dtoken information : ", dtoken);
+	$log.info("utoken information : ", utoken);
+
+    var deviceSuffix = "device.html";
+    var developerSuffix = "developer.html";
+
+    var deviceContext = currenturl.match(deviceSuffix+"$")==deviceSuffix;
+    var developerContext = currenturl.match(developerSuffix+"$")==developerSuffix;
+
     $timeout(function() {
-    	if (undefined != dtoken) {
+    	if (undefined != dtoken && deviceContext) {
     		// decode token to get the serial
     		var clear = base64.decode(dtoken);
     		var sn = clear.split(":")[0];
     		sn = sn.substring(sn.length-4);
-    		$log.info("serial", sn);
+    		$log.info("serial : ", sn);
     		Context.setSerial(sn);
     		Context.setDashBoardVisibilty(true);
-    		$log.info("settings Device ok");
-    	} if (undefined != utoken) {
-    		// decode token to get the serial
+       		$log.info("settings Device ok");
+    	} if (undefined != utoken && developerContext) {
     		Context.setSerial(undefined);
     		Context.setDashBoardVisibilty(true);
     		$log.info("settings Developer ok");
