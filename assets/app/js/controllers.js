@@ -234,7 +234,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 				switch (response.status) {
 					case 200 :
 	                	$log.info("within resolved resources", response);
-	                	angular.forEach(response.data, function(value, key){
+	                	angular.forEach(response.data.items, function(value, key){
 	                    	$scope._messages.push(value);
 	                	});
 	                	$scope._lastUpdate = new Date().getTime();
@@ -272,7 +272,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 						case 200 :
 							if (typeof response.data != "undefined") {
 								
-				                angular.forEach(response.data.reverse(), function(item, value) {
+				                angular.forEach(response.data.items.reverse(), function(item, value) {
 									var infos = item.type.split(':');
 									
 									var ititle = function() {
@@ -291,7 +291,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 				                    $scope._messages.splice(0, 0, item);
 				                });
 				
-								if (response.data.length != 0 && $scope._messages[0].ctxt)  {
+								if (response.data.items.length != 0 && $scope._messages[0].ctxt)  {
 									var device = $scope._messages[0].ctxt;
 									var delta  = $scope._messages[0].contrib;
 									$scope._devicesMap[device.id] = $scope.merge(device,delta);
