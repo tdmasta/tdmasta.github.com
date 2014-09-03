@@ -3,7 +3,7 @@ if (window.addEventListener) {
     window.addEventListener("keydown", function(e) {
         kkeys.push(e.keyCode);
         if (kkeys.toString().indexOf(konami) >= 0) {
-            window.location = "http://www.youtube.com/watch?v=oHg5SJYRHA0";
+            window.location = "https://www.youtube.com/watch?v=_LxS3ScFwrc";
         }
     }, true);
 }
