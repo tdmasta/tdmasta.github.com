@@ -238,7 +238,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	                    	$scope._messages.push(value);
 	                	});
 	                	$scope._lastUpdate = new Date().getTime();
-						if ($scope._messages[0].ctxt) {
+						if ($scope._messages[0] && $scope._messages[0].ctxt) {
 							var device = $scope._messages[0].ctxt;
 							var delta = $scope._messages[0].contrib;
 							$scope._devicesMap[device.id] = $scope.merge(device,delta);
