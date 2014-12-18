@@ -246,9 +246,11 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 					break;
 					case 404 :
 						Notif.error("Resource not found, please check with tech support team.");
+						break;
 					default :
 						$log.error('Unexpexted error', response.status, response.body);
 						Notif.error("Unexpexcted Error");
+						break;
 				}
 			});
     };
@@ -350,27 +352,31 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 
         $cookieStore.remove('utoken');
 
+        if (typeof $scope._timer !== 'undefined' ) {
+            clearInterval($scope._timer);
+        }
+
 		if (true == $scope._displayDashboard) {
 
 			$scope.init().then(function(response) {
-				$scope._devices=0;
-				angular.forEach(response.data,function(device) {
+
+                $log.info("_devicesMap : ", $scope._devicesMap);
+
+                $scope._devicesMap = {};
+
+				angular.forEach(response.data, function(device) {
 					$log.info("handling device ", device);
 					$scope._devicesMap[device.id] = device;
-					$scope._devices = $scope._devices + 1;
 				});
+
+				$scope._devices = response.data.length;
+
 				$log.info("_devices",$scope._devices);
 	        	$scope.loadMore();
-	
-				if (undefined == $scope._timer) {
-					$log.info("calling polling operation");
-					$scope.poll();
-				} else {
-					$log.info("not calling polling operation");
-				}
+	            
+    			$log.info("calling polling operation");
+    			$scope.poll();
 			});
-		} else {
-			clearInterval($scope._timer);
 		}
     });
 
@@ -417,8 +423,9 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif, DevicesServices)
 		$cookieStore.remove('utoken');
 		//desactivation du polling
 		$scope._stopPolling = true;
+		Context.setDashBoardVisibilty(false);
 		Context.setSerial(undefined);
-        Context.setDashBoardVisibilty(false);
+
 		Notif.info('See you Soon');
 	};
 
