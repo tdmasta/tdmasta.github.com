@@ -8,7 +8,7 @@ tags:
 ---
 {% include JB/setup %}
 
-![We are pleased to announce today the release of our new TD RF Module SDK v4.0.0.0!](/images/new_sdk_available.jpg)
+![We are pleased to announce today the release of our new TD RF Module SDK v4.0.0 !](/images/new_sdk_available.jpg)
 
 What's new ?
 ---

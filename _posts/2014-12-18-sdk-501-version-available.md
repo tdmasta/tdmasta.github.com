@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "SDK 5.0.0 version available"
+title: "SDK 5.0.1 version available"
 tagline: "For developpers"
 description: "A new SDK version made available to you developers"
 category: releases
@@ -8,7 +8,11 @@ tags:
 ---
 {% include JB/setup %}
 
-![We are pleased to announce today the release of our new TD RF Module SDK v5.0.0.0!](/images/new_sdk_available_5.0.0.png)
+![We are pleased to announce today the release of our new TD RF Module SDK v5.0.1 !](/images/new_sdk_available_5.0.1.jpg)
+
+<div class="alert alert-info">
+    <strong> Last minute : </strong> patch release SDK 5.0.1 addresses a minor bug that caused the loss of the persistent SIGFOX frame number when upgrading from a previous version of the SDK.
+</div>
 
 What's new ?
 ---
