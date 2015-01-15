@@ -48,21 +48,20 @@ scripts:
                     </div>
                 </div>
 
-                <!--
                     <div class="control-group">
-                        <label class="control-label" for="addressLine1">Address (line 1)</label>
+                        <label class="control-label" for="password">Password </label>
                         <div class="controls">
-                            <input id="addressLine1" name="account.address.line1" ng-model="account.address.line1" ng-model-instant type="text" />
+                            <input id="password" name="account.password" ng-model="account.password" ng-model-instant data-val="true" type="password" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>"  minlength="6" required class="required"/>
                         </div>
                     </div>
-    
+
                     <div class="control-group">
-                        <label class="control-label" for="addressLine2">Address (line 2)</label>
+                        <label class="control-label" for="repassword">Confirm password</label>
                         <div class="controls">
-                            <input id="addressLine2" name="account.address.line2" ng-model="account.address.line2" ng-model-instant type="text" />
+                            <input id="repassword" name="account.repassword" ng-model="account.repassword" ng-model-instant data-val="true" type="password" data-val-required="<i class='icon-large icon-white icon-exclamation-sign'>" minlength="6" required class="required"/>
                         </div>
                     </div> 
-    
+<!--    
                     <div class="control-group">
                         <label class="control-label" for="zipCode">Zip code</label>
                         <div class="controls">

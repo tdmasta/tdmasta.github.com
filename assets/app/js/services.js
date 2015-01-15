@@ -163,7 +163,7 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
 //      registration
 //      authentication
 //      deleteAccount
-angular.module('SecurityModule', []).factory('SecurityServices', function($http, $log, $cookieStore, CONSTANTS) {
+angular.module('SecurityModule', []).factory('SecurityServices', function(Base64, $http, $log, $cookieStore, CONSTANTS) {
 
     return {
 
@@ -181,22 +181,26 @@ angular.module('SecurityModule', []).factory('SecurityServices', function($http,
 
         // registration method
         registration: function(account) {
+            var token = Base64.encode(account.email + ':' + account.password);
             return $http({
                 method : 'POST',
                 url : CONSTANTS.remote + '/iot/developers/register.json',
-                data : account
+                data : account,
+                headers : {
+                    Authorization : 'Basic ' +  token
+                }
             });
         },
 
         // authentication method
         authentication: function(email, password) {
             $log.info('authentication : ' + email);
+            var token = Base64.encode(email + ':' + password);
             return $http({
                 method : 'GET',
                 url : CONSTANTS.remote + '/security/authentication',
-                params : {
-                    login : email,
-                    pwd : password
+                headers : {
+                    Authorization : 'Basic ' +  token
                 }
             });
         },

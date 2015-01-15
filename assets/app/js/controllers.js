@@ -5,7 +5,7 @@
 */
 
 // Authentication controller
-function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices, Context, Notif) {
+function AuthenticationCtrl(Base64, $scope, $http, $log, $cookieStore, SecurityServices, Context, Notif) {
 	$http.defaults.useXDomain = true;
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
@@ -37,6 +37,7 @@ function AuthenticationCtrl($scope, $http, $log, $cookieStore, SecurityServices,
             // authentication service
             SecurityServices.authentication(email, password)
                 .success(function(data, status) {
+                    data = Base64.encode(email+":"+password);
                     $log.info('authentication OK : data = ' + data);
                     $cookieStore.put('utoken', data);
                     $cookieStore.put('login', email);
@@ -68,7 +69,17 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
     // Registration button
     $scope.registrationSubmit = function() {
         var hosturl = CONSTANTS.remote;
-
+        if ($scope.account) {
+            if ($scope.account.password && $scope.account.repassword) {
+                if ($scope.account.repassword != $scope.account.password) {
+                    Notif.error('Passwords do not match, please double check');
+                    return;
+                }
+            } else {
+                    Notif.error('Password information is missing, please double check');
+                    return;
+            }
+        }
         // registration service
         SecurityServices.registration($scope.account)
             .success(function(data, status) {
