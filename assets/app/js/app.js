@@ -181,6 +181,6 @@ app.factory('Base64', function () {
     };
 });
 
-//app.constant('CONSTANTS', {remote : 'http://192.168.1.90:9010'});
+//app.constant('CONSTANTS', {remote : 'http://192.168.1.41:9010'});
 app.constant('CONSTANTS', {remote : 'http://sensor.insgroup.fr'});
 
