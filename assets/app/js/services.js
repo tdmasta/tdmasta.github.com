@@ -46,8 +46,8 @@ angular.module('NotificationModule', [], function($provide) {
                     styling: 'bootstrap'
                 });
 			}
-		}
-	})
+		};
+	});
 });
 
 
@@ -151,7 +151,7 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
                 }
             });
 		} 
-    }
+    };
 });
 
 
@@ -166,6 +166,14 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
 angular.module('SecurityModule', []).factory('SecurityServices', function(Base64, $http, $log, $cookieStore, CONSTANTS) {
 
     return {
+
+		// Activate developper account
+		activateAccount: function(uuid) {
+			return $http({
+				method : 'POST',
+				url: CONSTANTS.remote + '/iot/developers/activatation/' + uuid
+			});
+		},
 
         // checkCRC method
         checkCRC : function(inputSerial, inputKey) {
@@ -253,7 +261,7 @@ angular.module('SecurityModule', []).factory('SecurityServices', function(Base64
                 }
             });
         }
-    }
+    };
 });
 
 
@@ -410,7 +418,7 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
                 },
             });
         }
-	}
+	};
 });
 
 
@@ -430,7 +438,7 @@ angular.module('Context', []).factory('Context', function($rootScope, $cookieSto
 		dashboard : {
 			visible: false
 		}
-	}
+	};
 
     state.setDashBoardVisibilty = function(flag) {
 		this.dashboard.visible = flag;

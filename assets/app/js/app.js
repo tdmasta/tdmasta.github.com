@@ -3,6 +3,8 @@ var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'Securit
 	//delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	//$httpProvider.defaults.withCredentials = true;
 	
+	
+	//$locationProvider.html5Mode(true);
 	var interceptor = ['$rootScope', '$q', function (scope, $q) {
 
 	        function success(response) {
@@ -18,7 +20,7 @@ var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'Securit
 	                	var req = {
 	                    	config:response.config,
 	                    	deferred:deferred
-	                	}
+	                	};
 						scope.$broadcast('event:loginRequired');
 					break;
 					case 500:
@@ -26,19 +28,17 @@ var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'Securit
 		                var req = {
 		                    config:response.config,
 		                    deferred:deferred
-		                }
+		                };
 						scope.$broadcast('event:serverError');
 					break;
-					default:
-		            return $q.reject(response);
 				}
-	            // otherwise
+				return $q.reject(response);
 
 	        }
 
 	        return function (promise) {
 	            return promise.then(success, error);
-	        }
+	        };
 
 	    }];
 
@@ -182,5 +182,6 @@ app.factory('Base64', function () {
 });
 
 //app.constant('CONSTANTS', {remote : 'http://192.168.1.41:9010'});
-app.constant('CONSTANTS', {remote : 'http://sensor.insgroup.fr'});
+//app.constant('CONSTANTS', {remote : 'http://sensor.insgroup.fr'});
+app.constant('CONSTANTS', {remote : 'http://127.0.0.1:9010'});
 

@@ -5,8 +5,31 @@
 */
 
 // Authentication controller
-function AuthenticationCtrl(Base64, $scope, $http, $log, $cookieStore, SecurityServices, Context, Notif) {
+function AuthenticationCtrl(Base64, $scope, $http, $log, $cookieStore, $location, $window, $timeout, SecurityServices, Context, Notif) {
 	$http.defaults.useXDomain = true;
+
+	var uuid = $location.search().uuid;
+	$scope.loginUnauthorized = false;
+	if (uuid) {
+		Notif.info("Processing account activation");
+		$scope.loginUnauthorized = true;
+		SecurityServices.activateAccount(uuid)
+			.success(function(data, status) {
+				Notif.info("Your account has been activated. You can authenticate you.");
+				$scope.loginUnauthorized = false;
+				// to remove #?uuid=... from url
+				// wait 500 ms for the user have time to read success notif
+				$timeout(function() {
+						$window.location.href = "/dashboards/developer.html" ;
+					},
+					500);
+			})
+			.error(function(data, status) {
+				$scope.loginUnauthorized = true;
+				Notif.error("Error during account activation. Please retry later.");
+			});
+	}
+	
     // AuthenticationBySerialSubmit button
     $scope.authenticationBySerialSubmit = function() {
 
@@ -31,8 +54,9 @@ function AuthenticationCtrl(Base64, $scope, $http, $log, $cookieStore, SecurityS
     };
 
     // AuthenticationByEmailSubmit button
-    $scope.authenticationByEmailSubmit = function(email, password) {
-
+    $scope.authenticationByEmailSubmit = function() {
+		var email = $scope.inputEmail;
+		var password = $scope.inputPassword;
         if (email && password) {
             // authentication service
             SecurityServices.authentication(email, password)
@@ -53,6 +77,7 @@ function AuthenticationCtrl(Base64, $scope, $http, $log, $cookieStore, SecurityS
 
                     Context.setSerial(undefined);
                     Context.setDashBoardVisibilty(false);
+                    Notif.error('Invalid login / password combination, please check and try again');
                 });
         }
     };

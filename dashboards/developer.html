@@ -34,8 +34,8 @@ scripts:
                     </ul>
                 </p>
 
-                <form class="form-horizontal" accept-charset="utf-8" autocomplete="off" novalidate="novalidate" id="authenticationByEmailForm" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-app="evbApp" ng-submit="authenticationByEmailSubmit(inputEmail, inputPassword)" >
-
+                <form class="form-horizontal" accept-charset="utf-8" autocomplete="off" novalidate="novalidate" id="authenticationByEmailForm" name="authenticationByEmailForm" ng-controller="AuthenticationCtrl" ng-submit="authenticationByEmailSubmit()" >
+                    
                     <legend> Developer Authentication</legend>
                     <div class="control-group">
                         <label class="control-label" for="inputEmail" data-toggle="popover" data-placement="bottom" data-content="<p>Developer's email used for registration.</p>" data-html="true" data-original-title="<strong>What's this ?</strong>"><a href="#"><i class="icon-question-sign icon-large"></i>  Email </a></label>
@@ -54,7 +54,7 @@ scripts:
                     <div>
                         <div class="control-group">
                             <div class="controls">
-                                <button type="submit" class="btn btn-success" tabindex="3"> Sign In </button> - or - <a href="/register.html"> Sign Up</a>
+                                <button type="submit" ng-disabled="loginUnauthorized" class="btn btn-success" tabindex="3"> Sign In </button> - or - <a href="/register.html"> Sign Up</a>
                             </div>
                         </div>
                     </div>
@@ -63,9 +63,9 @@ scripts:
         </div>
     </div>
 
-    <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl">
+    <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl" >
 
-        <h3> <i class="icon-dashboard"> </i> <span class="pull-right" style="font-size: 15px"> logged as {{"{{login"}}}}&nbsp;<button type="button" class="btn btn-warning" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak> <i class="icon-white icon-eject"></i> Logout</button></span></h3>
+        <h3> <i class="icon-dashboard"> </i> <span class="pull-right" style="font-size: 15px"> logged as {{"{{login"}}}}&nbsp;<button type="button" class="btn btn-warning" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak> <i class="icon-white icon-eject"></i> Logout</button></span></h3>
 
         <tabset>
 
