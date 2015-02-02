@@ -43,7 +43,7 @@ scripts:
      		<h2>Authentication</h2>
 		</div>
      <p>
-         Developer Authentication rely on Basic HTTP Auth based on login / password combination provided at registration step.
+         Developer Authentication rely on Basic HTTP Auth based on login / password combination provided at registration step. The auth token used for basic authentication is built by concatenation login and password, separated by double point character (':'), and Base 64 encoded. This token has to be memorized and reused for next calls.
          <table class="table table-bordered">
              <thead>
                  <tr>
@@ -78,20 +78,15 @@ scripts:
                      </tr>
                      <tr>
                          <td><h6>Parameters</h6></td>
-                         <td>
-                             <ol>
-                                 <li><code>login</code> <i>required</i> Developer account login</li>
-                                 <li><code>pwd</code> <i>required</i> Developer account password</li>
-                             </ol>
-                         </td>
+                         <td>None, login and password are passed in Basic Authentication header.</td>
                      </tr>
                      <tr>
                          <td><h6>Returns</h6></td>
-                         <td>Device token for use with corresponding header token
+                         <td>true is authentication is successful.
                          <p>
                          <strong>Sample JSON response</strong></p>
                          <pre style="overflow:auto;">
-QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+true
                          </pre>
                          <h5>Return value definitions</h5>
                          <table class="table table-bordered">

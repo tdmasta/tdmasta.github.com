@@ -346,6 +346,6 @@ namespace :deploy do
   task :all => [:dev, :live]
   
   def rsync(domain)
-    sh "rsync -rtz --delete _site/ admin@sensor.insgroup.fr:/home/admin/www/#{domain}/"
+    sh "rsync --progress -h -rtz --delete _site/ admin@sensor.insgroup.fr:/home/admin/www/#{domain}/"
   end
 end
