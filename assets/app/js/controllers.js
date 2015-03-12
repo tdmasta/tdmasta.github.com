@@ -802,6 +802,16 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 		}
 	};
 
+    $scope.unregisterModule=function(device, $index) {
+        $log.info('unregisterModule : ', device, ' & index : ', $index);
+        var result = confirm("Want to unregister device '" + device.serial + "' and detach it from applications ?");
+        if (result == true) {
+            DevelopersServices.unregisterModule(device).then(function(response) {
+                $scope.loadDevices();
+            });
+        }
+    };
+
 	//Application Gestion
 	$scope.deleteAppli=function(appli, $index, $event) {
 		$event.stopPropagation();

@@ -24,6 +24,7 @@ scripts:
          <li><a href="#delete_app"><i class="icon-chevron-right"></i> Delete Iot App</a></li>
 		 <li class="nav-header">  Handling modules within app</li>
          <li><a href="#register_modules"><i class="icon-chevron-right"></i> Register modules</a></li>
+         <li><a href="#unregister_module"><i class="icon-chevron-right"></i> Unegister module</a></li>
          <li><a href="#list_modules"><i class="icon-chevron-right"></i> List Registered modules</a></li>
          <li><a href="#attach_modules"><i class="icon-chevron-right"></i> Attach modules to app</a></li>
          <li><a href="#detach_modules"><i class="icon-chevron-right"></i> Detach modules from app</a></li>
@@ -517,6 +518,58 @@ curl -X POST -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup
                     </tr>
             </tbody>
         </table>
+    </section>
+
+    <section id="unregister_module">
+        <div class="page-header">
+            <h2>Module unregistration</h2>
+        </div>
+     <p>
+     <br/><br/>
+     <h4><a name="DevUnregistrationModule">DELETE /iot/developers/modules.json</a></h4>
+     <br/>
+     <table class="table">
+              <tbody>
+                  <tr>
+                      <td><h6>Description</h6></td>
+                      <td>Unregister a single module to the developer's account, and detach it to Iot Applications.</td>
+                  </tr>
+                  <tr>
+                      <td><h6>Url</h6></td>
+                      <td><code>https://sensor.insgroup.fr/iot/developers/modules.json</code></td>
+                  </tr>
+                  <tr>
+                      <td><h6>Method</h6></td>
+                      <td>DELETE</td>
+                  </tr>
+                  <tr>
+                      <td><h6>Parameters</h6></td>
+                      <td>
+                          <ol>
+                              <li><code>id</code> <i>required</i> Iot Device technical id</li>
+                              <li><code>sn</code> <i>required</i> Iot Device serial number</li>
+                          </ol>
+                   <p><strong>Sample request command</strong></p>
+                   <pre style="overflow:auto;">
+curl -X DELETE -H "Authorization: Basic Blablafootoken==" "http://sensor.insgroup.fr/iot/developers/modules.json" -d "id=92507426&sn=1FA0"
+                       </pre>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td><h6>Returns</h6></td>
+                      <td>void</td>
+                 </tr>
+              <tr>
+                  <td><h6>Errors</h6></td>
+                  <td>
+                      <ul class="unstyled">
+                          <li><code>404</code> - The developer account was not found </li>
+                          <li><code>401</code> - The authentication information are missing or invalid </li>
+                      </ul>
+                  </td>
+              </tr>
+          </tbody>
+         </table>
     </section>
 
     <section id="list_modules">

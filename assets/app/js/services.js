@@ -407,6 +407,19 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
             });
         },
 
+        //unregister a module
+        unregisterModule : function(device) {
+            var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'DELETE',
+                url : CONSTANTS.remote + '/iot/developers/modules.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+                params : {id : device.id, sn : device.serial},
+            });
+        },
+
         //List modules of application
         findModules : function(appli) {
         	var utoken = $cookieStore.get('utoken');

@@ -139,9 +139,10 @@ scripts:
                         <td data-title="SERIAL" sortable="serial">
                         {{"{{device.serial"}}}}
                         </td>
+                        <td data-title="&nbsp;"> <button ng-click="unregisterModule(device, $index)" class="btn btn-danger"> <i class="icon-white icon-minus-sign"></i> Unregister </button> </td>
                     </tr>
                     <tr ng:show="!devicesList.length">
-                        <td colspan="2"><center><i class="icon-white icon-thumbs-down"></i> No registered modules found</center></td>
+                        <td colspan="3"><center><i class="icon-white icon-thumbs-down"></i> No registered modules found</center></td>
                     </tr>
                 </table>
 
