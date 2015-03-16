@@ -289,6 +289,19 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
             });
         },
 
+        // decode method
+        decode: function(decoder) {
+            var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'GET',
+                url : CONSTANTS.remote + '/iot/developers/decode',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+                params : {frame : decoder.frame, protocol : decoder.protocol},
+            });            
+        },
+
         // iotSimulation method
         iotSimulation: function(params) {
             var url = CONSTANTS.remote + '/iot/developers/simulator.json';

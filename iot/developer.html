@@ -22,13 +22,15 @@ scripts:
          <li><a href="#list_apps"><i class="icon-chevron-right"></i> List Iot Apps </a></li>
          <li><a href="#create_app"><i class="icon-chevron-right"></i> Create Iot App </a></li>
          <li><a href="#delete_app"><i class="icon-chevron-right"></i> Delete Iot App</a></li>
-		 <li class="nav-header">  Handling modules within app</li>
+		 <li class="nav-header"> Handling modules within app</li>
          <li><a href="#register_modules"><i class="icon-chevron-right"></i> Register modules</a></li>
          <li><a href="#unregister_module"><i class="icon-chevron-right"></i> Unegister module</a></li>
          <li><a href="#list_modules"><i class="icon-chevron-right"></i> List Registered modules</a></li>
          <li><a href="#attach_modules"><i class="icon-chevron-right"></i> Attach modules to app</a></li>
          <li><a href="#detach_modules"><i class="icon-chevron-right"></i> Detach modules from app</a></li>
          <li><a href="#list_app_modules"><i class="icon-chevron-right"></i> List app modules</a></li>
+         <li class="nav-header"> Extras</li>
+         <li><a href="#decode_frame"><i class="icon-chevron-right"></i> Decode any UDM frame</a></li>
 		</ul>
 </div>
 
@@ -43,6 +45,12 @@ scripts:
 		<div class="page-header">
      		<h2>Authentication</h2>
 		</div>
+
+        <div class="alert alert-danger">
+            <a class="close" data-dismiss="alert">×</a>
+            <strong>IMPORTANT : </strong> The authentication API has changed. The API returns no longer the authentication token. Please, find yours in on your developer dashboard, in 'My Account' tab. 
+        </div>
+        <br>
      <p>
          Developer Authentication rely on Basic HTTP Auth based on login / password combination provided at registration step. The auth token used for basic authentication is built by concatenation login and password, separated by double point character (':'), and Base 64 encoded. This token has to be memorized and reused for next calls.
          <table class="table table-bordered">
@@ -798,6 +806,78 @@ curl -X GET -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.
         "serial":"1FA0"
     }
 ]
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Errors</h6></td>
+                        <td>
+                            <ul class="unstyled">
+                                <li><code>404</code> - The developer account was not found </li>
+                                <li><code>401</code> - The authentication information are missing or invalid </li>
+                            </ul>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="decode_frame">
+        <div class="page-header">
+            <h2>Decode any UDM frame</h2>
+        </div>
+        <p>
+            <br/>
+            <br/>
+            <h4><a name="DecodeFrame">GET /iot/developers/decode</a></h4>
+            <br/>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><h6>Description</h6></td>
+                        <td>Decode any UDM Frame</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Url</h6></td>
+                        <td><code>https://sensor.insgroup.fr/iot/developers/decode</code></td>
+                    </tr>
+                    <tr>
+                        <td><h6>Method</h6></td>
+                        <td>GET</td>
+                    </tr>
+                    <tr>
+                        <td><h6>Parameters</h6></td>
+                        <td>
+                            <ol>
+                                <li><code>frame</code> <i>required</i> Frame to decode </li>
+                                <li><code>protocol</code> <i>required</i> Protocol to use (UDM22 or UDM23) </li>
+                            </ol>
+                            <p>
+                                <strong>Sample request command to decode the following UDM22 (means "UDM 2.2 version") frame : 010000 </strong>
+                            </p>
+                            <pre style="overflow:auto;">
+curl -X GET -H "Authorization: Basic Blablafootoken==" "https://sensor.insgroup.fr/iot/developers/decode?frame=010000&protocol=UDM22"
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h6>Returns</h6></td>
+                        <td>
+                            An IOT Callback structure with all your decoded informations in an extra zone. An empty result is returned if the frame is not valid.
+                            <p>
+                                <strong>Sample JSON response body</strong>
+                            </p>
+                            <pre style="overflow:auto;">
+{
+   "msg":{
+      "extra":{
+         "entry_id":0,
+         "frame_type":"srv_frm_event",
+         "code":"event_battery_low"
+      },
+      "custom":{}
+   }
+}
                             </pre>
                         </td>
                     </tr>

@@ -641,6 +641,18 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 
     $scope.generatedmessages = [];
 
+    $scope.decodedmessages = [];
+
+    $scope.udmProtocolSelect = [
+        { name: 'UDM 2.2', value: 'UDM22' }, 
+        { name: 'UDM 2.3', value: 'UDM23' }
+    ];
+
+    $scope.decoder = {
+        frame : '010000',
+        protocol : $scope.udmProtocolSelect[0].value
+    };
+
     $scope.typeMessagesSelect = [
         { name: 'Random', value: 'RANDOM' }, 
         { name: 'Battery low', value: 'BATTERY_LOW' }, 
@@ -713,6 +725,25 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
         }
     };
 
+    // decode button
+    $scope.decode = function() {
+        $scope.decodedmessages = [];
+        DevelopersServices.decode($scope.decoder)
+            .success(function(data, status){
+                $log.info("decoder success & data => " + JSON.stringify(data));
+                if (data != undefined && data.msg != undefined && data.msg.extra != undefined) {
+                    for ( var i in data.msg.extra) {
+                        $scope.decodedmessages.push(i + ' : ' + data.msg.extra[i]);
+                    }
+                } else {
+                    $scope.decodedmessages.push('Error : Invalid Frame');
+                }
+            })
+            .error(function(data, status){
+                $log.info("decoder error & data => " + JSON.stringify(data) + " & status = " + status);
+            });
+    };
+
     //load Informations
     $scope.loadInformations = function() {
         $log.info('loadInformations');
@@ -722,7 +753,8 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
                 email : response.data.customer.email,
                 firstname : response.data.customer.firstname,
                 lastname : response.data.customer.lastname,
-                gitid : response.data.customer.gitAlias
+                gitid : response.data.customer.gitAlias,
+                token : $cookieStore.get('utoken')
             };
         });
     };
