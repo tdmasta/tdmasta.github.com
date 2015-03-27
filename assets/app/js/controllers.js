@@ -265,7 +265,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     $scope.loadMore = function() {
         var oldest = $scope._messages.length != 0 ? $scope._messages[$scope._messages.length - 1].when : null;
 
-        DevicesServices.getMessagesBefore(oldest, 50)
+        DevicesServices.getMessagesBefore(oldest, 20)
             .then(function(response) {
 				switch (response.status) {
 					case 200 :
@@ -303,7 +303,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
         var newest = $scope._messages.length != 0 ? $scope._messages[0].when : null;
         var dtoken = $cookieStore.get('dtoken');
 		if(undefined != dtoken)
-	        DevicesServices.getMessagesAfter(newest, 50)
+	        DevicesServices.getMessagesAfter(newest, 20)
 	            .then(function(response) {
 					$log.info('response', response.data);
 					switch (response.status) {
