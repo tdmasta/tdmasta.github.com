@@ -483,13 +483,6 @@ function LogOutCtrl($scope, $log, $cookieStore, $window, Context, Notif, Devices
                 });
         } else {
             if(undefined != utoken) {
-                var snTab = new Array();
-                for(var deviceCpt=0; deviceCpt<$scope.devicesList.length; deviceCpt++) {
-                    var deviceSn = $scope.devicesList[deviceCpt].serial;
-                    snTab.push(deviceSn);
-                }
-                var snz = snTab.join(",");
-                $log.info('snz : ' + snz);
                 DevicesServices.getPacsFromIds(null, utoken)
                     .success(function(data, status) {
                         $log.info('getPacsFromIds OK');
