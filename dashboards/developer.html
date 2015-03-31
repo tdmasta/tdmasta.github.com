@@ -78,7 +78,7 @@ scripts:
 
     <div ng:show="_displayDashboard == true" ng-controller="DeveloperDashboardCtrl" >
 
-        <h3> <i class="icon-dashboard"> </i> <span class="pull-right" style="font-size: 15px"> logged as {{"{{login"}}}}&nbsp;<button type="button" class="btn btn-warning" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak> <i class="icon-white icon-eject"></i> Logout</button></span></h3>
+        <h3> <i class="icon-dashboard"> </i> <span class="pull-right" style="font-size: 15px"><button type="button" class="btn btn-warning" ng-controller="LogOutCtrl" ng-click="logOut()" ng:show="(_displayDashboard == true)" ng:cloak> <i class="icon-white icon-eject"></i> Logout from {{"{{login"}}}}</button></span></h3>
 
         <tabset>
 
