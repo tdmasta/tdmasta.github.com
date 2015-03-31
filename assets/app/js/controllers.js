@@ -448,7 +448,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 
 }
 
-function LogOutCtrl($scope, $log, $cookieStore, Context, Notif, DevicesServices) {
+function LogOutCtrl($scope, $log, $cookieStore, $window, Context, Notif, DevicesServices) {
 	
 	$scope._display = false;
 	$scope._serial = undefined;
@@ -461,6 +461,8 @@ function LogOutCtrl($scope, $log, $cookieStore, Context, Notif, DevicesServices)
 		$scope._stopPolling = true;
 		Context.setDashBoardVisibilty(false);
 		Context.setSerial(undefined);
+
+        $window.location.reload();
 
 		Notif.info('See you Soon');
 	};
