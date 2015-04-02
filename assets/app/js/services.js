@@ -433,6 +433,73 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
             });
         },
 
+        //get iot device
+        getIotDevice : function(device) {
+            var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'GET',
+                url : CONSTANTS.remote + '/iot/developers/device.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+                params : {id : device.id, sn : device.serial},
+            });                
+        },
+
+        //update watched flag
+        updateWatchedflag : function(device) {
+            var utoken = $cookieStore.get('utoken');
+            var flag = !device.watched;
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/devices/watch.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+                params : {id : device.id, sn : device.serial, value : flag},
+            });                
+        },
+
+        //update active flag
+        updateActiveflag : function(device) {
+            var utoken = $cookieStore.get('utoken');
+            var flag = !device.active;
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/devices/active.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+                params : {id : device.id, sn : device.serial, value : flag},
+            });                
+        },
+
+        //update status
+        updateStatus : function(device) {
+            var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/devices/status.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+                params : {id : device.id, sn : device.serial, value : device.status},
+            });                
+        },
+
+        //update bidirval
+        updateBidirval : function(device) {
+            var utoken = $cookieStore.get('utoken');
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/devices/bidirval.json',
+                headers : {
+                    Authorization : 'Basic ' + utoken
+                },
+                params : {id : device.id, sn : device.serial, value : device.bidirval},
+            });                
+        },
+
         //List modules of application
         findModules : function(appli) {
         	var utoken = $cookieStore.get('utoken');

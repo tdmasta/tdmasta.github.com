@@ -793,15 +793,73 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
         printRangeValue('frequency','frequencyvalue', ' sec');
     };
 
+    // Device edition
+    $scope.editDeviceDetails=function(device) {
+        $log.info('editDeviceDetails : ', device);
+        $scope.device=device;
+
+        DevelopersServices.getIotDevice(device).then(function(response) {
+            $log.info("In getIotDevice with response : ", response.data);
+            $scope.device.lastseen=response.data.lastseen;
+            $scope.device.status=response.data.status;
+            $scope.device.active=response.data.active;
+            $scope.device.watched=response.data.watched;
+            $scope.device.bidirval=response.data.bidirval;
+        });
+
+        $('.editDeviceModal').modal('show');
+    };
+
+    $scope.cancelEditDeviceModal=function() {
+        $log.info('cancelEditDeviceModal : ', $scope.device);
+        $('.editDeviceModal').modal('hide');
+    };
+
+    $scope.saveStatusEditDeviceModal=function() {
+        $log.info('saveStatusEditDeviceModal : ', $scope.device);
+        DevelopersServices.updateStatus($scope.device).then(function(response) {
+            $log.info("SaveStatusEditDeviceModal Ok");
+            Notif.info("Status Updated");
+        });
+        $('.editDeviceModal').modal('hide');
+    };
+    $scope.saveActiveEditDeviceModal=function() {
+        $log.info('saveActiveEditDeviceModal : ', $scope.device);
+        DevelopersServices.updateActiveflag($scope.device).then(function(response) {
+            $log.info("saveActiveEditDeviceModal Ok");
+            Notif.info("Active Flag Updated");
+        });
+        $('.editDeviceModal').modal('hide');
+    };
+    $scope.saveWatchedEditDeviceModal=function() {
+        $log.info('saveWatchedEditDeviceModal : ', $scope.device);
+        DevelopersServices.updateWatchedflag($scope.device).then(function(response) {
+            $log.info("saveWatchedEditDeviceModal Ok");
+            Notif.info("Watched Flag Updated");
+        });
+        $('.editDeviceModal').modal('hide');
+    };
+    $scope.saveBidirvalEditDeviceModal=function() {
+        $log.info('saveBidirvalEditDeviceModal : ', $scope.device);
+        DevelopersServices.updateBidirval($scope.device).then(function(response) {
+            $log.info("saveBidirvalEditDeviceModal Ok");
+            Notif.info("Bidir Value Updated");
+        });
+        $('.editDeviceModal').modal('hide');
+    };
+
+    // Device declaration
 	$scope.showDeviceDetails=function(device) {
 		$log.info('showDeviceDetails', device);
 		$scope.device=device;
 		$('.deviceModal').modal('show');
 	};
+
 	$scope.cancelDevice=function() {
 		$log.info('cancelDevice', $scope.device);
 		$('.deviceModal').modal('hide');
 	};
+
 	$scope.saveDevice=function() {
 		$log.info('saveDevice', $scope.device);
 		

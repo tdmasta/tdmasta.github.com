@@ -21,6 +21,7 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
          <li><a href="#change_status"><i class="icon-chevron-right"></i> Changing device status</a></li>
          <li><a href="#toggle_active_flag"><i class="icon-chevron-right"></i> Toggle active flag</a></li>
          <li><a href="#toggle_monitoring_flag"><i class="icon-chevron-right"></i> Toggle monitoring flag</a></li>
+         <li><a href="#change_bidirval"><i class="icon-chevron-right"></i> Change bidir value</a></li>
 		</ul>
 </div>
 
@@ -712,6 +713,7 @@ SERIAL; PAC
                                   <td>
                                       <ol>
                                           <li><code>id</code> <i>required</i> The device id</li>
+                                          <li><code>sn</code> Device serial number</li>
                                           <li><code>value</code> <i>required</i> The new state value</li>
                                       </ol>
                                   </td>
@@ -758,6 +760,7 @@ SERIAL; PAC
                                   <td>
                                       <ol>
                                           <li><code>id</code> <i>required</i> The device id</li>
+                                          <li><code>sn</code> <i>required</i> Device serial number</li>
                                           <li><code>value</code> <i>required</i> The new active flag value</li>
                                       </ol>
                                   </td>
@@ -804,6 +807,7 @@ SERIAL; PAC
                                   <td>
                                       <ol>
                                           <li><code>id</code> <i>required</i> The device id</li>
+                                          <li><code>sn</code> <i>required</i> Device serial number</li>
                                           <li><code>value</code> <i>required</i> The new active flag value</li>
                                       </ol>
                                   </td>
@@ -816,6 +820,53 @@ SERIAL; PAC
                                   <td><h6>Errors</h6></td>
                                   <td>
                                       <ul class="unstyled">
+                                          <li><code>401</code> - The authentication token is invalid or missing </li>
+                                      </ul>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+    </section>
+
+    <section id="change_bidirval">
+        <div class="page-header">
+            <h2>Change device bidir value</h2>
+        </div>
+        <h4><a>POST /iot/devices/bidirval.json</a></h4>
+              <br/>
+              <table class="table">
+                          <tbody>
+                              <tr>
+                                  <td><h6>Description</h6></td>
+                                  <td>Change device bidir value</td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Url</h6></td>
+                                  <td><code>https://sensor.insgroup.fr/iot/devices/bidirval.json</code></td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Method</h6></td>
+                                  <td>POST</td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Parameters</h6></td>
+                                  <td>
+                                      <ol>
+                                          <li><code>id</code> <i>required</i> The device id</li>
+                                          <li><code>sn</code> <i>required</i> The device serial number</li>
+                                          <li><code>value</code> <i>required</i> The new bidir value</li>
+                                      </ol>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Returns</h6></td>
+                                  <td>void</td>
+                              </tr>
+                              <tr>
+                                  <td><h6>Errors</h6></td>
+                                  <td>
+                                      <ul class="unstyled">
+                                          <li><code>404</code> - The serial number was not found </li>
                                           <li><code>401</code> - The authentication token is invalid or missing </li>
                                       </ul>
                                   </td>

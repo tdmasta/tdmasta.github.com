@@ -33,7 +33,8 @@ scripts:
                         <li>manage remote backend callback definition,</li>
                         <li>try our IOT Callback simulator,</li>
                         <li>decode any UDM frame,</li>
-                        <li>register your GitHub account.</li>                        
+                        <li>register your GitHub account,</li>
+                        <li>... and so much more !</li>
                     </ul>
                 </p>
 
@@ -65,7 +66,7 @@ scripts:
 
                 <div class="span5 alert alert-info">
                     <a class="close" data-dismiss="alert">×</a>
-                    <strong>Breaking news 2015/03 : </strong> <ul><li>New web service in Developer API : Module unregistration.</li><li>New tab in Developer Dashboard : UDM Frame Decoder</li></ul>
+                    <strong>Breaking news 2015/04 : </strong> <ul><li>New device's detail and associated WS (update status label, update bidir value, toggle active flag, ...).</li></ul>
                 </div>            
                 <div class="span5 alert alert-danger">
                     <a class="close" data-dismiss="alert">×</a>
@@ -91,7 +92,7 @@ scripts:
                         <td data-title="NAME" sortable="name">{{"{{appli.name"}}}}</td>
                         <td data-title="DESCRIPTION" >{{"{{appli.description"}}}}</td>
                         <td data-title="CREATED" sortable="created">{{"{{appli.created"}}}}</td>
-                        <td data-title="&nbsp;"> <button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger"> <i class="icon-white icon-minus-sign"></i> Delete</button> </td>
+                        <td data-title="OPERATIONS"> <button ng-click="deleteAppli(appli, $index, $event)" class="btn btn-danger"> <i class="icon-white icon-minus-sign"></i> Delete</button> </td>
                     </tr>
                     <tr ng:show="!appsList.length">
                         <td colspan="6"><center><i class="icon-white icon-thumbs-down"></i> No application found</center></td>
@@ -144,7 +145,7 @@ scripts:
 
             <tab heading="Registered Modules" select="loadDevices()">
 
-                <table ng-table="tableDevices" class="table">
+                <table ng-table="tableDevices" class="table span6">
                     <tr ng-repeat="device in devicesList">
                         <td data-title="ID" sortable="id">
                         {{"{{device.id"}}}}
@@ -152,18 +153,79 @@ scripts:
                         <td data-title="SERIAL" sortable="serial">
                         {{"{{device.serial"}}}}
                         </td>
-                        <td data-title="&nbsp;"> <button ng-click="unregisterModule(device, $index)" class="btn btn-danger"> <i class="icon-white icon-minus-sign"></i> Unregister </button> </td>
+                        <td data-title="OPERATIONS">
+                            <button ng-click="editDeviceDetails(device, $index)" class="btn btn-info"> <i class="icon-white icon-cog"></i> Details </button> | <button ng-click="unregisterModule(device, $index)" class="btn btn-danger"> <i class="icon-white icon-minus-sign"></i> Unregister </button>
+                        </td>
                     </tr>
                     <tr ng:show="!devicesList.length">
                         <td colspan="3"><center><i class="icon-white icon-thumbs-down"></i> No registered modules found</center></td>
                     </tr>
                 </table>
 
-                <button class="btn btn-primary" ng-click="showDeviceDetails({})">  <i class="icon-white icon-plus-sign"></i> Add</button>
+                <div class="span10">
+                    <button class="btn btn-primary" ng-click="showDeviceDetails({})">  <i class="icon-white icon-plus-sign"></i> Add</button>
+                    <button type="button" class="btn btn-success" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="getPacsFromId()">
+                        <i class="icon-white icon-download"></i> Download PAC
+                    </button>
+                </div>
 
-                <button type="button" class="btn btn-success" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="getPacsFromId()">
-                    <i class="icon-white icon-download"></i> Download PAC
-                </button>
+
+                <div class="editDeviceModal modal hide fade">
+                    <div class="modal-header">
+                        <h3>Module</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="control-group">
+                            <label class="span2" for="idinput">Id</label>
+                            <div>
+                                <input id="idinput" type="text" ng-model="device.id" readonly="true" class="required" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="span2" for="serialinput">Serial</label>
+                            <div>
+                                <input id="serialinput" type="text" ng-model="device.serial" readonly="true" class="required" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="span2" for="lastseeninput">Last seen</label>
+                            <div>
+                                <input id="lastseeninput" type="text" ng-model="device.lastseen" readonly="true" class="required" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label span2" for="addstatus">Functional Status</label>
+                            <div class="controls">
+                                <input id="addstatus" type="text" ng-model="device.status" ng-model-instant data-val="true"/>
+                                <button class="btn btn-primary" ng-click="saveStatusEditDeviceModal()">Save</button>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label span2" for="addbidirval">Bidir Value</label>
+                            <div class="controls">
+                                <input id="addbidirval" type="text" ng-model="device.bidirval" ng-model-instant data-val="true"/>
+                                <button class="btn btn-primary" ng-click="saveBidirvalEditDeviceModal()">Save</button>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label span2" for="addactive">Active Flag</label>
+                            <div class="controls">
+                                <input id="addactive" type="text" ng-model="device.active" readonly="true" ng-model-instant data-val="true"/>
+                                <button class="btn btn-primary" ng-click="saveActiveEditDeviceModal()">Toggle</button>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label span2" for="addwatched">Watch Flag</label>
+                            <div class="controls">
+                                <input id="addwatched" type="text" ng-model="device.watched" readonly="true" ng-model-instant data-val="true"/>
+                                <button class="btn btn-primary" ng-click="saveWatchedEditDeviceModal()">Toggle</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" ng-click="cancelEditDeviceModal()">Cancel</button>
+                    </div>
+                </div>
 
                 <div class="deviceModal modal hide fade">
                     <div class="modal-header">
