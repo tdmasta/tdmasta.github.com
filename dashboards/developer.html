@@ -278,36 +278,6 @@ scripts:
                             </div>
                         </div>
 
-                        <div class="control-group">
-                            <label class="control-label" for="type">Message Type</label>
-                            <div class="controls">
-                                <select id="type" name="simulation.type" ng-model="simulation.type" ng-model-instant data-val="true" data-val-required="Message type is required." required ng-options="option.value as option.name for option in typeMessagesSelect"></select>
-                                <span class="field-validation-valid" data-valmsg-for="type" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label" for="deviceserial">Device serial</label>
-                            <div class="controls">
-                                <input id="deviceserial" name="simulation.deviceserial" ng-model="simulation.deviceserial" ng-model-instant data-val="true" type="text" data-val-required="Device serial is required." required placeholder="Device serial"/>
-                                <span class="field-validation-valid" data-valmsg-for="deviceserial" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label" for="longitude">Longitude</label>
-                            <div class="controls">
-                                <input id="longitude" name="simulation.longitude" ng-model="simulation.longitude" ng-model-instant data-val="true" type="text" placeholder="Longitude if known"/>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label" for="latitude">Latitude</label>
-                            <div class="controls">
-                                <input id="latitude" name="simulation.latitude" ng-model="simulation.latitude" ng-model-instant data-val="true" type="text" placeholder="Latitude if known"/>
-                            </div>
-                        </div>
-
                         <div class="form-actions">
                             <button type="button" class="generatebt btn btn-primary" class-toggle="btn-danger" data-toggle="button" ng-click="startStopSimulation()">Start / Stop</button>
                             <input id="hits" class= "span1" name="simulation.hits" ng-model="simulation.hits" ng-model-instant data-val="true" type="text" readonly="readonly" size="5"/>
@@ -324,29 +294,20 @@ scripts:
                                     <thead>
                                         <th>Status</th>
                                         <th>Date</th>
-                                        <th>Result</th>
                                         <th>Url</th>
-                                        <th>Serial</th>
-                                        <th>Lng</th>
-                                        <th>Lat</th>
-                                        <th>Id</th>
-                                        <th>Type</th>
-                                        <th>Raw</th>
+                                        <th>Callback</th>
+                                        <th>App Key</th>
+                                        <th>App Id</th>
                                     </thead>
                                     <tbody ng-switch>
                                         <div ng:show="generatedmessages.length > 0" ng:cloak>
                                             <tr ng-repeat="generatedmessage in generatedmessages">
-                                            <td>{{"{{generatedmessage.status"}}}}</td>
-                                            <td>{{"{{generatedmessage.time"}}}}</td>
-                                            <td><span title="{{"{{generatedmessage.detail"}}}}">{{"{{generatedmessage.summary"}}}}</span></td>
-                                            <td>{{"{{generatedmessage.url"}}}}</td>
-                                            <td>{{"{{generatedmessage.message.msg.ctx.serial"}}}}</td>
-                                            <td>{{"{{generatedmessage.message.msg.ctx.position.longitude"}}}}</td>
-                                            <td>{{"{{generatedmessage.message.msg.ctx.position.latitude"}}}}</td>
-                                            <td>{{"{{generatedmessage.message.id"}}}}</td>
-                                            <td ng:show="generatedmessage.type == 'RANDOM' ">{{"{{generatedmessage.message.msg.type"}}}}</td>
-                                            <td ng:hide="generatedmessage.type == 'RANDOM' ">{{"{{generatedmessage.type"}}}}</td>
-                                            <td>{{"{{generatedmessage.message.msg.payload"}}}}</td>
+                                                <td>{{"{{generatedmessage.status"}}}}</td>
+                                                <td>{{"{{generatedmessage.time"}}}}</td>
+                                                <td>{{"{{generatedmessage.url"}}}}</td>
+                                                <td><span title="{{"{{generatedmessage.callback"}}}}">{{"{{generatedmessage.summary"}}}}</span></td>
+                                                <td>{{"{{generatedmessage.appkey"}}}}</td>
+                                                <td>{{"{{generatedmessage.appid"}}}}</td>
                                             </tr>
                                         </div>
                                     </tbody>
