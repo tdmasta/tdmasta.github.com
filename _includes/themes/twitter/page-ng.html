@@ -51,7 +51,7 @@
 document.createElement('ng-include');
 document.createElement('ng-pluralize');
 document.createElement('ng-view');
- 
+
 // Optionally these for CSS
 document.createElement('ng:include');
 document.createElement('ng:pluralize');
@@ -78,50 +78,8 @@ document.createElement('ng:view');
 	      <div class="nav-collapse">
 	        <!-- .nav, .navbar-search, .navbar-form, etc -->
             <ul class="nav">
-              {% assign pages_list = site.pages %}
-              {% assign group = 'navigation' %}
-              {% include JB/pages_list %}
-            </ul>
-
-            <ul class="nav">
-              <li id="cloud-on-chip-menu" class="dropdown closed">
-                <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Cloud On Chip Modules<b class="caret"></b></a>
-                <ul class="dropdown-menu" role="menu" >
-                  <li class="dropdown-submenu">
-						<a href="#">TD1202</a>
-						<ul class="dropdown-menu">
-							<li><a tabindex="-1" href="/cloud-on-chip/td1202/index.html">Features</a></li>
-							<li><a tabindex="-1" href="/cloud-on-chip/td1202/evb.html">Evaluation board</a></li>
-							<li><a tabindex="-1" href="/cloud-on-chip/td1202/download.html">Resources</a></li>
-						</ul>
-					</li>
-					<li class="dropdown-submenu">
-						<a href="#">TD1208</a>
-						<ul class="dropdown-menu">
-							<li><a tabindex="-1" href="/cloud-on-chip/td1208/index.html">Features</a></li>
-							<li><a tabindex="-1" href="/cloud-on-chip/td1208/evb.html">Evaluation board</a></li>
-                            <li><a tabindex="-1" href="/cloud-on-chip/td1208/sdk.html">SDK</a></li>
-							<li><a tabindex="-1" href="/cloud-on-chip/td1208/download.html">Resources</a></li>
-						</ul>
-					</li>
-                    <li class="dropdown-submenu">
-                        <a href="#">TD1204</a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="/cloud-on-chip/td1204/index.html">Features</a></li>
-                            <li><a tabindex="-1" href="/cloud-on-chip/td1204/evb.html">Evaluation board</a></li>
-                            <li><a tabindex="-1" href="/cloud-on-chip/td1204/sdk.html">SDK</a></li>
-                            <li><a tabindex="-1" href="/cloud-on-chip/td1204/download.html">Resources</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a href="#">TD1207</a>
-                        <ul class="dropdown-menu">
-<!--                            <li><a tabindex="-1" href="/cloud-on-chip/td1207/index.html" onclick="return false" target="_blank">Features <span class="label label-success">Soon</span></a></li> -->
-<!--                            <li><a tabindex="-1" href="/cloud-on-chip/td1207/evb.html" onclick="return false" target="_blank">Evaluation board <span class="label label-success">Soon</span></a></li> -->
-                            <li><a tabindex="-1" href="/cloud-on-chip/td1207/download.html">Resources</a></li>
-                        </ul>
-                    </li>
-                </ul>
+              <li id="fat-menu">
+                <a href="http://sigfoxmodules.td-next.com/" target="_blank"> Documentation <sup><span class="label label-warning">new</span></sup> </a>
               </li>
             </ul>
 
@@ -158,7 +116,7 @@ document.createElement('ng:view');
     <div class="container" style="min-height:100%;">
 
       <div class="content">
-	
+
 		<div class="row">
 			<div class="span12 container">
                 <!--[if IE]>
@@ -168,7 +126,7 @@ document.createElement('ng:view');
                 <![endif]-->
 		    </div>
 		</div>
-	
+
 		<div class="page-header container">
 		  <h1>{{ page.title }} {% if page.tagline %} <small>{{ page.tagline }}</small>{% endif %}</h1>
 		</div>
