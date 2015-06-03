@@ -195,7 +195,8 @@ function RegistrationCtrl($scope, $http, $log, $cookieStore, CONSTANTS, Security
 // Dashboard controller
 function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Context, Notif) {
 
-    $scope._messages = [];
+    $scope._messagesUDM = [];
+    $scope._messagesRAW = [];
     $scope._lastUpdate = new Date().getTime();
 	$scope._timer = undefined;
 	$scope._serial = undefined;
@@ -243,7 +244,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     //Clear device messages
     $scope.clearDeviceMessages = function() {
         $log.info('clearDeviceMessages');
-        var result = confirm("Want to clear ALL emitted messages from your device ?");
+        var result = confirm("Want to clear ALL UDM messages from your device ?");
         if (result==true) {
             DevicesServices.clearDeviceMessages()
                 .then(function(response) {
@@ -251,7 +252,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
                         case 200 :
                             $log.info("clearDeviceMessages ok");
                             Context.setDashBoardVisibilty(true);
-                            $scope._messages = [];
+                            $scope._messagesUDM = [];
                             break;
                         default :
                             $log.error('Unexpexted error', response.status, response.body);
@@ -261,22 +262,22 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
         }
     };
 
-    // loadMore    
-    $scope.loadMore = function() {
-        var oldest = $scope._messages.length != 0 ? $scope._messages[$scope._messages.length - 1].when : null;
+    // loadMoreUDM
+    $scope.loadMoreUDM = function() {
+        var oldestUDM = $scope._messagesUDM.length != 0 ? $scope._messagesUDM[$scope._messagesUDM.length - 1].when : null;
 
-        DevicesServices.getMessagesBefore(oldest, 20)
+        DevicesServices.getMessagesBefore(oldestUDM, 20)
             .then(function(response) {
 				switch (response.status) {
 					case 200 :
 	                	$log.info("within resolved resources", response);
 	                	angular.forEach(response.data.items, function(value, key){
-	                    	$scope._messages.push(value);
+	                    	$scope._messagesUDM.push(value);
 	                	});
 	                	$scope._lastUpdate = new Date().getTime();
-						if ($scope._messages[0] && $scope._messages[0].ctxt) {
-							var device = $scope._messages[0].ctxt;
-							var delta = $scope._messages[0].contrib;
+						if ($scope._messagesUDM[0] && $scope._messagesUDM[0].ctxt) {
+							var device = $scope._messagesUDM[0].ctxt;
+							var delta = $scope._messagesUDM[0].contrib;
 							$scope._devicesMap[device.id] = $scope.merge(device,delta);
 						};
 					break;
@@ -290,7 +291,31 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 				}
 			});
     };
-	
+
+    // loadMoreRAW
+    $scope.loadMoreRAW = function() {
+        var oldestRAW = $scope._messagesRAW.length != 0 ? $scope._messagesRAW[$scope._messagesRAW.length - 1].when : null;
+        Notif.error("loadMoreRAW");
+        DevicesServices.getMessagesBefore(oldestRAW, 20)
+            .then(function(response) {
+                switch (response.status) {
+                    case 200 :
+                        $log.info("within resolved resources", response);
+                        angular.forEach(response.data.items, function(value, key){
+                            $scope._messagesRAW.push(value);
+                        });
+                    break;
+                    case 404 :
+                        Notif.error("Resource not found, please check with tech support team.");
+                        break;
+                    default :
+                        $log.error('Unexpexted error', response.status, response.body);
+                        Notif.error("Unexpexcted Error");
+                        break;
+                }
+            });
+    };
+
 	$scope.merge = function(obj1, obj2) {
 	    var obj3 = {};
 	    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
@@ -300,7 +325,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 
     // checkForNewMsg
     $scope.checkForNewMsg = function() {
-        var newest = $scope._messages.length != 0 ? $scope._messages[0].when : null;
+        var newest = $scope._messagesUDM.length != 0 ? $scope._messagesUDM[0].when : null;
         var dtoken = $cookieStore.get('dtoken');
 		if(undefined != dtoken)
 	        DevicesServices.getMessagesAfter(newest, 20)
@@ -309,16 +334,16 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 					switch (response.status) {
 						case 200 :
 							if (typeof response.data != "undefined") {
-								
+
 				                angular.forEach(response.data.items.reverse(), function(item, value) {
 									var infos = item.type.split(':');
-									
+
 									var ititle = function() {
 										return $scope._eventTitle[infos[0] || 'undefined'];
 									};
-									
+
 									var itext = [$scope._eventDetail[infos[1] || 'undefined'], item.payload || ''].join(' ');
-									
+
 				                    jQuery.pnotify({
 				                        title: ititle,
 				                        text: itext,
@@ -326,12 +351,13 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 										type: 'info',
 				                        styling: 'bootstrap'
 				                    });
-				                    $scope._messages.splice(0, 0, item);
+				                    $scope._messagesUDM.splice(0, 0, item);
+                                    $scope._messagesRAW.splice(0, 0, item);
 				                });
-				
-								if (response.data.items.length != 0 && $scope._messages[0].ctxt)  {
-									var device = $scope._messages[0].ctxt;
-									var delta  = $scope._messages[0].contrib;
+
+								if (response.data.items.length != 0 && $scope._messagesUDM[0].ctxt)  {
+									var device = $scope._messagesUDM[0].ctxt;
+									var delta  = $scope._messagesUDM[0].contrib;
 									$scope._devicesMap[device.id] = $scope.merge(device,delta);
 								}
 							}
@@ -408,7 +434,7 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 				$scope._devices = response.data.length;
 
 				$log.info("_devices",$scope._devices);
-	        	$scope.loadMore();
+	        	$scope.loadMoreUDM();
 	            
     			$log.info("calling polling operation");
     			$scope.poll();
@@ -614,7 +640,8 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 
 	$scope.navType = 'pills';
 	$scope.login = $cookieStore.get('login');
-    $scope._messages = [];
+    $scope._messagesUDM = [];
+    $scope._messagesRAW = [];
     $scope._lastUpdate = new Date().getTime();
 	$scope._errors = [];
 	$scope.tableApps = new ngTableParams({

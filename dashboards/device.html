@@ -123,7 +123,7 @@ scripts:
 		<div class="row">
 			<div class="pull-right">
 				<a href="#history" class="btn btn-info" data-toggle="modal" > <i class="icon-white icon-list-alt"></i> Show messages</a>
-				<button ng-click="clearDeviceMessages()" class="btn btn-danger"> <i class="icon-white icon-minus-sign"></i> Clear messages</button>
+				<button ng-click="clearDeviceMessages()" class="btn btn-danger"> <i class="icon-white icon-minus-sign"></i> Clear UDM messages</button>
 			</div>
 		</div>
 
@@ -133,96 +133,195 @@ scripts:
 				<h3><i class="icon-time"> </i> History </h3>
 			</div>
 			<div class="modal-body">
-				<div when-scrolled="loadMore();" ng:cloak id="fixed">
-					<div ng:show="_messages.length == 0">
-						<table class="table table-striped table-condensed table-hover">
-							<thead>
-								<th>Emission Date</th>
-								<th>Reception Date</th>
-								<th>Index</th>
-								<th>Msg</th>
-								<th>[Payload]</th>
-								<th>Lvl</th>
-							</thead>
-							<tbody ng-switch>
-								<tr>
-									<td colspan="6">
-									<center>
-										<i class="icon-spin icon-spinner"></i> No message found
-									</center></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div ng:show="_messages.length > 0">
-						<table class="table table-striped table-condensed table-hover">
-							<thead>
-								<th>Emission Date</th>
-								<th>Reception Date</th>
-								<th>Index</th>
-								<th>Msg</th>
-								<th>[Payload]</th>
-								<th>Lvl</th>
-							</thead>
-							<tbody ng-switch>
-								<tr ng-repeat="message in _messages">
-									<td>{{"{{message.received | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
-									<td>{{"{{message.when | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
-									<td>{{"{{message.ctxt.index"}}}}</td>
-									<td>{{"{{message.type"}}}}</td>
+			    <tabset>
+                    <tab heading="UDM History">
+        				<div when-scrolled="loadMoreUDM();" ng:cloak id="fixed">
+        					<div ng:show="_messagesUDM.length == 0">
+        						<table class="table table-striped table-condensed table-hover">
+        							<thead>
+        								<th>Emission Date</th>
+        								<th>Reception Date</th>
+        								<th>Index</th>
+        								<th>Msg</th>
+        								<th>[Payload]</th>
+        								<th>Lvl</th>
+        							</thead>
+        							<tbody ng-switch>
+        								<tr>
+        									<td colspan="6">
+        									<center>
+        										<i class="icon-spin icon-spinner"></i> No message found
+        									</center></td>
+        								</tr>
+        							</tbody>
+        						</table>
+        					</div>
+        					<div ng:show="_messagesUDM.length > 0">
+        						<table class="table table-striped table-condensed table-hover">
+        							<thead>
+        								<th>Emission Date</th>
+        								<th>Reception Date</th>
+        								<th>Index</th>
+        								<th>Msg</th>
+        								<th>[Payload]</th>
+        								<th>Lvl</th>
+        							</thead>
+        							<tbody ng-switch>
+        								<tr ng-repeat="message in _messagesUDM">
+        									<td>{{"{{message.received | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
+        									<td>{{"{{message.when | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
+        									<td>{{"{{message.ctxt.index"}}}}</td>
+        									<td>{{"{{message.type"}}}}</td>
 
-                                    <td>
-							             <ul>
-                                             <li ng-show="message.extra.frame_type">Frame Type : {{"{{message.extra.frame_type"}}}}</li>
-                                             <li ng-show="message.extra.type">Type : {{"{{message.extra.type"}}}}</li>
-							                 <li ng-show="message.extra.latitude">Latitude : {{"{{message.extra.latitude"}}}}</li>
-                                             <li ng-show="message.extra.longitude">Longitude : {{"{{message.extra.longitude"}}}}</li>
-                                             <li ng-show="message.extra.altitude && message.extra.altitude !== '8190'">Altitude : {{"{{message.extra.altitude"}}}}</li>
-                                             <li ng-show="message.extra.satellites">Satellites : {{"{{message.extra.satellites"}}}}</li>
-                                             <li ng-show="message.extra.quality">Quality : {{"{{message.extra.quality"}}}}</li>
-                                             <li ng-show="message.extra.satelliteinview">Satellite in view : {{"{{message.extra.satelliteinview"}}}}</li>
-                                             <li ng-show="message.extra.month">Month : {{"{{message.extra.month"}}}}</li>
-                                             <li ng-show="message.extra.day">Day : {{"{{message.extra.day"}}}}</li>
-                                             <li ng-show="message.extra.hours">Day : {{"{{message.extra.hours"}}}}</li>
-                                             <li ng-show="message.extra.minutes">Minutes : {{"{{message.extra.minutes"}}}}</li>
-                                             <li ng-show="message.extra.volt">Volt : {{"{{message.extra.volt"}}}}</li>
-                                             <li ng-show="message.extra.temp">Temp : {{"{{message.extra.temp"}}}}</li>
-                                             <li ng-show="message.extra.frequency">Frequency : {{"{{message.extra.frequency"}}}}</li>
-                                             <li ng-show="message.extra.reason_detail">Reason : {{"{{message.extra.reason_detail"}}}}</li>
-                                             <li ng-show="message.extra.raw">Raw : {{"{{message.extra.raw"}}}}</li>
-                                             <li ng-show="message.extra.asciiraw">ASCII Raw : {{"{{message.extra.asciiraw"}}}}</li>
-                                             <li ng-show="message.extra.mobile">Mobile : {{"{{message.extra.mobile"}}}}</li>
-                                             <li ng-show="message.extra.value_id">Value_id : {{"{{message.extra.value_id"}}}}</li>
-                                             <li ng-show="message.extra.port">Port : {{"{{message.extra.port"}}}}</li>
-                                             <li ng-show="message.extra.pin">Pin : {{"{{message.extra.pin"}}}}</li>
-                                             <li ng-show="message.extra.code">Code : {{"{{message.extra.code"}}}}</li>
-                                             <li ng-show="message.extra.custom">Custom : {{"{{message.extra.custom"}}}}</li>
-                                             <li ng-show="message.extra.payload">Payload : {{"{{message.extra.payload"}}}}</li>
-                                             <li ng-show="message.extra.data">Data : {{"{{message.extra.data"}}}}</li>
-                                             <li ng-show="message.extra.asciidata">Ascii Data : {{"{{message.extra.asciidata"}}}}</li>
-                                             <li ng-show="message.extra.sigfox_id">Sigfox Id : {{"{{message.extra.sigfox_id"}}}}</li>
-                                             <li ng-show="message.extra.device_class">Device Class : {{"{{message.extra.device_class"}}}}</li>
-                                             <li ng-show="message.extra.soft_release">Soft Release : {{"{{message.extra.soft_release"}}}}</li>
-                                             <li ng-show="message.extra.release && message.extra.sub_release">Release : {{"{{message.extra.release"}}}}.{{"{{message.extra.sub_release"}}}}</li>
-                                             <li ng-show="message.extra.pro_release && message.extra.pro_sub_release">Pro Release : {{"{{message.extra.pro_release"}}}}.{{"{{message.extra.pro_sub_release"}}}}</li>
-                                             <li ng-show="message.extra.frm_release && message.extra.frm_sub_release">Frm Release : {{"{{message.extra.frm_release"}}}}.{{"{{message.extra.frm_sub_release"}}}}</li>
-                                             <li ng:show="isgeolocorgps(message.extra)"> <a href="javascript:openmap('{{'{{message.extra.latitude'}}}},{{'{{message.extra.longitude'}}}}');" class="btn btn-success btn-mini"> <i class="icon-white icon-eye-open"></i> VIEW </a></li>
-							             </ul>
-							        </td>
+                                            <td>
+        							             <ul>
+                                                     <li ng-show="message.extra.frame_type">Frame Type : {{"{{message.extra.frame_type"}}}}</li>
+                                                     <li ng-show="message.extra.type">Type : {{"{{message.extra.type"}}}}</li>
+        							                 <li ng-show="message.extra.latitude">Latitude : {{"{{message.extra.latitude"}}}}</li>
+                                                     <li ng-show="message.extra.longitude">Longitude : {{"{{message.extra.longitude"}}}}</li>
+                                                     <li ng-show="message.extra.altitude && message.extra.altitude !== '8190'">Altitude : {{"{{message.extra.altitude"}}}}</li>
+                                                     <li ng-show="message.extra.satellites">Satellites : {{"{{message.extra.satellites"}}}}</li>
+                                                     <li ng-show="message.extra.quality">Quality : {{"{{message.extra.quality"}}}}</li>
+                                                     <li ng-show="message.extra.satelliteinview">Satellite in view : {{"{{message.extra.satelliteinview"}}}}</li>
+                                                     <li ng-show="message.extra.month">Month : {{"{{message.extra.month"}}}}</li>
+                                                     <li ng-show="message.extra.day">Day : {{"{{message.extra.day"}}}}</li>
+                                                     <li ng-show="message.extra.hours">Day : {{"{{message.extra.hours"}}}}</li>
+                                                     <li ng-show="message.extra.minutes">Minutes : {{"{{message.extra.minutes"}}}}</li>
+                                                     <li ng-show="message.extra.volt">Volt : {{"{{message.extra.volt"}}}}</li>
+                                                     <li ng-show="message.extra.temp">Temp : {{"{{message.extra.temp"}}}}</li>
+                                                     <li ng-show="message.extra.frequency">Frequency : {{"{{message.extra.frequency"}}}}</li>
+                                                     <li ng-show="message.extra.reason_detail">Reason : {{"{{message.extra.reason_detail"}}}}</li>
+                                                     <li ng-show="message.extra.raw">Raw : {{"{{message.extra.raw"}}}}</li>
+                                                     <li ng-show="message.extra.asciiraw">ASCII Raw : {{"{{message.extra.asciiraw"}}}}</li>
+                                                     <li ng-show="message.extra.mobile">Mobile : {{"{{message.extra.mobile"}}}}</li>
+                                                     <li ng-show="message.extra.value_id">Value_id : {{"{{message.extra.value_id"}}}}</li>
+                                                     <li ng-show="message.extra.port">Port : {{"{{message.extra.port"}}}}</li>
+                                                     <li ng-show="message.extra.pin">Pin : {{"{{message.extra.pin"}}}}</li>
+                                                     <li ng-show="message.extra.code">Code : {{"{{message.extra.code"}}}}</li>
+                                                     <li ng-show="message.extra.custom">Custom : {{"{{message.extra.custom"}}}}</li>
+                                                     <li ng-show="message.extra.payload">Payload : {{"{{message.extra.payload"}}}}</li>
+                                                     <li ng-show="message.extra.data">Data : {{"{{message.extra.data"}}}}</li>
+                                                     <li ng-show="message.extra.asciidata">Ascii Data : {{"{{message.extra.asciidata"}}}}</li>
+                                                     <li ng-show="message.extra.sigfox_id">Sigfox Id : {{"{{message.extra.sigfox_id"}}}}</li>
+                                                     <li ng-show="message.extra.device_class">Device Class : {{"{{message.extra.device_class"}}}}</li>
+                                                     <li ng-show="message.extra.soft_release">Soft Release : {{"{{message.extra.soft_release"}}}}</li>
+                                                     <li ng-show="message.extra.release && message.extra.sub_release">Release : {{"{{message.extra.release"}}}}.{{"{{message.extra.sub_release"}}}}</li>
+                                                     <li ng-show="message.extra.pro_release && message.extra.pro_sub_release">Pro Release : {{"{{message.extra.pro_release"}}}}.{{"{{message.extra.pro_sub_release"}}}}</li>
+                                                     <li ng-show="message.extra.frm_release && message.extra.frm_sub_release">Frm Release : {{"{{message.extra.frm_release"}}}}.{{"{{message.extra.frm_sub_release"}}}}</li>
+                                                     <li ng:show="isgeolocorgps(message.extra)"> <a href="javascript:openmap('{{'{{message.extra.latitude'}}}},{{'{{message.extra.longitude'}}}}');" class="btn btn-success btn-mini"> <i class="icon-white icon-eye-open"></i> VIEW </a></li>
+        							             </ul>
+        							        </td>
 
-									<td>{{"{{message.lvl"}}}}</td>
-								</tr>
-								<tr>
-									<td colspan="6">
-									<center>
-										<i class="icon-spin icon-spinner"></i>
-									</center></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					</ng-switch>
-				</div>
+        									<td>{{"{{message.lvl"}}}}</td>
+        								</tr>
+        								<tr>
+        									<td colspan="6">
+        									<center>
+        										<i class="icon-spin icon-spinner"></i>
+        									</center></td>
+        								</tr>
+        							</tbody>
+        						</table>
+        					</div>
+        					</ng-switch>
+        				</div>
+        			</tab>
+<!-- TODO -->
+<!--
+                    <tab heading="Raw History" >
+                        <div when-scrolled="loadMoreRAW();" ng:cloak id="fixed">
+                            <div ng:show="_messagesRAW.length == 0">
+                                <table class="table table-striped table-condensed table-hover">
+                                    <thead>
+                                        <th>Emission Date</th>
+                                        <th>Reception Date</th>
+                                        <th>Index</th>
+                                        <th>Msg</th>
+                                        <th>[Payload]</th>
+                                        <th>Lvl</th>
+                                    </thead>
+                                    <tbody ng-switch>
+                                        <tr>
+                                            <td colspan="6">
+                                            <center>
+                                                <i class="icon-spin icon-spinner"></i> No message found
+                                            </center></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng:show="_messagesRAW.length > 0">
+                                <table class="table table-striped table-condensed table-hover">
+                                    <thead>
+                                        <th>Emission Date</th>
+                                        <th>Reception Date</th>
+                                        <th>Index</th>
+                                        <th>Msg</th>
+                                        <th>[Payload]</th>
+                                        <th>Lvl</th>
+                                    </thead>
+                                    <tbody ng-switch>
+                                        <tr ng-repeat="message in _messagesRAW">
+                                            <td>{{"{{message.received | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
+                                            <td>{{"{{message.when | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
+                                            <td>{{"{{message.ctxt.index"}}}}</td>
+                                            <td>{{"{{message.type"}}}}</td>
+
+                                            <td>
+                                                 <ul>
+                                                     <li ng-show="message.extra.frame_type">Frame Type : {{"{{message.extra.frame_type"}}}}</li>
+                                                     <li ng-show="message.extra.type">Type : {{"{{message.extra.type"}}}}</li>
+                                                     <li ng-show="message.extra.latitude">Latitude : {{"{{message.extra.latitude"}}}}</li>
+                                                     <li ng-show="message.extra.longitude">Longitude : {{"{{message.extra.longitude"}}}}</li>
+                                                     <li ng-show="message.extra.altitude && message.extra.altitude !== '8190'">Altitude : {{"{{message.extra.altitude"}}}}</li>
+                                                     <li ng-show="message.extra.satellites">Satellites : {{"{{message.extra.satellites"}}}}</li>
+                                                     <li ng-show="message.extra.quality">Quality : {{"{{message.extra.quality"}}}}</li>
+                                                     <li ng-show="message.extra.satelliteinview">Satellite in view : {{"{{message.extra.satelliteinview"}}}}</li>
+                                                     <li ng-show="message.extra.month">Month : {{"{{message.extra.month"}}}}</li>
+                                                     <li ng-show="message.extra.day">Day : {{"{{message.extra.day"}}}}</li>
+                                                     <li ng-show="message.extra.hours">Day : {{"{{message.extra.hours"}}}}</li>
+                                                     <li ng-show="message.extra.minutes">Minutes : {{"{{message.extra.minutes"}}}}</li>
+                                                     <li ng-show="message.extra.volt">Volt : {{"{{message.extra.volt"}}}}</li>
+                                                     <li ng-show="message.extra.temp">Temp : {{"{{message.extra.temp"}}}}</li>
+                                                     <li ng-show="message.extra.frequency">Frequency : {{"{{message.extra.frequency"}}}}</li>
+                                                     <li ng-show="message.extra.reason_detail">Reason : {{"{{message.extra.reason_detail"}}}}</li>
+                                                     <li ng-show="message.extra.raw">Raw : {{"{{message.extra.raw"}}}}</li>
+                                                     <li ng-show="message.extra.asciiraw">ASCII Raw : {{"{{message.extra.asciiraw"}}}}</li>
+                                                     <li ng-show="message.extra.mobile">Mobile : {{"{{message.extra.mobile"}}}}</li>
+                                                     <li ng-show="message.extra.value_id">Value_id : {{"{{message.extra.value_id"}}}}</li>
+                                                     <li ng-show="message.extra.port">Port : {{"{{message.extra.port"}}}}</li>
+                                                     <li ng-show="message.extra.pin">Pin : {{"{{message.extra.pin"}}}}</li>
+                                                     <li ng-show="message.extra.code">Code : {{"{{message.extra.code"}}}}</li>
+                                                     <li ng-show="message.extra.custom">Custom : {{"{{message.extra.custom"}}}}</li>
+                                                     <li ng-show="message.extra.payload">Payload : {{"{{message.extra.payload"}}}}</li>
+                                                     <li ng-show="message.extra.data">Data : {{"{{message.extra.data"}}}}</li>
+                                                     <li ng-show="message.extra.asciidata">Ascii Data : {{"{{message.extra.asciidata"}}}}</li>
+                                                     <li ng-show="message.extra.sigfox_id">Sigfox Id : {{"{{message.extra.sigfox_id"}}}}</li>
+                                                     <li ng-show="message.extra.device_class">Device Class : {{"{{message.extra.device_class"}}}}</li>
+                                                     <li ng-show="message.extra.soft_release">Soft Release : {{"{{message.extra.soft_release"}}}}</li>
+                                                     <li ng-show="message.extra.release && message.extra.sub_release">Release : {{"{{message.extra.release"}}}}.{{"{{message.extra.sub_release"}}}}</li>
+                                                     <li ng-show="message.extra.pro_release && message.extra.pro_sub_release">Pro Release : {{"{{message.extra.pro_release"}}}}.{{"{{message.extra.pro_sub_release"}}}}</li>
+                                                     <li ng-show="message.extra.frm_release && message.extra.frm_sub_release">Frm Release : {{"{{message.extra.frm_release"}}}}.{{"{{message.extra.frm_sub_release"}}}}</li>
+                                                     <li ng:show="isgeolocorgps(message.extra)"> <a href="javascript:openmap('{{'{{message.extra.latitude'}}}},{{'{{message.extra.longitude'}}}}');" class="btn btn-success btn-mini"> <i class="icon-white icon-eye-open"></i> VIEW </a></li>
+                                                 </ul>
+                                            </td>
+
+                                            <td>{{"{{message.lvl"}}}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6">
+                                            <center>
+                                                <i class="icon-spin icon-spinner"></i>
+                                            </center></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </ng-switch>
+                        </div>
+                    </tab>
+-->
+                </tabset>
 			</div>
 			<div class="modal-footer">
 				<a class="btn" data-dismiss="modal">Close</a>
