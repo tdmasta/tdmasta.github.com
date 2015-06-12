@@ -87,6 +87,25 @@ angular.module('DevicesModule', ['ngCookies']).factory('DevicesServices', functi
             }
         },
 
+        // getSfxMessagesBefore method
+        getSfxMessagesBefore: function(before, amount) {
+            var dtoken = $cookieStore.get('dtoken');
+            var url = CONSTANTS.remote + '/iot/devices/msgs/sfx/history.json';
+            $log.info('url built up', url);
+
+            return $http({
+                method : 'GET',
+                url : url,
+                params : {
+                    before : before,
+                    amount : amount
+                },
+                headers : {
+                    'x-snsr-device-key' : dtoken
+                }
+            });
+        },
+
         // getMessagesBefore method
         getMessagesBefore: function(before, amount) {
             var dtoken = $cookieStore.get('dtoken');

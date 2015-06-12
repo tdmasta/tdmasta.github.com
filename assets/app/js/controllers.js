@@ -293,15 +293,21 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
     };
 
     // loadMoreRAW
-    $scope.loadMoreRAW = function() {
-        var oldestRAW = $scope._messagesRAW.length != 0 ? $scope._messagesRAW[$scope._messagesRAW.length - 1].when : null;
-        Notif.error("loadMoreRAW");
-        DevicesServices.getMessagesBefore(oldestRAW, 20)
+    $scope.loadMoreRAW = function(clear) {
+        var oldestRAW = null;
+
+        if (clear == true) {
+            $scope._messagesRAW = [];
+        } else {
+            oldestRAW = $scope._messagesRAW.length != 0 ? $scope._messagesRAW[$scope._messagesRAW.length - 1].time : null;
+        }
+
+        DevicesServices.getSfxMessagesBefore(oldestRAW, 20)
             .then(function(response) {
                 switch (response.status) {
                     case 200 :
-                        $log.info("within resolved resources", response);
-                        angular.forEach(response.data.items, function(value, key){
+                        $log.info("Within resolved resources with load more RAW", response);
+                        angular.forEach(response.data, function(value, key){
                             $scope._messagesRAW.push(value);
                         });
                     break;
@@ -322,6 +328,11 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 	    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
 	    return obj3;
 	};
+
+    $scope.formattedDate = function(expression) {
+        var formatted = new Date(expression);
+        return formatted;
+    };
 
     // checkForNewMsg
     $scope.checkForNewMsg = function() {
@@ -352,7 +363,6 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 				                        styling: 'bootstrap'
 				                    });
 				                    $scope._messagesUDM.splice(0, 0, item);
-                                    $scope._messagesRAW.splice(0, 0, item);
 				                });
 
 								if (response.data.items.length != 0 && $scope._messagesUDM[0].ctxt)  {
@@ -435,7 +445,10 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
 
 				$log.info("_devices",$scope._devices);
 	        	$scope.loadMoreUDM();
-	            
+
+                $log.info("Load more raw");
+                $scope.loadMoreRAW(true);
+
     			$log.info("calling polling operation");
     			$scope.poll();
 			});

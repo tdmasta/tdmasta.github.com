@@ -184,4 +184,4 @@ app.factory('Base64', function () {
 //app.constant('CONSTANTS', {remote : 'http://192.168.1.41:9010'});
 app.constant('CONSTANTS', {remote : 'https://sensor.insgroup.fr'});
 //app.constant('CONSTANTS', {remote : 'http://127.0.0.1:9010'});
-//app.constant('CONSTANTS', {remote : 'http://kenshiro.insgroup.fr:12345'});
+//app.constant('CONSTANTS', {remote : 'http://sandbox.insgroup.fr'});

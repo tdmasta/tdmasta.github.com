@@ -55,21 +55,26 @@ scripts:
 						</div>
 					</div>
 				</form>
-			</div>
 
+                <div class="span5 alert alert-info">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <strong>Breaking news 2015/06 : </strong> <ul><li>Device's tooltips and sigfox raw messages history.</li></ul>
+                </div>
+
+			</div>
 		</div>
 	</div>
 	<div ng:show="_displayDashboard == true">
 		<div class="row">
 			<div class="span12">
 				<center>
-					last update {{"{{_lastUpdate | date:'medium' "}}}}
+					Last update : {{"{{_lastUpdate | date : 'yyyy-MM-dd HH:mm:ss' "}}}}
 				</center>
 			</div>
 		</div>
 		<div class="row">
 			<div class="span12">
-				<h3><i class="icon-dashboard"> </i> Module {{"{{_serial"}}}} status <span class="pull-right">
+				<h3><i class="icon-dashboard"> </i> Module {{"{{_serial"}}}} <span class="pull-right">
                     <button type="button" class="btn btn-success" ng-app="evbApp" ng-controller="LogOutCtrl" ng-click="getPacsFromId()" ng:show="(_display == true) && (undefined != _serial)" ng:cloak>
                         <i class="icon-white icon-download"></i> Download PAC
                     </button>
@@ -90,27 +95,27 @@ scripts:
 							<i class="icon-hdd icon-2x snsr-{{"{d.uid"}}}}"></i><span class="label label-info">{{"{{d.uid"}}}}</span> </a> | <span class="badge badge-success">{{"{{d.index"}}}}</span> | <span class="label label-warning">{{"{{d.category"}}}}</span>
 						</div>
 						<div id="modal-body">
-							Since {{"{{d.firstseen|date:'dd MM'"}}}}
+							Since : {{"{{formattedDate(d.firstseen) | date : 'yyyy-MM-dd HH:mm:ss'"}}}}
 						</div>
 						<div class="modal-footer">
 							<ul class="unstyle inline">
 								<li class="pull-left">
-									<a href="#" class="indicator" data-toggle="popover" data-placement="bottom" data-original-title="Device information" data-content="<p>{{"{{d.uid"}}}}<br/></p>" data-html="true"></a>
+									<a href="#" class="indicator" data-toggle="tooltip" title="{{"{{d.uid"}}}}"><i class="icon-hdd icon-2x snsr-{{"{d.uid"}}}}"></i></a>
 								</li>
 								<li>
-									<a href="#" class="indicator" data-toggle="tooltip" data-original-title="Battery status indicator : {{"{{d.battery"}}}}"><i class="icon-bolt icon-2x snsr-{{"{{d.battery | lowercase"}}}}"></i></a>
+									<a href="#" class="indicator" data-toggle="tooltip" title="Battery status indicator : {{"{{d.battery"}}}}"><i class="icon-bolt icon-2x snsr-{{"{{d.battery | lowercase"}}}}"></i></a>
 								</li>
 								<li>
-									<a href="#" class="indicator" data-toggle="tooltip" data-original-title="Sigfox wireless signal status indicator : {{"{{d.level"}}}}"><i class="icon-signal icon-2x snsr-{{"{{d.level | lowercase"}}}}"></i></a>
+									<a href="#" class="indicator" data-toggle="tooltip" title="Sigfox wireless signal status indicator : {{"{{d.level"}}}}"><i class="icon-signal icon-2x snsr-{{"{{d.level | lowercase"}}}}"></i></a>
 								</li>
 								<li>
-									<a href="#" class="indicator" data-toggle="tooltip" data-original-title="Local network connection status indicator : {{"{{d.network"}}}}"><i class="icon-rss icon-2x snsr-{{"{{d.network | lowercase"}}}}"></i></a>
+									<a href="#" class="indicator" data-toggle="tooltip" title="Local network connection status indicator : {{"{{d.network"}}}}"><i class="icon-rss icon-2x snsr-{{"{{d.network | lowercase"}}}}"></i></a>
 								</li>
 								<li>
-									<a href="#" class="indicator" data-toggle="tooltip" data-original-title="Temperature status indicator : {{"{{d.temp"}}}}"><i class="icon-certificate icon-2x snsr-{{"{{d.temp | lowercase"}}}}"></i></a>
+									<a href="#" class="indicator" data-toggle="tooltip" title="Temperature status indicator : {{"{{d.temp"}}}}"><i class="icon-certificate icon-2x snsr-{{"{{d.temp | lowercase"}}}}"></i></a>
 								</li>
 								<li>
-									<a href="#" class="indicator" data-toggle="tooltip" data-original-title="Switch status indicator : {{"{{d.tamper"}}}}"><i class="icon-exclamation-sign icon-2x snsr-{{"{{d.tamper | lowercase"}}}}"></i></a>
+									<a href="#" class="indicator" data-toggle="tooltip" title="Switch status indicator : {{"{{d.tamper"}}}}"><i class="icon-exclamation-sign icon-2x snsr-{{"{{d.tamper | lowercase"}}}}"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -134,17 +139,17 @@ scripts:
 			</div>
 			<div class="modal-body">
 			    <tabset>
-                    <tab heading="UDM History">
+                    <tab heading="UDM">
         				<div when-scrolled="loadMoreUDM();" ng:cloak id="fixed">
         					<div ng:show="_messagesUDM.length == 0">
         						<table class="table table-striped table-condensed table-hover">
         							<thead>
-        								<th>Emission Date</th>
-        								<th>Reception Date</th>
+        								<th>Emission Time</th>
+        								<th>Reception Time</th>
         								<th>Index</th>
-        								<th>Msg</th>
-        								<th>[Payload]</th>
-        								<th>Lvl</th>
+        								<th>Type</th>
+        								<th>Payload</th>
+        								<th>Snr (in dB)</th>
         							</thead>
         							<tbody ng-switch>
         								<tr>
@@ -159,12 +164,12 @@ scripts:
         					<div ng:show="_messagesUDM.length > 0">
         						<table class="table table-striped table-condensed table-hover">
         							<thead>
-        								<th>Emission Date</th>
-        								<th>Reception Date</th>
+        								<th>Emission Time</th>
+        								<th>Reception Time</th>
         								<th>Index</th>
-        								<th>Msg</th>
-        								<th>[Payload]</th>
-        								<th>Lvl</th>
+        								<th>Type</th>
+        								<th>Payload</th>
+        								<th>Snr (in dB)</th>
         							</thead>
         							<tbody ng-switch>
         								<tr ng-repeat="message in _messagesUDM">
@@ -226,26 +231,24 @@ scripts:
         					</ng-switch>
         				</div>
         			</tab>
-<!-- TODO -->
-<!--
-                    <tab heading="Raw History" >
-                        <div when-scrolled="loadMoreRAW();" ng:cloak id="fixed">
+
+                    <tab heading="Raw" >
+                        <div ng:cloak id="fixed">
+                            <button ng-click="loadMoreRAW(false);" class="btn btn-info"> <i class="icon-white icon-plus-sign"></i> More messages</button>
+                            <button ng-click="loadMoreRAW(true);" class="btn btn-success"> <i class="icon-white icon-refresh"></i> Refresh</button>
                             <div ng:show="_messagesRAW.length == 0">
                                 <table class="table table-striped table-condensed table-hover">
                                     <thead>
-                                        <th>Emission Date</th>
-                                        <th>Reception Date</th>
-                                        <th>Index</th>
-                                        <th>Msg</th>
-                                        <th>[Payload]</th>
-                                        <th>Lvl</th>
+                                        <th>Time</th>
+                                        <th>Data</th>
+                                        <th>Snr (in dB)</th>
+                                        <th>Tap Infos (Snr in dB & Rssi in dBm)</th>
                                     </thead>
                                     <tbody ng-switch>
                                         <tr>
-                                            <td colspan="6">
-                                            <center>
-                                                <i class="icon-spin icon-spinner"></i> No message found
-                                            </center></td>
+                                            <td colspan="4">
+                                                <center>No message found</center>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -253,66 +256,21 @@ scripts:
                             <div ng:show="_messagesRAW.length > 0">
                                 <table class="table table-striped table-condensed table-hover">
                                     <thead>
-                                        <th>Emission Date</th>
-                                        <th>Reception Date</th>
-                                        <th>Index</th>
-                                        <th>Msg</th>
-                                        <th>[Payload]</th>
-                                        <th>Lvl</th>
+                                        <th>Time</th>
+                                        <th>Data</th>
+                                        <th>Snr (in dB)</th>
+                                        <th>Tap Infos (Snr in dB & Rssi in dBm)</th>
                                     </thead>
                                     <tbody ng-switch>
-                                        <tr ng-repeat="message in _messagesRAW">
-                                            <td>{{"{{message.received | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
-                                            <td>{{"{{message.when | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
-                                            <td>{{"{{message.ctxt.index"}}}}</td>
-                                            <td>{{"{{message.type"}}}}</td>
-
+                                        <tr ng-repeat="messageRAW in _messagesRAW">
+                                            <td>{{"{{messageRAW.time * 1000 | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
+                                            <td>{{"{{messageRAW.data "}}}}</td>
+                                            <td>{{"{{messageRAW.snr "}}}}</td>
                                             <td>
-                                                 <ul>
-                                                     <li ng-show="message.extra.frame_type">Frame Type : {{"{{message.extra.frame_type"}}}}</li>
-                                                     <li ng-show="message.extra.type">Type : {{"{{message.extra.type"}}}}</li>
-                                                     <li ng-show="message.extra.latitude">Latitude : {{"{{message.extra.latitude"}}}}</li>
-                                                     <li ng-show="message.extra.longitude">Longitude : {{"{{message.extra.longitude"}}}}</li>
-                                                     <li ng-show="message.extra.altitude && message.extra.altitude !== '8190'">Altitude : {{"{{message.extra.altitude"}}}}</li>
-                                                     <li ng-show="message.extra.satellites">Satellites : {{"{{message.extra.satellites"}}}}</li>
-                                                     <li ng-show="message.extra.quality">Quality : {{"{{message.extra.quality"}}}}</li>
-                                                     <li ng-show="message.extra.satelliteinview">Satellite in view : {{"{{message.extra.satelliteinview"}}}}</li>
-                                                     <li ng-show="message.extra.month">Month : {{"{{message.extra.month"}}}}</li>
-                                                     <li ng-show="message.extra.day">Day : {{"{{message.extra.day"}}}}</li>
-                                                     <li ng-show="message.extra.hours">Day : {{"{{message.extra.hours"}}}}</li>
-                                                     <li ng-show="message.extra.minutes">Minutes : {{"{{message.extra.minutes"}}}}</li>
-                                                     <li ng-show="message.extra.volt">Volt : {{"{{message.extra.volt"}}}}</li>
-                                                     <li ng-show="message.extra.temp">Temp : {{"{{message.extra.temp"}}}}</li>
-                                                     <li ng-show="message.extra.frequency">Frequency : {{"{{message.extra.frequency"}}}}</li>
-                                                     <li ng-show="message.extra.reason_detail">Reason : {{"{{message.extra.reason_detail"}}}}</li>
-                                                     <li ng-show="message.extra.raw">Raw : {{"{{message.extra.raw"}}}}</li>
-                                                     <li ng-show="message.extra.asciiraw">ASCII Raw : {{"{{message.extra.asciiraw"}}}}</li>
-                                                     <li ng-show="message.extra.mobile">Mobile : {{"{{message.extra.mobile"}}}}</li>
-                                                     <li ng-show="message.extra.value_id">Value_id : {{"{{message.extra.value_id"}}}}</li>
-                                                     <li ng-show="message.extra.port">Port : {{"{{message.extra.port"}}}}</li>
-                                                     <li ng-show="message.extra.pin">Pin : {{"{{message.extra.pin"}}}}</li>
-                                                     <li ng-show="message.extra.code">Code : {{"{{message.extra.code"}}}}</li>
-                                                     <li ng-show="message.extra.custom">Custom : {{"{{message.extra.custom"}}}}</li>
-                                                     <li ng-show="message.extra.payload">Payload : {{"{{message.extra.payload"}}}}</li>
-                                                     <li ng-show="message.extra.data">Data : {{"{{message.extra.data"}}}}</li>
-                                                     <li ng-show="message.extra.asciidata">Ascii Data : {{"{{message.extra.asciidata"}}}}</li>
-                                                     <li ng-show="message.extra.sigfox_id">Sigfox Id : {{"{{message.extra.sigfox_id"}}}}</li>
-                                                     <li ng-show="message.extra.device_class">Device Class : {{"{{message.extra.device_class"}}}}</li>
-                                                     <li ng-show="message.extra.soft_release">Soft Release : {{"{{message.extra.soft_release"}}}}</li>
-                                                     <li ng-show="message.extra.release && message.extra.sub_release">Release : {{"{{message.extra.release"}}}}.{{"{{message.extra.sub_release"}}}}</li>
-                                                     <li ng-show="message.extra.pro_release && message.extra.pro_sub_release">Pro Release : {{"{{message.extra.pro_release"}}}}.{{"{{message.extra.pro_sub_release"}}}}</li>
-                                                     <li ng-show="message.extra.frm_release && message.extra.frm_sub_release">Frm Release : {{"{{message.extra.frm_release"}}}}.{{"{{message.extra.frm_sub_release"}}}}</li>
-                                                     <li ng:show="isgeolocorgps(message.extra)"> <a href="javascript:openmap('{{'{{message.extra.latitude'}}}},{{'{{message.extra.longitude'}}}}');" class="btn btn-success btn-mini"> <i class="icon-white icon-eye-open"></i> VIEW </a></li>
-                                                 </ul>
+                                                <ul>
+                                                    <li ng-repeat="rinfo in messageRAW.rinfos">Tap : {{"{{rinfo.tap"}}}} - Snr : {{"{{rinfo.snr"}}}} - Rssi : {{"{{rinfo.rssi"}}}}</li>
+                                                </ul>
                                             </td>
-
-                                            <td>{{"{{message.lvl"}}}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6">
-                                            <center>
-                                                <i class="icon-spin icon-spinner"></i>
-                                            </center></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -320,7 +278,7 @@ scripts:
                             </ng-switch>
                         </div>
                     </tab>
--->
+
                 </tabset>
 			</div>
 			<div class="modal-footer">
