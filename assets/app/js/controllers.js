@@ -460,6 +460,11 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
         $scope._serial = Context.serial;
     });
 
+    // is undefined or null
+    $scope.isUndefinedOrNull = function(val) {
+        return angular.isUndefined(val) || val === null 
+    };
+
     // is geolocorgps frame
     $scope.isgeolocorgps = function (extra) {
 
@@ -467,9 +472,8 @@ function DashboardCtrl($log, $scope, DevicesServices, $timeout, $cookieStore, Co
             return false;
         }
 
-        var messagetype = extra.type;
-
-        if (messagetype === 'data_geoloc' || messagetype === 'data_gps') {
+        var messagetype = extra.frame_type;
+        if (messagetype === 'srv_frm_geoloc' || (messagetype === 'srv_frm_data' && extra.type === 'data_gps') || (messagetype === 'srv_frm_data' && extra.type === 'data_geoloc')) {
 
             var latitude = extra.latitude;
             var longitude = extra.longitude;
