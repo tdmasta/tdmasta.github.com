@@ -15,6 +15,7 @@ tagline: "Internet Of Things made easy with SENSOR&trade;"
          <li class="nav-header"> Device Messages </li>
          <li><a href="#msgs_history"><i class="icon-chevron-right"></i> Fetching messages history</a></li>
          <li><a href="#recents_msgs"><i class="icon-chevron-right"></i> Fetching recents messages</a></li>
+         <li><a href="#raw_msgs_history"><i class="icon-chevron-right"></i> Fetching raw messages history</a></li>
          <li><a href="#fetch_devices"><i class="icon-chevron-right"></i> Fetching devices</a></li>
          <li><a href="#clear_messages"><i class="icon-chevron-right"></i> Clear messages</a></li>
          <li class="nav-header"> Device Operations </li>
@@ -324,6 +325,7 @@ SERIAL; PAC
                  </tbody>
              </table>
              </section>
+
 	<section id="recents_msgs">
 		<div class="page-header">
 			<h2>Fetching latests messages</h2>
@@ -450,6 +452,139 @@ SERIAL; PAC
                      </table>
 	</section>
 	
+    <section id="raw_msgs_history">
+    <div class="page-header">
+        <h2>Fetching raw messages history</h2>
+    </div>
+             <h4><a>GET /iot/devices/msgs/sfx/history.json</a></h4>
+             <br/>
+             <table class="table">
+                         <tbody>
+                             <tr>
+                                 <td><h6>Description</h6></td>
+                                 <td>Device Raw Messages history resolution</td>
+                             </tr>
+                             <tr>
+                                 <td><h6>Url</h6></td>
+                                 <td><code>https://sensor.insgroup.fr/iot/devices/msgs/sfx/history.json</code></td>
+                             </tr>
+                             <tr>
+                                 <td><h6>Method</h6></td>
+                                 <td>GET</td>
+                             </tr>
+                             <tr>
+                                 <td><h6>Parameters</h6></td>
+                                 <td>
+                                     <ol>
+                                         <li><code>limit</code> <i>optional</i> the limit of raw messages to be retrieved, default to 20 </li>
+                                         <li><code>before</code> <i>optional</i> the date (GMT timestamp) as end date, default to now</li>
+                                     </ol>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td><h6>Returns</h6></td>
+                                 <td>Raw messages history
+                                 <p>
+                                     <strong>Sample JSON response</strong></p>
+                                     <pre style="overflow:auto;">
+[
+  {
+    "device": "0A03",
+    "time": 1447666420,
+    "data": "82040002010b",
+    "snr": "21.52",
+    "rinfos": [
+      {
+        "tap": "0DCA",
+        "snr": "21.52",
+        "rssi": "-94.00"
+      },
+      {
+        "tap": "0AF7",
+        "snr": "20.15",
+        "rssi": "-124.00"
+      }
+    ]
+  },
+  {
+    "device": "0A03",
+    "time": 1447666300,
+    "data": "81040002010b",
+    "snr": "23.05",
+    "rinfos": [
+      {
+        "tap": "0AF7",
+        "snr": "17.40",
+        "rssi": "-125.00"
+      },
+      {
+        "tap": "0DD3",
+        "snr": "21.86",
+        "rssi": "-114.00"
+      }
+    ]
+  }
+]
+
+                                 </pre>
+                             <h5>Return value definitions</h5>
+                              <table class="table table-bordered">
+                                  <thead>
+                                      <tr>
+                                          <th>Field</th>
+                                          <th>Description</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td>device</td>
+                                          <td>Device id</td>
+                                      </tr>
+                                      <tr>
+                                          <td>time</td>
+                                          <td>Message reception timestamp (GMT)</td>
+                                      </tr>
+                                      <tr>
+                                          <td>data</td>
+                                          <td>Raw message</td>
+                                      </tr>
+                                      <tr>
+                                          <td>snr</td>
+                                          <td>The best SNR of the messages received by the network so far</td>
+                                      </tr>
+                                      <tr>
+                                          <td>rinfos</td>
+                                          <td>List all receptions for each base stations</td>
+                                      </tr>
+                                      <tr>
+                                          <td>rinfos.tap</td>
+                                          <td>Base station identifier</td>
+                                      </tr>
+                                      <tr>
+                                          <td>rinfos.snr</td>
+                                          <td>The best signal of all repetitions for this base station</td>
+                                      </tr>
+                                      <tr>
+                                          <td>rinfos.rssi</td>
+                                          <td>Received Signal Strength Indication (in dBm)</td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td><h6>Errors</h6></td>
+                         <td>
+                             <ul class="unstyled">
+                                 <li><code>404</code> - The serial number was not found </li>
+                                 <li><code>401</code> - The authentication token is invalid or missing </li>
+                             </ul>
+                         </td>
+                     </tr>
+                 </tbody>
+             </table>
+             </section>
+
 	<section id="fetch_devices">
 		<div class="page-header">
 			<h2>Fetching devices information</h2>
