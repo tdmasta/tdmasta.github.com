@@ -177,6 +177,7 @@ scripts:
 
                                             <td>
         							             <ul>
+                                                     <li ng-show="!isUndefinedOrNull(message.extra.frame_type)">Message : {{"{{message.extra.message"}}}}</li>
                                                      <li ng-show="!isUndefinedOrNull(message.extra.frame_type)">Frame Type : {{"{{message.extra.frame_type"}}}}</li>
                                                      <li ng-show="!isUndefinedOrNull(message.extra.type)">Type : {{"{{message.extra.type"}}}}</li>
                                                      <li ng-show="!isUndefinedOrNull(message.extra.entry_id)">Entry Id : {{"{{message.extra.entry_id"}}}}</li>
@@ -238,7 +239,7 @@ scripts:
                                     <thead>
                                         <th>Time</th>
                                         <th>Data</th>
-                                        <th>Snr (in dB)</th>
+                                        <th>Link Quality</th>
                                         <th>Tap Infos (Snr in dB & Rssi in dBm)</th>
                                     </thead>
                                     <tbody ng-switch>
@@ -255,14 +256,14 @@ scripts:
                                     <thead>
                                         <th>Time</th>
                                         <th>Data</th>
-                                        <th>Snr (in dB)</th>
+                                        <th>Link Quality</th>
                                         <th>Tap Infos (Snr in dB & Rssi in dBm)</th>
                                     </thead>
                                     <tbody ng-switch>
                                         <tr ng-repeat="messageRAW in _messagesRAW">
                                             <td>{{"{{messageRAW.time * 1000 | date : 'yyyy-MM-dd HH:mm:ss' "}}}}</td>
                                             <td>{{"{{messageRAW.data "}}}}</td>
-                                            <td>{{"{{messageRAW.snr "}}}}</td>
+                                            <td>{{"{{messageRAW.linkQuality "}}}}</td>
                                             <td>
                                                 <ul>
                                                     <li ng-repeat="rinfo in messageRAW.rinfos">Tap : {{"{{rinfo.tap"}}}} - Snr : {{"{{rinfo.snr"}}}} - Rssi : {{"{{rinfo.rssi"}}}}</li>
