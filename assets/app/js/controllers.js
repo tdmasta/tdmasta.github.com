@@ -684,7 +684,9 @@ function DeveloperDashboardCtrl($log,$location, $scope, DevelopersServices, $tim
 
     $scope.udmProtocolSelect = [
         { name: 'UDM 2.2', value: 'UDM22' }, 
-        { name: 'UDM 2.3', value: 'UDM23' }
+        { name: 'UDM 2.3', value: 'UDM23' },
+        { name: 'UDM 2.3-EXT', value: 'UDM23EXT' },
+        { name: 'UDM 2.4', value: 'UDM24' }
     ];
 
     $scope.decoder = {
