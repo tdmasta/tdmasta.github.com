@@ -1,0 +1,65 @@
+---
+layout: page-ng
+title: Supply operations
+scripts:
+- {name: validation, type: remote, url: "https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"}
+- {name: validation.nonobs, type: remote, url: "https://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.js"}
+- {name: modernizr, type: remote, url: "/assets/app/js/mdz.js"}
+- {name: pines, type: remote, url: "/assets/app/lib/jquery.pnotify.min.js"}
+- {name: service, type: remote, url: "/assets/app/js/services.js"}
+- {name: controller, type: remote, url: "/assets/app/js/controllers.js"}
+- {name: bootrap, type: remote, url: "/assets/app/lib/ui-bootstrap-tpls-0.4.0.js"}
+- {name: ngTable, type: remote, url: "/assets/app/lib/ng-table.js"}
+- {name: app, type: remote, url: "/assets/app/js/app.js"}
+- {name: angularbootstrapapp, type: inline, content: "angular.bootstrap(document, ['evbApp']);"}
+---
+
+{% include JB/setup %}
+
+<div ng-controller="SupplyCtrl" >
+
+    <div>
+
+        <div class="row" style="margin: 0 auto;display: table;">
+            <div class="span5">
+
+                <h3> Batch module information</h3>
+
+                <form class="form-horizontal" accept-charset="utf-8" auto-complete="off" novalidate="novalidate" id="getPacs" name="getPacsForm" ng-app="evbApp" ng-submit="getPacsFunction(supply)" >
+
+                    <div class="control-group">
+                        <label class="control-label" for="supplyLogin"><a href="#"> Login </a></label>
+                        <div class="controls">
+                            <input id="supplyLogin" name="supply.login" ng-model="supply.login" ng-model-instant data-val="true" type="text" data-val-required="Login is required." required tabindex="1" class="required" />
+                            <span class="field-validation-valid" data-valmsg-for="supplyLogin" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="supplyPassword"><a href="#"> Password </a></label>
+                        <div class="controls">
+                            <input id="supplyPassword" name="supply.password" ng-model="supply.password" ng-model-instant data-val="true" type="password" data-val-required="Password is required." required tabindex="2" class="required" />
+                            <span class="field-validation-valid" data-valmsg-for="supplyPassword" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="supplyBlisters"><a href="#"> Blister references </a></label>
+                        <div class="controls">
+                            <textarea id="supplyBlisters" name="supply.blisters" ng-model="supply.blisters" ng-model-instant data-val="true" data-val-required="Blisters is required." required tabindex="3" class="required" rows="10" placeholder="Enter file names without extension, case insensitive, one per line"></textarea>
+                            <span class="field-validation-valid" data-valmsg-for="supplyBlisters" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-success" tabindex="4"> Get Pacs </button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+       </div>
+
+    </div>
+
+</div>

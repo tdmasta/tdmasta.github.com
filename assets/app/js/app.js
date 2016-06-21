@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'SecurityModule', 'Context', 'NotificationModule','ui.bootstrap','ngTable'],function($routeProvider, $locationProvider, $httpProvider) {
+var app = angular.module('evbApp', ['DevelopersModule','DevicesModule', 'SecurityModule', 'Context', 'NotificationModule', 'SupplyModule', 'ui.bootstrap','ngTable'],function($routeProvider, $locationProvider, $httpProvider) {
 	//delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	//$httpProvider.defaults.withCredentials = true;
 	

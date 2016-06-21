@@ -4,6 +4,29 @@
  * Controllers
 */
 
+// Supply controller
+function SupplyCtrl($scope, $http, $log, $cookieStore, SupplyServices, Base64) {
+
+    $http.defaults.useXDomain = true;
+
+    $scope.getPacsFunction = function() {
+        var stoken = Base64.encode($scope.supply.login + ":" + $scope.supply.password);
+        SupplyServices.getPacsSrv($scope.supply.blisters, stoken)
+            .then(function(response) {
+                switch (response.status) {
+                    case 200 :
+                        var blob = new Blob([response.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                        var objectUrl = URL.createObjectURL(blob);
+                        window.open(objectUrl);
+                        break;
+                    default :
+                        $log.info("default");
+                        break;
+                }
+            });
+    };
+}
+
 // Authentication controller
 function AuthenticationCtrl(Base64, $scope, $http, $log, $cookieStore, $location, $window, $timeout, SecurityServices, Context, Notif) {
 	$http.defaults.useXDomain = true;

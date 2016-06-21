@@ -535,6 +535,27 @@ angular.module('DevelopersModule', []).factory('DevelopersServices', function($h
 
 
 //
+// Module : SupplyServices
+//
+angular.module('SupplyModule', []).factory('SupplyServices', function($http, $log, $cookieStore, CONSTANTS) {
+
+    return {
+
+        // getPacsmethod
+        getPacsSrv: function(blisters, stoken) {
+            return $http({
+                method : 'POST',
+                url : CONSTANTS.remote + '/iot/developers/supply/pacs.json',
+                data : {ids : blisters},
+                headers : {
+                    Authorization : 'Basic ' + stoken
+                }
+            });
+        }
+    };
+});
+
+//
 // Module : ContextModule
 //
 // member :
