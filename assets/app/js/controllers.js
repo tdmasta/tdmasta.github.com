@@ -9,15 +9,18 @@ function SupplyCtrl($scope, $http, $log, $cookieStore, SupplyServices, Base64) {
 
     $http.defaults.useXDomain = true;
 
+    $scope._supplyPacs = null;
+
     $scope.getPacsFunction = function() {
         var stoken = Base64.encode($scope.supply.login + ":" + $scope.supply.password);
         SupplyServices.getPacsSrv($scope.supply.blisters, stoken)
             .then(function(response) {
                 switch (response.status) {
                     case 200 :
-                        var blob = new Blob([response.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-                        var objectUrl = URL.createObjectURL(blob);
-                        window.open(objectUrl);
+//                        var blob = new Blob([response.data], {type: "application/octet-stream"});
+//                        var objectUrl = URL.createObjectURL(blob);
+//                        window.open(objectUrl);
+                        $scope._supplyPacs = response.data.replace(/(?:\r\r|\n\n|\r\n)/g, '\n');
                         break;
                     default :
                         $log.info("default");
